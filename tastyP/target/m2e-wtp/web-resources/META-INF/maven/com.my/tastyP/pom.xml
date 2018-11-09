@@ -55,7 +55,6 @@
 			<artifactId>aopalliance</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
