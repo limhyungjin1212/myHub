@@ -56,6 +56,7 @@ public class UserController {
 
 	@RequestMapping("logout")
 	public String logoutGet(HttpSession session) throws Exception {
+		logger.info("logout");
 		session.invalidate();
 		return "redirect:/";
 
