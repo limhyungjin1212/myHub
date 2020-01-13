@@ -26,6 +26,13 @@ public class UserController {
 	public void joinGet() {
 		logger.info("joinGet..");
 		
+	}
+	
+	@RequestMapping(value="join" , method = RequestMethod.POST)
+	public void joinPost(UserVO uvo) throws Exception {
+		logger.info("joinPost.."+uvo);
+		
+		us.join(uvo);
 		
 	}
 	
@@ -42,9 +49,11 @@ public class UserController {
 		logger.info("loginPost"+uv);
 		if(uv ==null ) {return;}
 		model.addAttribute("userVO",uv);
-		
-		
-		
-		
 	}
+	
+	
+	
+	
+	
+	
 }

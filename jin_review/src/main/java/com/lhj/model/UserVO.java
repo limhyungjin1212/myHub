@@ -1,7 +1,7 @@
 package com.lhj.model;
 
 public class UserVO {
-	private String uid,upw,uname;
+	private String uid,upw,uname,umail,uphone;
 
 	public String getUid() {
 		return uid;
@@ -27,9 +27,27 @@ public class UserVO {
 		this.uname = uname;
 	}
 
+	
+	public String getUmail() {
+		return umail;
+	}
+
+	public void setUmail(String umail) {
+		this.umail = umail;
+	}
+
+	public String getUphone() {
+		return uphone;
+	}
+
+	public void setUphone(String uphone) {
+		this.uphone = uphone;
+	}
+
 	@Override
 	public String toString() {
-		return "UserVO [uid=" + uid + ", upw=" + upw + ", uname=" + uname + "]";
+		return "UserVO [uid=" + uid + ", upw=" + upw + ", uname=" + uname + ", umail=" + umail + ", uphone=" + uphone
+				+ "]";
 	}
 	
 }

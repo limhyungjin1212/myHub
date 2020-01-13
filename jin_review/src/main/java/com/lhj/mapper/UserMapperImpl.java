@@ -19,5 +19,10 @@ public class UserMapperImpl implements UserMapper{
 		UserVO user =session.selectOne(namespace+".login",lvo); 
 		return user;
 	}
+
+	@Override
+	public void join(UserVO uvo) throws Exception {
+		session.insert(namespace+".join",uvo);
+	}
 	
 }
