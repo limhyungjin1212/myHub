@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lhj.model.LoginVO;
 import com.lhj.model.UserVO;
@@ -30,9 +31,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "join", method = RequestMethod.POST)
-	public void joinPost(UserVO uvo) throws Exception {
+	public String joinPost(UserVO uvo,RedirectAttributes rttr) throws Exception {
 		logger.info("joinPost.." + uvo);
 		us.join(uvo);
+		rttr.addFlashAttribute("msg","wsuccess");
+		return "redirect:../";
 
 	}
 
@@ -51,7 +54,7 @@ public class UserController {
 			return;
 		}
 		model.addAttribute("userVO", uv);
-
+		
 	}
 
 	@RequestMapping("logout")

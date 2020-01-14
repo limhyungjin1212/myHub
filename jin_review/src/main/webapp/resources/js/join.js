@@ -3,7 +3,7 @@
  */
 
 function idcheck() {
-	var id = document.getElementById("id").value; // id가 id의 값
+	var id = document.getElementById("uid").value; // id가 id의 값
 	if (id.length < 8 || id.length > 12) { // id의 길이가 8보다 작거나 12보다 크면
 		document.getElementById("idcheck").innerHTML = "id는 8자이상 12자 이하로 입력하셔야 합니다.";
 	} else {
@@ -38,7 +38,7 @@ function key() {
  */
 
 function pwequalscheck() {
-	var pw = document.getElementById("pw").value;
+	var pw = document.getElementById("upw").value;
 	var pwchk = document.getElementById("pwchk").value;
 
 	if (pw == pwchk) {
@@ -71,12 +71,14 @@ function selectEmail() {
 		document.getElementById("email2").value = select;
 		document.getElementById("email2").readOnly = true;
 	}
-
 }
 
 $(document).ready(
 		function() {
-
+			
+			$("#uid").on("")
+			
+			
 			$("#pw").on("blur",	function() {
 				var pw = $("#pw").val().length;
 					if (pw < 8 || pw > 12) {
@@ -87,6 +89,7 @@ $(document).ready(
 						}
 					});
 			
+			
 				var year = "<option>연도</option>";
 				for(i=2019;i>1980;i--){
 					year +="<option>";
@@ -94,6 +97,12 @@ $(document).ready(
 					year +="</option>";
 				}
 				$("#year").html(year);
+				
+				
+				$("#submit").on("click",function(){
+						$("#umail").val;
+					});
+				
 				
 				
 				

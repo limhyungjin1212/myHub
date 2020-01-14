@@ -27,12 +27,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session = request.getSession();
 		
+		
 		Object userVO = modelAndView.getModel().get("userVO");
 		System.out.println("userVO="+userVO);
 		if(userVO !=null) { //사용자의 정보가 있다면 HttpSession에 로그인 처리
 			logger.info("new login success");
 			session.setAttribute(LOGIN, userVO); //세션에 회원 정보 저장
-			response.sendRedirect("../"); //로그인 성공한 후 메인으로 이동
+			
+			response.sendRedirect("../list"); //로그인 성공한 후 메인으로 이동
 		}
 	}
 	

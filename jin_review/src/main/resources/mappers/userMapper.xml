@@ -9,7 +9,7 @@
 	</select>
 
 	<insert id="join" >
-		insert into tbl_user values(#{uid},#{upw},#{uname},#{umail},#{uphone});
+		insert into tbl_user values(#{uid},#{upw},#{uname},#{umail},#{gender});
 	</insert>
 
 </mapper>

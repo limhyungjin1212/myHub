@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lhj.model.BoardVO;
+import com.lhj.model.Criteria;
 
 @Repository
 public class BoardMapperImpl implements BoardMapper {
@@ -23,7 +24,7 @@ public class BoardMapperImpl implements BoardMapper {
 
 	@Override
 	public void boardWrite(BoardVO board) throws Exception {
-		// TODO Auto-generated method stub
+		session.insert(namespace+".boardWrite",board);
 		
 	}
 
@@ -37,6 +38,17 @@ public class BoardMapperImpl implements BoardMapper {
 	public void boardDelete(int num) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<BoardVO> boardListPage(Criteria cri) throws Exception {
+		List list = session.selectList(namespace+".boardListPage",cri);
+		return list;
+	}
+
+	@Override
+	public int boardCount(Criteria cri) throws Exception {
+		return session.selectOne(namespace+".boardCount",cri);
 	}
 	
 }

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -28,17 +27,16 @@
 				<li class="nav-item active"><a class="nav-link" href="#">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-				<li class="nav-item"><a class="nav-link" href="user/join">회원가입</a>
-				</li>
+				<li class="nav-item active" ><a class="nav-link" href="#">About</a></li>
 
 				<c:choose>
 					<c:when test="${login ne null }">
-							${login.uid } 님 환영합니다.
-							<a href="user/logout">로그아웃</a>
+					<li class="nav-item active" >
+					${login.uname } 님 환영합니다.<a class="nav-link" href="user/logout">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item"><a class="nav-link" href="user/login">로그인</a>
+					<li class="nav-item active"><a class="nav-link" href="user/join">회원가입</a>	</li>
+						<li class="nav-item active"><a class="nav-link" href="user/login">로그인</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

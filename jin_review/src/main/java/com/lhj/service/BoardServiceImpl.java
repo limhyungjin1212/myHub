@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lhj.mapper.BoardMapper;
 import com.lhj.model.BoardVO;
+import com.lhj.model.Criteria;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -22,8 +23,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void boardWrite(BoardVO board) throws Exception {
-		// TODO Auto-generated method stub
-		
+		bm.boardWrite(board);
 	}
 
 	@Override
@@ -36,6 +36,16 @@ public class BoardServiceImpl implements BoardService {
 	public void boardDelete(int num) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<BoardVO> boardListPage(Criteria cri) throws Exception {
+		return bm.boardListPage(cri);
+	}
+
+	@Override
+	public int boardCount(Criteria cri) throws Exception {
+		return bm.boardCount(cri);
 	}
 
 }

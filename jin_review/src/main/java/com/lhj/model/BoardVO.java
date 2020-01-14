@@ -1,6 +1,7 @@
 package com.lhj.model;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class BoardVO {
 	
@@ -9,9 +10,16 @@ public class BoardVO {
 	private String pcate;
 	private String ptel;
 	private String pinfo;
+	private Date regdate;
 	private String[] pfiles;
 	
 	
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
 	public int getPno() {
 		return pno;
 	}
@@ -51,7 +59,7 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [pno=" + pno + ", pname=" + pname + ", pcate=" + pcate + ", ptel=" + ptel + ", pinfo=" + pinfo
-				+ ", pfiles=" + Arrays.toString(pfiles) + "]";
+				+ ", regdate=" + regdate + ", pfiles=" + Arrays.toString(pfiles) + "]";
 	}
 	
 	

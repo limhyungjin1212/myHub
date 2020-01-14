@@ -9,37 +9,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-
 <title>JinsReview</title>
-
-<!-- Bootstrap core CSS -->
-<link href="resources/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href="resources/css/heroic-features.css?ver=33" rel="stylesheet">
-
 </head>
-
 <body>
-	<div>
-		<jsp:include page="include/header.jsp"></jsp:include>
-	</div>
-	<!-- Page Content -->
-	<div class="container">
-		<c:choose>
-			<c:when test="${login.uid eq 'admin'}">
-				<jsp:include page="board/list.jsp"></jsp:include>
-			</c:when>
-			<c:otherwise>
-				<jsp:include page="include/container.jsp"></jsp:include>
-			</c:otherwise>
-		</c:choose>
-	</div>
-	<!-- /.container -->
-
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<jsp:include page="include/footer.jsp"></jsp:include>
-	</footer>
-
+<jsp:forward page="main.jsp"></jsp:forward>
 </body>
 </html>
