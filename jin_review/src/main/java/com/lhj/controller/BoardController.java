@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lhj.model.BoardVO;
@@ -30,7 +31,11 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	
-	
+	@RequestMapping(value="/test", method = RequestMethod.GET)
+	public void test() throws Exception{
+		logger.info("boardListGet..");
+		
+	}
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String boardListGet(BoardVO boardVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
 		logger.info("boardListGet..");
@@ -64,5 +69,59 @@ public class BoardController {
 		
 		return "redirect:list";
 	}
+	
+	
+	@RequestMapping(value="detail" , method= RequestMethod.GET)
+	public String detailGet(HttpServletRequest req,@RequestParam int pno,Model model) throws Exception {
+		logger.info("detail");
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		
+		model.addAttribute("detail",boardService.boardDetail(pno));
+		
+		return "main";
+	}
+	
+	@RequestMapping(value="update" , method= RequestMethod.GET)
+	public String updateGet(HttpServletRequest req,@RequestParam int pno,Model model) throws Exception {
+		logger.info("updateGet");
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		model.addAttribute("detail",boardService.boardDetail(pno));
+		
+		return "main";
+	}
+	
+	@RequestMapping(value="update", method = RequestMethod.POST)
+	public String updatePost(BoardVO board , RedirectAttributes rttr) throws Exception{
+		logger.info("updatePost..");
+		
+		boardService.boardUpdate(board);
+		rttr.addFlashAttribute("msg","wsuccess");
+		
+		return "redirect:detail?pno="+board.getPno()+"";
+	}
+	
+	@RequestMapping(value="delete" , method = RequestMethod.GET)
+	public String deletePost(@RequestParam int pno,RedirectAttributes rttr) throws Exception{
+		logger.info("delete..");
+		
+		boardService.boardDelete(pno);
+		
+		rttr.addFlashAttribute("msg","dsuccess");
+		return "redirect:list";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

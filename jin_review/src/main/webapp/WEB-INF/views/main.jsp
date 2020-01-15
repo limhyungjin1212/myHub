@@ -6,10 +6,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	content="width=device-width, initial-scale=1, shrink-to-fit=no,user-scalable=no">
 <meta name="description" content="">
 <meta name="author" content="">
-
 <title>JinsReview</title>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
@@ -30,15 +29,23 @@
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  
+<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 
-
+<link rel="stylesheet" href="resources/css/upload.css" >
 </head>
 <body>
 	<div>
 		<jsp:include page="include/header.jsp"></jsp:include>
 	</div>
-	<h1>URI : ${uri }</h1>
-
+	<h1>URI : ${uri }
+		<a href="test">지도 테스트</a>
+	</h1>
+	
 
 
 	<!-- Page Content -->
@@ -48,8 +55,13 @@
 			<c:choose>
 				<c:when test="${uri == '/register' }">
 				<%@ include file="board/register.jsp"%>
-				<h1>으아아</h1>
 				</c:when>
+				<c:when test="${uri == '/detail' }">
+					<%@ include file="board/detail.jsp"%>
+				</c:when>
+				<c:when test="${uri == '/update' }">
+					<%@ include file="board/update.jsp"%>
+				</c:when>				
 				<c:otherwise>
 					<%@ include file="board/list.jsp" %>
 				</c:otherwise>

@@ -30,14 +30,12 @@ public class BoardMapperImpl implements BoardMapper {
 
 	@Override
 	public void boardUpdate(BoardVO board) throws Exception {
-		// TODO Auto-generated method stub
-		
+		session.update(namespace+".boardUpdate",board);
 	}
 
 	@Override
-	public void boardDelete(int num) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void boardDelete(int pno) throws Exception {
+		session.delete(namespace+".boardDelete",pno);
 	}
 
 	@Override
@@ -49,6 +47,12 @@ public class BoardMapperImpl implements BoardMapper {
 	@Override
 	public int boardCount(Criteria cri) throws Exception {
 		return session.selectOne(namespace+".boardCount",cri);
+	}
+
+	@Override
+	public BoardVO boardDetail(int pno) throws Exception {
+		
+		return session.selectOne(namespace+".boardDetail",pno);
 	}
 	
 }

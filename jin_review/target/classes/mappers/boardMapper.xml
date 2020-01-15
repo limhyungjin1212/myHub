@@ -42,4 +42,27 @@
 			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
 		]]>
 	</select>
+	
+	<!-- 상세보기  -->
+	<select id="boardDetail" resultType="com.lhj.model.BoardVO">
+		select * from product_board where pno = #{pno}
+	</select>
+	
+	<!-- 수정  -->
+	<update id="boardUpdate">
+		update product_board set pcate = #{pcate}, ptel = #{ptel} , pinfo = #{pinfo} where pno = #{pno}	
+	</update>
+	
+	
+	<!-- 삭제  -->
+	<delete id="boardDelete">
+		delete from product_board where pno = #{pno}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
 </mapper>

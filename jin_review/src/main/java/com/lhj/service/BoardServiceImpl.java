@@ -28,14 +28,12 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void boardUpdate(BoardVO board) throws Exception {
-		// TODO Auto-generated method stub
-		
+		bm.boardUpdate(board);
 	}
 
 	@Override
-	public void boardDelete(int num) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void boardDelete(int pno) throws Exception {
+		bm.boardDelete(pno);
 	}
 
 	@Override
@@ -46,6 +44,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int boardCount(Criteria cri) throws Exception {
 		return bm.boardCount(cri);
+	}
+
+	@Override
+	public BoardVO boardDetail(int pno) throws Exception {
+		return bm.boardDetail(pno);
 	}
 
 }

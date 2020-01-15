@@ -59,6 +59,31 @@
 						<th>작성일자</th>
 						<th>조회수</th>
 					</tr>
+					<!-- Trigger the modal with a button -->
+					<button type="button" class="btn btn-info btn-lg"
+						data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+					<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Modal Header</h4>
+								</div>
+								<div class="modal-body">
+									<p>Some text in the modal.</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Close</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
 					<tr>
 						<td><a href="register">글쓰기</a></td>
 						<td colspan="4"><c:if test="${page.prev }">
@@ -92,7 +117,7 @@
 						<tr>
 							<td>${boardVO.pno }</td>
 							<td><a
-								href="boardDetail?num=${boardVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${boardVO.pname }</a></td>
+								href="detail?pno=${boardVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${boardVO.pname }</a></td>
 							<td>${boardVO.ptel }</td>
 							<td>${boardVO.regdate }</td>
 							<td>${boardVO.pinfo }</td>

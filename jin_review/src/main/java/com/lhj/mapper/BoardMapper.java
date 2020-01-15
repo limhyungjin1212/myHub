@@ -12,9 +12,11 @@ public interface BoardMapper {
 	
 	public void boardUpdate(BoardVO board) throws Exception;
 	
-	public void boardDelete(int num) throws Exception;
+	public void boardDelete(int pno) throws Exception;
 	
 	public List<BoardVO> boardListPage(Criteria cri) throws Exception;
 	
 	public int boardCount(Criteria cri) throws Exception;
+	
+	public BoardVO boardDetail(int pno) throws Exception;
 }
