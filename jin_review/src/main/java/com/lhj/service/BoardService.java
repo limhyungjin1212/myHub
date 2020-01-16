@@ -28,5 +28,7 @@ public interface BoardService {
 	//상세보기
 	public BoardVO boardDetail(int pno) throws Exception;
 	
+	//게시판 상세보기 파일 불러오기
+	public List<String> getAttach(int pno) throws Exception;
 	
 }

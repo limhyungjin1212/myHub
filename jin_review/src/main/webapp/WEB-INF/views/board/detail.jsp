@@ -9,26 +9,72 @@
       }
     </style>
 <div>
-	<div id="map"></div>
-	 <script>
-// Initialize and add the map
-function initMap() {
-  // The location of Uluru
-  var uluru = {lat: -25.344, lng: 131.036};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 10, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
-    </script>
-    
-    
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&callback=initMap">
-    </script>
-    
+	  <script>
+		  var str="";
+		  var pno = ${detail.pno};
+		  $.getJSON("detailJSON?pno="+pno , function(data){
+		    	$(data).each(
+		    		function(){
+		    			str ="<img src='displayFile?fileName="+data+"'/>";
+		    		});
+		    	
+		    	$(".attach").append(str);
+		    	
+		    });
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
+      var map;
+      var service;
+      var infowindow;
+
+      function initMap() {
+        var sydney = new google.maps.LatLng(35.907801, 127.767662);
+
+        infowindow = new google.maps.InfoWindow();
+
+        map = new google.maps.Map(
+            document.getElementById('map'), {center: sydney, zoom: 17});
+
+        var request = {
+          query: '${detail.place}',
+          fields: ['name', 'geometry'],
+        };
+
+        service = new google.maps.places.PlacesService(map);
+
+        service.findPlaceFromQuery(request, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
+            }
+
+            map.setCenter(results[0].geometry.location);
+          }
+        });
+      }
+
+      function createMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
+     
+      
+    </script>
+    
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&libraries=places&callback=initMap" async defer></script>
+    
+<div id="map"></div>
+<div class="attach"></div>
 	<table border="1">
 		<tr>
 			<td>분류 : ${detail.pcate }</td>

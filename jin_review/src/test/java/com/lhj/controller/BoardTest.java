@@ -24,4 +24,7 @@ public class BoardTest {
 	public void boardListTest() throws Exception {
 		logger.info(""+bs.boardList());
 	}
+	
+	
+	
 }

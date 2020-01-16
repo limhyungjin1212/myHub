@@ -11,7 +11,8 @@ public class BoardVO {
 	private String ptel;
 	private String pinfo;
 	private Date regdate;
-	private String[] pfiles;
+	private String place;
+	private String[] files;
 	
 	
 	public Date getRegdate() {
@@ -50,16 +51,23 @@ public class BoardVO {
 	public void setPinfo(String pinfo) {
 		this.pinfo = pinfo;
 	}
-	public String[] getPfiles() {
-		return pfiles;
+	
+	public String[] getFiles() {
+		return files;
 	}
-	public void setPfiles(String[] pfiles) {
-		this.pfiles = pfiles;
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
 	}
 	@Override
 	public String toString() {
 		return "BoardVO [pno=" + pno + ", pname=" + pname + ", pcate=" + pcate + ", ptel=" + ptel + ", pinfo=" + pinfo
-				+ ", regdate=" + regdate + ", pfiles=" + Arrays.toString(pfiles) + "]";
+				+ ", regdate=" + regdate + ", place=" + place + ", files=" + Arrays.toString(files) + "]";
 	}
 	
 	

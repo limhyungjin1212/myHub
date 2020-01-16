@@ -51,8 +51,18 @@ public class BoardMapperImpl implements BoardMapper {
 
 	@Override
 	public BoardVO boardDetail(int pno) throws Exception {
-		
 		return session.selectOne(namespace+".boardDetail",pno);
 	}
 	
+	//게시판 파일 업로드
+		@Override
+		public void addAttach(String filename) throws Exception {
+			session.insert(namespace+".addAttach",filename);
+		}
+
+		@Override
+		public List<String> getAttach(int pno) throws Exception {
+			List list = session.selectList(namespace+".getAttach",pno);
+			return list;
+		}
 }

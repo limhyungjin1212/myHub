@@ -19,4 +19,11 @@ public interface BoardMapper {
 	public int boardCount(Criteria cri) throws Exception;
 	
 	public BoardVO boardDetail(int pno) throws Exception;
+	
+	//게시판 글 쓰기 할떄 파일 업로드
+	public void addAttach(String filename) throws Exception;
+	
+	//게시판 상세보기 파일 불러오기
+		public List<String> getAttach(int pno) throws Exception;
+	
 }

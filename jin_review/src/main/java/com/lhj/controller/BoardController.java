@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lhj.model.BoardVO;
@@ -36,6 +37,22 @@ public class BoardController {
 		logger.info("boardListGet..");
 		
 	}
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public String index(BoardVO boardVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
+		logger.info("index..");
+		//List<BoardVO> list = boardService.boardList(); 
+		
+		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
+				
+		model.addAttribute("list",boardService.boardListPage(cri));
+		model.addAttribute("page",pv);
+		model.addAttribute("attach",boardService.getAttach(boardVO.getPno()));
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
+		
+		return "index";
+	}
+	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String boardListGet(BoardVO boardVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
 		logger.info("boardListGet..");
@@ -62,8 +79,9 @@ public class BoardController {
 	
 	@RequestMapping(value="register", method = RequestMethod.POST)
 	public String registerPost(BoardVO board , RedirectAttributes rttr) throws Exception{
-		logger.info("registerPost..");
 		
+		logger.info("registerPost.."+board);
+		logger.info("파일"+board.getFiles());
 		boardService.boardWrite(board);
 		rttr.addFlashAttribute("msg","wsuccess");
 		
@@ -73,7 +91,7 @@ public class BoardController {
 	
 	@RequestMapping(value="detail" , method= RequestMethod.GET)
 	public String detailGet(HttpServletRequest req,@RequestParam int pno,Model model) throws Exception {
-		logger.info("detail");
+		logger.info("detail"+pno);
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		
 		model.addAttribute("detail",boardService.boardDetail(pno));
@@ -81,11 +99,25 @@ public class BoardController {
 		return "main";
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="/detailJSON" , method= RequestMethod.GET)
+	public List<String> getAttach(@RequestParam int pno ) throws Exception{
+		
+		logger.info("pno="+pno);
+		logger.info("상세보기"+boardService.getAttach(pno));
+		
+		
+		
+		return boardService.getAttach(pno);
+	}
+	
+	
 	@RequestMapping(value="update" , method= RequestMethod.GET)
 	public String updateGet(HttpServletRequest req,@RequestParam int pno,Model model) throws Exception {
 		logger.info("updateGet");
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
-		model.addAttribute("detail",boardService.boardDetail(pno));
+		model.addAttribute("update",boardService.boardDetail(pno));
 		
 		return "main";
 	}

@@ -8,8 +8,8 @@
 	</select>
 
 	<insert id="boardWrite">
-		insert into product_board(pname,pcate,ptel,pinfo) 
-		values(#{pname},#{pcate},#{ptel},#{pinfo})
+		insert into product_board(pname,pcate,ptel,pinfo,place) 
+		values(#{pname},#{pcate},#{ptel},#{pinfo},#{place})
 	</insert>
 
 
@@ -28,9 +28,9 @@
 </sql>
 	<!-- rownum을 이용한 페이징  -->
 	<select id="boardListPage" resultType="com.lhj.model.BoardVO">
-		select pno , pname, pcate , pinfo , regdate
+		select pno , pname, pcate ,ptel, pinfo , regdate
 			from (
-				select @rownum:=@rownum+1 as rownum , pno, pname, pcate , pinfo , regdate
+				select @rownum:=@rownum+1 as rownum , pno, pname, pcate , pinfo, ptel , regdate
 				from (select @rownum:=0) as rownum , product_board
 				<!-- <if test="keyword != null">
 				where subject like concat('%',trim(#{keyword}),'%')
@@ -59,10 +59,14 @@
 		delete from product_board where pno = #{pno}
 	</delete>
 	
+	<!--게시판 파일 업로드  -->
+	<insert id="addAttach">
+		insert into attach(filename,pno) values (#{filename},LAST_INSERT_ID())
+	</insert>
 	
 	
-	
-	
-	
+	<select id="getAttach" resultType="string">
+		select * from attach where pno = #{pno};
+	</select>
 	
 </mapper>

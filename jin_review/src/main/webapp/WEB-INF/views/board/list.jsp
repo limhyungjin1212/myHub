@@ -45,19 +45,19 @@
 				<thead>
 					<tr>
 						<th>글번호</th>
+						<th>분류</th>
 						<th>제목</th>
-						<th>작성자</th>
+						<th>연락처</th>
 						<th>작성일자</th>
-						<th>조회수</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
 						<th>글번호</th>
+						<th>분류</th>
 						<th>제목</th>
-						<th>작성자</th>
+						<th>연락처</th>
 						<th>작성일자</th>
-						<th>조회수</th>
 					</tr>
 					<!-- Trigger the modal with a button -->
 					<button type="button" class="btn btn-info btn-lg"
@@ -116,11 +116,12 @@
 					<c:forEach items="${list }" var="boardVO">
 						<tr>
 							<td>${boardVO.pno }</td>
-							<td><a
-								href="detail?pno=${boardVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${boardVO.pname }</a></td>
+							<td>${boardVO.pcate }</td>
+							<td>
+							<a href="detail?pno=${boardVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${boardVO.pname }</a>
+							</td>
 							<td>${boardVO.ptel }</td>
 							<td>${boardVO.regdate }</td>
-							<td>${boardVO.pinfo }</td>
 						</tr>
 					</c:forEach>
 
