@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <style>
       #map {
         width: 100%;
         height: 400px;
         background-color: grey;
+      }
+      #reply{
+      background-color: grey;
       }
     </style>
 <div>
@@ -13,6 +16,7 @@
 		  var str="";
 		  var pno = ${detail.pno};
 		  $.getJSON("detailJSON?pno="+pno , function(data){
+			  console.log(data);
 		    	$(data).each(
 		    		function(){
 		    			str ="<img src='displayFile?fileName="+data+"'/>";
@@ -72,10 +76,10 @@
     
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&libraries=places&callback=initMap" async defer></script>
-    
 <div id="map"></div>
 <div class="attach"></div>
-	<table border="1">
+<div class="row text-center">
+	<table class="w3-table-all" border="1">
 		<tr>
 			<td>분류 : ${detail.pcate }</td>
 			<td>이름 : ${detail.pname }</td>
@@ -85,13 +89,32 @@
 			<td>등록일 :${detail.regdate }</td>
 		</tr>
 	</table>
+		
 	<div>
 		<textarea>설명 : ${detail.pinfo }</textarea>
 		
+		<c:if test="${login.uid eq 'admin' }">
 		<button class="btn-primary" onclick="location.href='update?pno=${detail.pno}'">수정</button>
 		<button onclick="location.href='delete?pno=${detail.pno}'">삭제</button>
-		<button onclick="location.href='list'">목록</button>
+		</c:if>
+		<button onclick="location.href='main'">목록</button>
+		
+	</div>
+	<br>
+	
+	
 	</div>
 	
-	
-</div>
+	<div id="replies"></div>	
+	<br>
+	<div>
+	<input type="hidden" id="newPno" value="${detail.pno }">
+	<input type="hidden" id="newWriter" value="${login.uname}">
+		댓글 내용 : <textarea name="replytext" id="newReplyText" ></textarea>
+	</div>
+
+	<button id="replyAddBtn" >댓글 추가</button>
+		
+	</div>
+
+<script type="text/javascript" src="resources/js/reply.js?ver=4"></script>

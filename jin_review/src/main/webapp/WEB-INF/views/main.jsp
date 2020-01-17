@@ -29,46 +29,59 @@
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
-  
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 
-<link rel="stylesheet" href="resources/css/upload.css" >
+<link rel="stylesheet" href="resources/css/upload.css">
 </head>
 <body>
 	<div>
 		<jsp:include page="include/header.jsp"></jsp:include>
 	</div>
-	<h1>URI : ${uri }
-		<a href="test">지도 테스트</a>
+	<h1>
+		URI : ${uri } <a href="test">지도 테스트</a>
 	</h1>
-	
+
 
 
 	<!-- Page Content -->
 	<div class="container">
 		<c:choose>
 			<c:when test="${login.uid eq 'admin'}">
-			<c:choose>
-				<c:when test="${uri == '/register' }">
-				<%@ include file="board/register.jsp"%>
-				</c:when>
-				<c:when test="${uri == '/detail' }">
-					<%@ include file="board/detail.jsp"%>
-				</c:when>
-				<c:when test="${uri == '/update' }">
-					<%@ include file="board/update.jsp"%>
-				</c:when>				
-				<c:otherwise>
-					<%@ include file="board/list.jsp" %>
-				</c:otherwise>
-			</c:choose>
+				<c:choose>
+					<c:when test="${uri == '/register' }">
+						<%@ include file="board/register.jsp"%>
+					</c:when>
+					<c:when test="${uri == '/detail' }">
+						<%@ include file="board/detail.jsp"%>
+					</c:when>
+					<c:when test="${uri == '/update' }">
+						<%@ include file="board/update.jsp"%>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="board/list.jsp"%>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<jsp:include page="include/container.jsp"></jsp:include>
+				<c:choose>
+					<c:when test="${uri == '/detail' }">
+						<%@ include file="board/detail.jsp"%>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="include/container.jsp"%>
+					</c:otherwise>
+				</c:choose>
+				
+				
+				
 			</c:otherwise>
 		</c:choose>
 		<c:if test="">

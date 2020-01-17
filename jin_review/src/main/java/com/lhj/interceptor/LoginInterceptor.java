@@ -34,7 +34,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			logger.info("new login success");
 			session.setAttribute(LOGIN, userVO); //세션에 회원 정보 저장
 			
-			response.sendRedirect("../list"); //로그인 성공한 후 메인으로 이동
+			response.sendRedirect("../main"); //로그인 성공한 후 메인으로 이동
 		}
 	}
 	

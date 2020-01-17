@@ -24,7 +24,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/ddf", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			HttpServletRequest req) {
 		/*
@@ -38,7 +38,7 @@ public class HomeController {
 		 * model.addAttribute("serverTime", formattedDate );
 		 */		
 		
-		return "index";
+		return "redirect:/main";
 	}
 	
 }

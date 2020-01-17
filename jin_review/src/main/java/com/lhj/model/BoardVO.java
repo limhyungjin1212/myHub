@@ -12,6 +12,9 @@ public class BoardVO {
 	private String pinfo;
 	private Date regdate;
 	private String place;
+	
+	private String filename;
+	
 	private String[] files;
 	
 	
@@ -64,10 +67,19 @@ public class BoardVO {
 	public void setPlace(String place) {
 		this.place = place;
 	}
+	
+	
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [pno=" + pno + ", pname=" + pname + ", pcate=" + pcate + ", ptel=" + ptel + ", pinfo=" + pinfo
-				+ ", regdate=" + regdate + ", place=" + place + ", files=" + Arrays.toString(files) + "]";
+				+ ", regdate=" + regdate + ", place=" + place + ", filename=" + filename + ", files="
+				+ Arrays.toString(files) + "]";
 	}
 	
 	

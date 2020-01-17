@@ -30,9 +30,6 @@
     var str ="";
     var p =0;
     $("#btn").on("click" , function(){
-    	
-    	
-    	
     	 $.getJSON("detailajax?pno="+pno , function(data){
     	    	$(data).each(
     	    		function(){

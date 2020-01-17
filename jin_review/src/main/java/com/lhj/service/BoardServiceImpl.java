@@ -68,4 +68,9 @@ public class BoardServiceImpl implements BoardService {
 		return bm.getAttach(pno);
 	}
 
+	@Override
+	public List<BoardVO> boardListAttach(Criteria cri) throws Exception {
+		return bm.boardListAttach(cri);
+	}
+
 }

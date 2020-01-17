@@ -69,4 +69,24 @@
 		select * from attach where pno = #{pno};
 	</select>
 	
+	
+	<select id="boardListAttach" resultType="com.lhj.model.BoardVO" >
+		select * from (select B.* , @rownum:=@rownum+1 as rownum from (
+		select 	p.pno, p.pname, p.pcate , p.pinfo, p.ptel , p.regdate , p.place,a.filename
+				from product_board p left join attach a on (p.pno = a.pno) join (select @rownum:=0) as R 
+						<include refid="keyword"></include>
+						) 
+                        as B
+                order by B.pno desc) as C 
+			<![CDATA[
+			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
+		]]> 
+	</select>
+	
+	
+	
+	
+	
+	
+	
 </mapper>

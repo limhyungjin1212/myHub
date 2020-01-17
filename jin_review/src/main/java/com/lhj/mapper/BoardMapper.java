@@ -24,6 +24,9 @@ public interface BoardMapper {
 	public void addAttach(String filename) throws Exception;
 	
 	//게시판 상세보기 파일 불러오기
-		public List<String> getAttach(int pno) throws Exception;
+	public List<String> getAttach(int pno) throws Exception;
 	
+	//메인페이지 이미지랑 글 불러오기
+	public List<BoardVO> boardListAttach(Criteria cri) throws Exception;
+		
 }

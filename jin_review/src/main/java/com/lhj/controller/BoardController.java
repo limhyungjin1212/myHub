@@ -37,16 +37,17 @@ public class BoardController {
 		logger.info("boardListGet..");
 		
 	}
-	@RequestMapping(value="/", method = RequestMethod.GET)
+	@RequestMapping(value="/main", method = RequestMethod.GET)
 	public String index(BoardVO boardVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
-		logger.info("index..");
+		logger.info("index.."+cri);
 		//List<BoardVO> list = boardService.boardList(); 
-		
+		logger.info("22.."+cri);
 		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
 				
-		model.addAttribute("list",boardService.boardListPage(cri));
+
+		model.addAttribute("list",boardService.boardListAttach(cri));
 		model.addAttribute("page",pv);
-		model.addAttribute("attach",boardService.getAttach(boardVO.getPno()));
+		logger.info(""+boardService.boardListAttach(cri));
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
 		
@@ -93,7 +94,7 @@ public class BoardController {
 	public String detailGet(HttpServletRequest req,@RequestParam int pno,Model model) throws Exception {
 		logger.info("detail"+pno);
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
-		
+		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
 		model.addAttribute("detail",boardService.boardDetail(pno));
 		
 		return "main";
@@ -106,8 +107,6 @@ public class BoardController {
 		
 		logger.info("pno="+pno);
 		logger.info("상세보기"+boardService.getAttach(pno));
-		
-		
 		
 		return boardService.getAttach(pno);
 	}

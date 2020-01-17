@@ -65,4 +65,10 @@ public class BoardMapperImpl implements BoardMapper {
 			List list = session.selectList(namespace+".getAttach",pno);
 			return list;
 		}
+
+		@Override
+		public List<BoardVO> boardListAttach(Criteria cri) throws Exception {
+			List<BoardVO> list = session.selectList(namespace+".boardListAttach",cri);
+			return list;
+		}
 }
