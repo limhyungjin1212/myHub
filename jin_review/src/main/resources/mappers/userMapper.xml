@@ -5,7 +5,11 @@
 <mapper namespace="com.lhj.mapper.UserMapper">
 
 	<select resultType="com.lhj.model.UserVO" id="login">
-		select uid,upw, uname from user where uid = #{uid} and upw = #{upw}
+		select uid,upw, uname from tbl_user where uid = #{uid} and upw = #{upw}
 	</select>
+
+	<insert id="join" >
+		insert into tbl_user values(#{uid},#{upw},#{uname},#{umail},#{gender});
+	</insert>
 
 </mapper>

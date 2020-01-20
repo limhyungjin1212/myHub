@@ -12,10 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-@RunWith(SpringJUnit4ClassRunner.class) //ÄÄÆÄÀÏÇÒ¶§ ½ºÇÁ¸µ¿¡¼­¸¸µç Å¬·¡½ºµµ °°ÀÌ ½ÇÇà ½ÃÄÑ¶ó
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml") //context È¯°æ¼³Á¤ÀÌ ¾îµð¿¡ÀÖ´ÂÁö ÀÎ½Ä ½ÃÄÑÁÖ±âÀ§ÇØ
+@RunWith(SpringJUnit4ClassRunner.class) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ¶ï¿½
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml") //context È¯ï¿½æ¼³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½
 public class ConnectionPoolTest {
-	@Autowired //Ã£¾ÆºÁ root-context¿¡ bean id = dataSource ÇØÁØ°É Ã£¾ÆÁÖ´Âµí?? 
+	@Autowired //Ã£ï¿½Æºï¿½ root-contextï¿½ï¿½ bean id = dataSource ï¿½ï¿½ï¿½Ø°ï¿½ Ã£ï¿½ï¿½ï¿½Ö´Âµï¿½?? 
 	//DataSource dataSource = new DataSource();
 	private DataSource dataSource;
 	

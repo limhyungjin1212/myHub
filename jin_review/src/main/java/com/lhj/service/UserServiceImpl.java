@@ -17,5 +17,10 @@ public class UserServiceImpl implements UserService {
 	public UserVO login(LoginVO lvo) throws Exception {
 		return um.login(lvo);
 	}
+
+	@Override
+	public void join(UserVO uvo) throws Exception {
+		um.join(uvo);
+	}
 	
 }

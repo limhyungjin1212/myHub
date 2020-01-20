@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhj.mapper.BoardMapper">
+	<select id="boardList" resultType="com.lhj.model.BoardVO">
+		select * from product_board
+	</select>
+
+	<insert id="boardWrite">
+		insert into product_board(pname,pcate,ptel,pinfo,place) 
+		values(#{pname},#{pcate},#{ptel},#{pinfo},#{place})
+	</insert>
+
+
+	<!-- 전체 게시글 갯수  -->
+	<select id="boardCount" resultType="int">
+		select count(*) from product_board
+		<!-- <if test="keyword !=null">
+			where subject like concat('%',#{keyword},'%')
+		</if> -->
+		<include refid="keyword"></include>			
+	</select>
+<sql id="keyword">
+		<if test="keyword != null">
+				where pname like concat('%',trim(#{keyword}),'%')
+				</if>
+</sql>
+	<!-- rownum을 이용한 페이징  -->
+	<select id="boardListPage" resultType="com.lhj.model.BoardVO">
+		select pno , pname, pcate ,ptel, pinfo , regdate
+			from (
+				select @rownum:=@rownum+1 as rownum , pno, pname, pcate , pinfo, ptel , regdate
+				from (select @rownum:=0) as rownum , product_board
+				<!-- <if test="keyword != null">
+				where subject like concat('%',trim(#{keyword}),'%')
+				</if> -->
+				<include refid="keyword"></include>
+				order by pno desc
+			) product_board 
+				<![CDATA[
+			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
+		]]>
+	</select>
+	
+	<!-- 상세보기  -->
+	<select id="boardDetail" resultType="com.lhj.model.BoardVO">
+		select * from product_board where pno = #{pno}
+	</select>
+	
+	<!-- 수정  -->
+	<update id="boardUpdate">
+		update product_board set pcate = #{pcate}, ptel = #{ptel} , pinfo = #{pinfo} where pno = #{pno}	
+	</update>
+	
+	
+	<!-- 삭제  -->
+	<delete id="boardDelete">
+		delete from product_board where pno = #{pno}
+	</delete>
+	
+	<!--게시판 파일 업로드  -->
+	<insert id="addAttach">
+		insert into attach(filename,pno) values (#{filename},LAST_INSERT_ID())
+	</insert>
+	
+	
+	<select id="getAttach" resultType="string">
+		select * from attach where pno = #{pno};
+	</select>
+	
+	
+	<select id="boardListAttach" resultType="com.lhj.model.BoardVO" >
+		select * from (select B.* , @rownum:=@rownum+1 as rownum from (
+		select 	p.pno, p.pname, p.pcate , p.pinfo, p.ptel , p.regdate , p.place,a.filename
+				from product_board p left join attach a on (p.pno = a.pno) join (select @rownum:=0) as R 
+						<include refid="keyword"></include>
+						) 
+                        as B
+                order by B.pno desc) as C 
+			<![CDATA[
+			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
+		]]> 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+</mapper>
