@@ -65,14 +65,14 @@ public class ReplyController {
 	
 	
 	/* 댓글 수정 */
-	@RequestMapping(value="/{pno}", method= {RequestMethod.PUT ,RequestMethod.PATCH })
-	public ResponseEntity<String> update(@PathVariable("pno") int pno , @RequestBody ReviewVO rv){
+	@RequestMapping(value="/{rno}", method= {RequestMethod.PUT ,RequestMethod.PATCH })
+	public ResponseEntity<String> update(@PathVariable("rno") int rno , @RequestBody ReviewVO rv){
 		
-		logger.info("ReviewVO :"+rv);
+		logger.info("ReviewVO :"+rno);
 		ResponseEntity<String> entity = null;
 		
 		try {
-			rv.setRno(pno);
+			rv.setRno(rno);
 			rs.repModify(rv);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
@@ -84,14 +84,14 @@ public class ReplyController {
 	}
 	
 	/* 댓글 삭제 */
-	@RequestMapping(value="/{pno}", method= RequestMethod.DELETE)
-	public ResponseEntity<String> remove(@PathVariable("pno") int pno){
+	@RequestMapping(value="/{rno}", method= RequestMethod.DELETE)
+	public ResponseEntity<String> remove(@PathVariable("rno") int rno){
 		
-		logger.info("ReviewVO :"+pno);
+		logger.info("ReviewVO :"+rno);
 		ResponseEntity<String> entity = null;
 		
 		try {
-			rs.repDel(pno);
+			rs.repDel(rno);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

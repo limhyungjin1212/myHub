@@ -29,18 +29,34 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		
 		Object userVO = modelAndView.getModel().get("userVO");
+		
+		
 		System.out.println("userVO="+userVO);
+		
+		String uri = (String) request.getAttribute("uri");
+		System.out.println("로그인한후"+uri);
 		if(userVO !=null) { //사용자의 정보가 있다면 HttpSession에 로그인 처리
 			logger.info("new login success");
 			session.setAttribute(LOGIN, userVO); //세션에 회원 정보 저장
 			
-			response.sendRedirect("../main"); //로그인 성공한 후 메인으로 이동
+			if(uri !=null ) { //받아온 uri 가 null이 아닐경우 
+				response.sendRedirect("../"+uri);
+			} else {
+				response.sendRedirect("../main");//로그인 성공한 후 메인으로 이동
+			}
 		}
+		
+		
 	}
 	
 	//로그인 하기 전
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
+		
+		String uri = request.getParameter("uri");
+		System.out.println("uri="+uri);
+		request.setAttribute("uri", uri);
+		
 		HttpSession session = request.getSession();
 		if(session.getAttribute(LOGIN) !=null) { //기존에 로그인 했엇다면 로그인 정보 삭제
 			logger.info("clear login data before");

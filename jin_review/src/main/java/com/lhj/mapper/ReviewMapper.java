@@ -16,7 +16,7 @@ public interface ReviewMapper {
 		public void repModify(ReviewVO rv) throws Exception;
 		
 		//댓글 삭제
-		public void repDel(int pno) throws Exception;
+		public void repDel(int rno) throws Exception;
 		
 		//댓글 조회 페이징
 		public List<ReviewVO> repListPage(int bno,Criteria cri) throws Exception;

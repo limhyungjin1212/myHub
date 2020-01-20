@@ -30,14 +30,12 @@ public class ReviewMapperImpl implements ReviewMapper {
 
 	@Override
 	public void repModify(ReviewVO rv) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+			session.update(namespace+".repModify",rv);
+		}
 
 	@Override
-	public void repDel(int pno) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void repDel(int rno) throws Exception {
+		session.delete(namespace+".repDel",rno);
 	}
 
 	@Override

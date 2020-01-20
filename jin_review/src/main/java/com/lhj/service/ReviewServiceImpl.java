@@ -27,14 +27,12 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public void repModify(ReviewVO rv) throws Exception {
-		// TODO Auto-generated method stub
-		
+		rm.repModify(rv);
 	}
 
 	@Override
-	public void repDel(int pno) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void repDel(int rno) throws Exception {
+		rm.repDel(rno);
 	}
 
 	@Override

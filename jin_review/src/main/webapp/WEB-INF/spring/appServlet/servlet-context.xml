@@ -40,10 +40,10 @@
 			<mapping path="/user/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
-		<interceptor>
-			<mapping path="../replies" />
+		<!-- <interceptor>
+			<mapping path="/replies" />
 			<beans:ref bean="authInterceptor" />
-		</interceptor> 
+		</interceptor>  -->
 	</interceptors>
 	
 	<context:component-scan base-package="com.lhj.controller" />

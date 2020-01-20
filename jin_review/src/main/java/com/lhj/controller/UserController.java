@@ -39,27 +39,31 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public void loginGet() {
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginGet() {
 		logger.info("loginGet..");
 
+		return "user/login";
 	}
 
 	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
-	public void loginPost(LoginVO lvo, Model model) throws Exception {
+	public String loginPost(LoginVO lvo, Model model,RedirectAttributes rttr) throws Exception {
 		logger.info("loginPost..");
 		UserVO uv = us.login(lvo);
 		logger.info("loginPost" + uv);
 		if (uv == null) {
-			return;
+			rttr.addFlashAttribute("msg","fail");
+			return "redirect:login";
 		}
 		model.addAttribute("userVO", uv);
 		
+		return "user/loginPost";
 	}
 
 	@RequestMapping("logout")
 	public String logoutGet(HttpSession session) throws Exception {
 		logger.info("logout");
+		session.removeAttribute("login");
 		session.invalidate();
 		return "redirect:/";
 
