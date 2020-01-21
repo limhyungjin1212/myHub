@@ -5,7 +5,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="">JinsReview</a>
+		<a class="navbar-brand" href="main">JinsReview</a>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -24,7 +24,7 @@
 		
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Home
+				<li class="nav-item active"><a class="nav-link" href="main">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item active" ><a class="nav-link" href="#">About</a></li>

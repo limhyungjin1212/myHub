@@ -1,6 +1,8 @@
 package com.lhj.mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +73,20 @@ public class BoardMapperImpl implements BoardMapper {
 			List<BoardVO> list = session.selectList(namespace+".boardListAttach",cri);
 			return list;
 		}
+
+		@Override
+		public void deleteAttach(int pno) throws Exception {
+			session.delete(namespace+".deleteAttach",pno);
+		}
+
+		@Override
+		public void replaceAttach(String filename, int pno) throws Exception {
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("filename", filename);
+			param.put("pno", pno);
+			
+			session.insert(namespace+".replaceAttach",param);
+		}
+
 }

@@ -36,15 +36,14 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewVO> repListPage(int bno, Criteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReviewVO> repListPage(int pno, Criteria cri) throws Exception {
+		List list = rm.repListPage(pno, cri);
+		return list;
 	}
 
 	@Override
 	public int repCount(int pno) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return rm.repCount(pno);
 	}
 	
 }

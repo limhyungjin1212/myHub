@@ -30,16 +30,17 @@
 	<!-- 댓글 페이징처리  -->
 	<select id="repListPage" resultType="com.lhj.model.ReviewVO">
 		select *
-		from (select @rownum:=@rownum+1 as rownum , rno , bno, replytext,replyer, regdate , updatedate
-		from (select @rownum:=0) as rownum , tbl_reply
-		where  bno=#{bno} 
+		from (select @rownum:=@rownum+1 as rownum ,rno , pno, content,writer, regdate 
+		from (select @rownum:=0) as rownum , review
+		where  pno=#{pno} 
 		order by rno desc
-		) tbl_reply
+		) review
 				<![CDATA[
-			where rownum >(#{cri2.pageNum}-1)*#{cri2.amount} and rownum<=#{cri2.amount}*#{cri2.pageNum} 
+			where rownum >(#{cri.pageNum}-1) * #{cri.amount} and rownum<= #{cri.amount} * #{cri.pageNum} 
 		]]>
 	</select>
 
+	<!--댓글 총 갯수  -->
 	<select id="repCount" resultType="int">
 		select count(*) from review where pno = #{pno}
 	</select>

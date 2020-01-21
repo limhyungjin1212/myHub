@@ -35,7 +35,7 @@ public class UserController {
 		logger.info("joinPost.." + uvo);
 		us.join(uvo);
 		rttr.addFlashAttribute("msg","wsuccess");
-		return "redirect:../";
+		return "redirect:/user/login";
 
 	}
 

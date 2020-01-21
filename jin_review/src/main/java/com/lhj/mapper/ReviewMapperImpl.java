@@ -1,6 +1,8 @@
 package com.lhj.mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +41,21 @@ public class ReviewMapperImpl implements ReviewMapper {
 	}
 
 	@Override
-	public List<ReviewVO> repListPage(int bno, Criteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReviewVO> repListPage(int pno, Criteria cri) throws Exception {
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("pno", pno);
+		param.put("cri", cri);
+		
+		List pagelist = session.selectList(namespace+".repListPage",param);
+		System.out.println("pagelist="+pagelist);
+		return pagelist;
 	}
 
 	@Override
 	public int repCount(int pno) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int cnt = session.selectOne(namespace+".repCount",pno); 
+		return cnt;
 	}
 
 }

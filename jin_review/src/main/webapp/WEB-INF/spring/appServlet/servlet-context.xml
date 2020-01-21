@@ -40,6 +40,10 @@
 			<mapping path="/user/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
+		<interceptor>
+			<mapping path="/list" />
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
 		<!-- <interceptor>
 			<mapping path="/replies" />
 			<beans:ref bean="authInterceptor" />

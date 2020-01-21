@@ -19,7 +19,7 @@ public interface ReviewMapper {
 		public void repDel(int rno) throws Exception;
 		
 		//댓글 조회 페이징
-		public List<ReviewVO> repListPage(int bno,Criteria cri) throws Exception;
+		public List<ReviewVO> repListPage(int pno,Criteria cri) throws Exception;
 		
 		//댓글 총 갯수
 		public int repCount(int pno) throws Exception;

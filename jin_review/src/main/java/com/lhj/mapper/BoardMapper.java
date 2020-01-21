@@ -28,5 +28,13 @@ public interface BoardMapper {
 	
 	//메인페이지 이미지랑 글 불러오기
 	public List<BoardVO> boardListAttach(Criteria cri) throws Exception;
-		
+	
+	//파일 삭제
+	public void deleteAttach(int pno) throws Exception;
+	
+	//파일 등록(수정시)
+	public void replaceAttach(String filename , int pno) throws Exception;
+	
+	
+	
 }

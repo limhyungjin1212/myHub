@@ -101,7 +101,6 @@ $(".fileDrop").on("dragenter dragover",function(event){
 	}); //small click end
 	$("#registerForm").submit(function(event){
 		event.preventDefault();
-		
 		var that = $(this);
 		
 		var str = "";
@@ -120,18 +119,11 @@ $(".fileDrop").on("dragenter dragover",function(event){
 		var sv = $(this).val();
 		console.log(sv);
 		if(sv == "제품"){
-			 
+			 $("#map").hide();
+		} else{
+			 $("#map").show();
 		}
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	function initMap() {
@@ -203,7 +195,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 
         // Sets a listener on a radio button to change the filter type on Places
         // Autocomplete.
-       /* function setupClickListener(id, types) {
+      /*function setupClickListener(id, types) {
           var radioButton = document.getElementById(id);
           radioButton.addEventListener('click', function() {
             autocomplete.setTypes(types);

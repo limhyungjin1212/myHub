@@ -13,7 +13,7 @@ public class BoardVO {
 	private Date regdate;
 	private String place;
 	
-	private String filename;
+	private String fn;
 	
 	private String[] files;
 	
@@ -69,17 +69,17 @@ public class BoardVO {
 	}
 	
 	
-	public String getFilename() {
-		return filename;
+	public String getFn() {
+		return fn;
 	}
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setFn(String fn) {
+		this.fn = fn;
 	}
 	@Override
 	public String toString() {
 		return "BoardVO [pno=" + pno + ", pname=" + pname + ", pcate=" + pcate + ", ptel=" + ptel + ", pinfo=" + pinfo
-				+ ", regdate=" + regdate + ", place=" + place + ", filename=" + filename + ", files="
-				+ Arrays.toString(files) + "]";
+				+ ", regdate=" + regdate + ", place=" + place + ", fn=" + fn + ", files=" + Arrays.toString(files)
+				+ "]";
 	}
 	
 	

@@ -103,26 +103,28 @@ public class ReplyController {
 	
 	
 	/* 댓글 페이징 목록 */
-	@RequestMapping(value = "/{bno}/{pageNum}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> listPage(@PathVariable("bno") int bno
-							,@PathVariable("pageNum") int pageNum) {
+	@RequestMapping(value = "/{pno}/{page}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> listPage(@PathVariable("pno") int pno
+							,@PathVariable("page") int page) {
 
-		logger.info("ReplyPage :" + bno+pageNum);
+		logger.info("ReplyPage :" + pno+"/"+page);
 		ResponseEntity<Map<String, Object>> entity = null;
 
 		try {
 			Criteria cri = new Criteria();
-			cri.setPageNum(pageNum);
+			cri.setPageNum(page);
 
-			int cnt = rs.repCount(bno);
+			
+			int cnt = rs.repCount(pno);
+			logger.info("cnt="+cnt);
 			
 			PageVO pv = new PageVO(cri, cnt);
-			List<ReviewVO> pagelist = rs.repListPage(bno, cri);
-			
+			List<ReviewVO> pagelist = rs.repListPage(pno, cri);
+			logger.info("pagelist="+pagelist);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", pagelist);
-			map.put("pv", pv);
+			map.put("page", pv);
 			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 			logger.info("entity = "+entity);

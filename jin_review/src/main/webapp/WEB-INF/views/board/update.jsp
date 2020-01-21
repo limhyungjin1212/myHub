@@ -19,6 +19,27 @@
 			$(".attach").append(str);
 
 		});
+		
+		//small 태그를 클릭
+		$(".uploadedList").on("click","small",function(event){
+			var that = $(this);
+			$.ajax({
+				url:"deleteFile",
+				type:"post",
+				data: {fileName:$(this).attr("data-src")},
+				dataType:"text",
+				success:function(result){
+					if(result == 'deleted'){
+						alert("deleted");
+						that.parent("div").remove();
+					}
+				}
+			})
+			
+			
+		}); //small click end
+		
+		
 		// This example requires the Places library. Include the libraries=places
 		// parameter when you first load the API. For example:
 		// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
@@ -164,6 +185,8 @@
 						id="place-name" class="title"></span><br> <span
 						id="place-address"></span>
 				</div>
+				
+				
 				<div class="attach"></div>
 
 

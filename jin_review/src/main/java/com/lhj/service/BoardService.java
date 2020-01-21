@@ -32,5 +32,7 @@ public interface BoardService {
 	public List<String> getAttach(int pno) throws Exception;
 	
 	//메인페이지 이미지랑 글 불러오기
-		public List<BoardVO> boardListAttach(Criteria cri) throws Exception;
+	public List<BoardVO> boardListAttach(Criteria cri) throws Exception;
+	
+		
 }

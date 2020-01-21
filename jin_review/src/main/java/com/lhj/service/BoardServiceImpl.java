@@ -38,13 +38,28 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	@Transactional
 	@Override
 	public void boardUpdate(BoardVO board) throws Exception {
 		bm.boardUpdate(board);
+		
+		int pno = board.getPno();
+		
+		bm.deleteAttach(pno);
+		
+		String[] files = board.getFiles();
+		if(files == null) {
+			return;
+		}
+		for(String filename : files) {
+			bm.replaceAttach(filename, pno);
+		}
 	}
 
+	@Transactional
 	@Override
 	public void boardDelete(int pno) throws Exception {
+		bm.deleteAttach(pno);
 		bm.boardDelete(pno);
 	}
 
@@ -72,5 +87,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardListAttach(Criteria cri) throws Exception {
 		return bm.boardListAttach(cri);
 	}
+
+	
+	
+	
+	
 
 }

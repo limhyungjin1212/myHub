@@ -1,5 +1,6 @@
 package com.lhj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,9 +45,14 @@ public class BoardController {
 		logger.info("22.."+cri);
 		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
 				
-
-		model.addAttribute("list",boardService.boardListAttach(cri));
+		List list = new ArrayList();
+		list = boardService.boardListAttach(cri);
+		logger.info("");
+		model.addAttribute("list", list);
+		
 		model.addAttribute("page",pv);
+		
+		
 		logger.info(""+boardService.boardListAttach(cri));
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
@@ -86,7 +92,7 @@ public class BoardController {
 		boardService.boardWrite(board);
 		rttr.addFlashAttribute("msg","wsuccess");
 		
-		return "redirect:list";
+		return "redirect:main";
 	}
 	
 	

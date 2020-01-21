@@ -6,6 +6,8 @@ public class ReviewVO {
 	private int pno,rno;
 	private String content , writer;
 	private Date regdate;
+	
+	
 	public int getPno() {
 		return pno;
 	}

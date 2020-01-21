@@ -6,29 +6,46 @@
 
 		
 
-	   var str2="";
-  	var pno = document.getElementById("newPno").value;
-  	function getAllList(){
-  		$.getJSON("replies/all/"+pno , function(data){
-  			console.log(data.length);
-  			$(data).each(
-  				function(){
-  					str2 += "<li data-rno='"+this.rno+"' class='replyLi'>" 
-  						+this.pno + ":" +"<span>"+  this.content+"</span>"
-  					/*+"<input type='button' value='수정'></li>";*/
-  						/*+"<c:if test = '"${login.uname eq admin }"'>"*/ 
-  						+"<button>수정</button></li>" +
-  								"</c:if>";
-  				});
-  			
-  			$("#replies").html(str2);
-  			str2="";
-  		});
-  	}
+	 
 	//	
 $(document).ready(function(){
-	getAllList();
+	
+	
 
+	var pct = $(".pcate").text();
+	console.log(pct);
+	if(pct == '제품'){
+		$("#map").hide();
+	}
+	/*//이미지 사이즈 조정
+	
+	$('.thumbnail').each(function() {
+			    var maxWidth = 500; // Max width for the image
+			    var maxHeight = 300;    // Max height for the image
+			    var ratio = 0;  // Used for aspect ratio
+			    var width = $(this).width();    // Current image width
+			    var height = $(this).height();  // Current image height
+			  
+			    // Check if the current width is larger than the max
+			    if(width > maxWidth){
+			        ratio = maxWidth / width;   // get ratio for scaling image
+			        $(this).css("width", maxWidth); // Set new width
+			        $(this).css("height", height * ratio);  // Scale height based on ratio
+			        height = height * ratio;    // Reset height to match scaled image
+			    }
+			  
+			    var width = $(this).width();    // Current image width
+			    var height = $(this).height();  // Current image height
+			  
+			    // Check if current height is larger than max
+			    if(height > maxHeight){
+			        ratio = maxHeight / height; // get ratio for scaling image
+			        $(this).css("height", maxHeight);   // Set new height
+			        $(this).css("width", width * ratio);    // Scale width based on ratio
+			        width = width * ratio;    // Reset width to match scaled image
+			    }
+	});*/
+	
 	//댓글쓰기 버튼 클릭 start
 	$("#replyAddBtn").on("click",function(){
 		var pno = $("#newPno").val();

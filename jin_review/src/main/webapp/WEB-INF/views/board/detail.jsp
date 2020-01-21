@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <style>
 #map {
 	width: 100%;
@@ -11,6 +12,11 @@
 #reply {
 	background-color: grey;
 }
+
+.replyLi{
+	background-color: grey;
+}
+
 </style>
 <div>
 	<script>
@@ -25,14 +31,11 @@
 	}
 	
 		var str = "";
-		var pno = $
-		{
-			detail.pno
-		};
+		var pno = ${detail.pno};
 		$.getJSON("detailJSON?pno=" + pno, function(data) {
 			console.log(data);
 			$(data).each(function() {
-				str = "<img src='displayFile?fileName=" + data + "'/>";
+				str = "<img class ='thumbnail' src='displayFile?fileName=" + data + "'/>";
 			});
 
 			$(".attach").append(str);
@@ -57,7 +60,7 @@
 			});
 
 			var request = {
-				query : '${detail.place}',
+				query :	'${detail.place}',
 				fields : [ 'name', 'geometry' ],
 			};
 
@@ -88,15 +91,13 @@
 	</script>
 
 
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&libraries=places&callback=initMap"
-		async defer></script>
+	<script	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&libraries=places&callback=initMap"	async defer></script>
 	<div id="map"></div>
 	<div class="attach"></div>
 	<div class="row text-center">
 		<table class="w3-table-all" border="1">
 			<tr>
-				<td>분류 : ${detail.pcate }</td>
+				<td class="pcate">${detail.pcate }</td>
 				<td>이름 : ${detail.pname }</td>
 			</tr>
 			<tr>
@@ -121,11 +122,72 @@
 
 	</div>
 
-
-	<ul id="replies"></ul>
-
-	<br> <input type="hidden" id="newPno" value="${detail.pno }">
-
+	<div class="reviewBox">
+	<ul id="replies" class="w3-ul w3-border"></ul>
+	</div>
+	<br> 
+	
+	<ul class="pagination"></ul>
+	<input type="hidden" id="newPno" value="${detail.pno }">
+	<input type="hidden" id="loginfo" value="${login.uname}">
+	<script>
+	  var str2="";
+  	var pno = document.getElementById("newPno").value;
+  	var loginfo =document.getElementById("loginfo").value;
+  	
+  	function getPageList(page){
+  		$.getJSON("replies/"+pno+"/"+page,function(data){
+  			console.log(data.length);
+  			var str2 = "";
+  			$(data.list).each(function(){
+  				str2 += "<li data-rno='"+this.rno+"' class='replyLi'>" 
+					+this.writer + "<br>" +"<span>"+  this.content+"<br><i class='far fa-star'></i> </span>";
+					
+				if(loginfo == this.writer){
+					str2+="<button>수정</button></li>";
+					} else{
+						str2+="</li>";
+					}
+  			});
+  			$("#replies").html(str2);
+  			
+  			printPaging(data.page);
+  			
+  		});
+  	}
+  	
+  	function printPaging(page){
+  		
+  		var str3="";
+  		
+  		if(page.prev){
+  			str3 += "<li><a href='"+(page.startPage-1)+"' > [이전] </a></li> ";
+  		}
+  		
+  		for(var i=page.startPage , len = page.endPage; i<=len; i++){
+  			var strClass = page.cri.page == i ? 'class=active' : '';
+  			str3 += "<li "+strClass+"><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+  		}
+  		if(page.next){
+  			str3 += "<li><a class='page-link' href='"+(page.endPage+1)+"' > [다음] </a></li> ";
+  		}
+  		$('.pagination').html(str3);
+  	}
+  	
+  	var replyPage = 1;
+  	$(".pagination").on("click", "li a",function(event){
+  		event.preventDefault(); //<a href=""> 태그의 기본동작인 페이지 전환을 막는 역할을 한다. 
+  		
+  		replyPage = $(this).attr("href"); //이동을 막고 현재 클릭된 페이지의 번호를 얻어내고. 리스트 호출
+  		
+  		getPageList(replyPage);
+  	});
+  	
+  	getPageList(1); //첫댓글은 1페이지.
+  	
+  	</script>
+	
+	
 	<c:choose>
 		<c:when test="${!empty login }">
 			<div>
@@ -196,5 +258,5 @@
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=65"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=62"></script>
 
