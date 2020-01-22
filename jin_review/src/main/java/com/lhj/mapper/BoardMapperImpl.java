@@ -27,7 +27,6 @@ public class BoardMapperImpl implements BoardMapper {
 	@Override
 	public void boardWrite(BoardVO board) throws Exception {
 		session.insert(namespace+".boardWrite",board);
-		
 	}
 
 	@Override

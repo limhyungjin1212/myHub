@@ -132,7 +132,7 @@ public class BoardController {
 		logger.info("updatePost..");
 		
 		boardService.boardUpdate(board);
-		rttr.addFlashAttribute("msg","wsuccess");
+		rttr.addFlashAttribute("msg","usuccess");
 		
 		return "redirect:detail?pno="+board.getPno()+"";
 	}
@@ -144,7 +144,7 @@ public class BoardController {
 		boardService.boardDelete(pno);
 		
 		rttr.addFlashAttribute("msg","dsuccess");
-		return "redirect:list";
+		return "redirect:main";
 	}
 	
 	

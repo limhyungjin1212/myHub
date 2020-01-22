@@ -33,7 +33,7 @@
       <span id="place-address"></span>
     </div>
 	<br>
-	내용 : <textarea rows="10" cols="20" name="pinfo"></textarea> <br>
+	내용 : <textarea class="form-control" rows="10" cols="20" name="pinfo"></textarea> <br>
 	연락처 : <input type="text" name="ptel"> <br>
 	 파일 : <input type="file" name="filename">
 	 

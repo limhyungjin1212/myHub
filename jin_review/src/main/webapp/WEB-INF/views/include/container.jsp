@@ -40,7 +40,7 @@
     <li data-target="#demo" data-slide-to="2"></li>
   </ul>
   
-  <!-- The slideshow -->
+  <%-- <!-- The slideshow -->
   <div class="carousel-inner">
   
     <div class="carousel-item active">
@@ -48,10 +48,11 @@
     </div>
     <c:forEach items="${list }" var="boardVO">
     <div class="carousel-item">
+    	<a href="#">크크</a>
       <img src='displayFile?fileName=${boardVO.fn}' alt="Chicago" width="300" height="200">
     </div>
     </c:forEach>
-  </div>
+  </div> --%>
   
   <!-- Left and right controls -->
   <a class="carousel-control-prev" href="#demo" data-slide="prev">

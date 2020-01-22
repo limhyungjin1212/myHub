@@ -58,4 +58,12 @@ public class ReviewMapperImpl implements ReviewMapper {
 		return cnt;
 	}
 
+	@Override
+	public void revAddAttach(String filename) throws Exception {
+		session.insert(namespace+"revAddAttach",filename);
+	}
+	
+	
+	
+
 }

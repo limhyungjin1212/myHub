@@ -23,4 +23,7 @@ public interface ReviewMapper {
 		
 		//댓글 총 갯수
 		public int repCount(int pno) throws Exception;
+		
+		//리뷰 쓸때 파일 업로드
+		public void revAddAttach(String filename) throws Exception;
 }

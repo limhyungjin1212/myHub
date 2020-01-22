@@ -1,5 +1,6 @@
 package com.lhj.model;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class ReviewVO {
@@ -7,6 +8,7 @@ public class ReviewVO {
 	private String content , writer;
 	private Date regdate;
 	
+	private String[] files;
 	
 	public int getPno() {
 		return pno;
@@ -38,10 +40,18 @@ public class ReviewVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	
+	
+	public String[] getFiles() {
+		return files;
+	}
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
 	@Override
 	public String toString() {
 		return "ReviewVO [pno=" + pno + ", rno=" + rno + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + "]";
+				+ regdate + ", files=" + Arrays.toString(files) + "]";
 	}
 	
 	

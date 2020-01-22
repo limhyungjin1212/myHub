@@ -41,8 +41,8 @@
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		<interceptor>
-			<mapping path="/list" />
-			<beans:ref bean="loginInterceptor" />
+			<mapping path="/detail/*" />
+			<beans:ref bean="authInterceptor" />
 		</interceptor>
 		<!-- <interceptor>
 			<mapping path="/replies" />

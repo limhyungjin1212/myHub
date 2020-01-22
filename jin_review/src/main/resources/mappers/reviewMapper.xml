@@ -45,7 +45,10 @@
 		select count(*) from review where pno = #{pno}
 	</select>
 
-
+	<!--리뷰 게시판 파일 업로드  -->
+	<insert id="revAddAttach">
+		insert into review_attach(filename,rno) values (#{filename},LAST_INSERT_ID())
+	</insert>
 
 
 </mapper>

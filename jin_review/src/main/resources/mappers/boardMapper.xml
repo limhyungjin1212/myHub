@@ -75,7 +75,7 @@
 		select 	p.pno, p.pname, p.pcate , p.pinfo, p.ptel , p.regdate , p.place,a.filename as fn
 				from product_board p left join attach a on (p.pno = a.pno) join (select @rownum:=0) as R 
 						<include refid="keyword"></include>
-						) 
+						group by p.pno ) 
                         as B
                 order by B.pno desc) as C 
 			<![CDATA[

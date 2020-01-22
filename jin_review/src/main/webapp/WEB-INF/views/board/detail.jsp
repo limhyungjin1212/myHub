@@ -29,18 +29,11 @@
 	} else if (result =='fail'){
 		alert('로그인 실패');
 	}
+	else if (result =='usuccess'){
+		alert('수정 완료');
+	}
 	
-		var str = "";
-		var pno = ${detail.pno};
-		$.getJSON("detailJSON?pno=" + pno, function(data) {
-			console.log(data);
-			$(data).each(function() {
-				str = "<img class ='thumbnail' src='displayFile?fileName=" + data + "'/>";
-			});
-
-			$(".attach").append(str);
-
-		});
+		
 		// This example requires the Places library. Include the libraries=places
 		// parameter when you first load the API. For example:
 		// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
@@ -114,7 +107,7 @@
 					onclick="location.href='update?pno=${detail.pno}'">수정</button>
 				<button onclick="location.href='delete?pno=${detail.pno}'">삭제</button>
 			</c:if>
-			<button onclick="location.href='main'">목록</button>
+		
 
 		</div>
 		<br>
@@ -128,11 +121,76 @@
 	<br> 
 	
 	<ul class="pagination"></ul>
-	<input type="hidden" id="newPno" value="${detail.pno }">
+	
 	<input type="hidden" id="loginfo" value="${login.uname}">
+	
+	
+	
+	<c:choose>
+		<c:when test="${!empty login }">
+			<div>
+			<form id="rvWrite" name="rvWrite">
+				<input type="hidden" name="writer" id="newWriter" value="${login.uname}">
+				<input type="hidden" name="pno" id="newPno" value="${detail.pno }">
+				리뷰
+				<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5" name="replytext" id="newReplyText"></textarea>
+				<div class="fileDrop">
+					<h1>여기다 파일을 끌어다 놓으세요.</h1>
+				</div>
+				<div class="rvUploadedlist">
+					
+				</div>
+				<button id="replyAddBtn" class="btn btn-primary">리뷰 등록</button>
+				</form>
+				
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div>
+				<h5>
+					리뷰 등록을 원하시면 로그인을 해주세요<a href="user/login?uri=">로그인하러가기</a>
+				</h5>
+			</div>
+
+			<button type="button" class="btn btn-primary" data-toggle="modal"
+				data-target="#myModal">로그인하러가기a</button>
+
+			<!-- The Modal -->
+			<div class="modal" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">Modal Heading</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<form action="user/loginPost" method="post">
+							<input type="hidden" name="uri" value='detail?pno=${detail.pno}&pageNum=1&keyword='>
+								<input class="w3-input w3-border" type="text" name="uid" placeholder="아이디">
+								<input class="w3-input w3-border" type="password" name="upw" placeholder="비밀번호" >
+								<input class="w3-input w3-border" type="submit" value="로그인">
+							</form>
+						</div>
+
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+		</c:otherwise>
+	</c:choose>
+	
 	<script>
 	  var str2="";
-  	var pno = document.getElementById("newPno").value;
+  	var pno = ${detail.pno};
   	var loginfo =document.getElementById("loginfo").value;
   	
   	function getPageList(page){
@@ -188,57 +246,7 @@
   	</script>
 	
 	
-	<c:choose>
-		<c:when test="${!empty login }">
-			<div>
-				<input type="hidden" id="newWriter" value="${login.uname}">
-				댓글 내용 :
-				<textarea name="replytext" id="newReplyText"></textarea>
-				<button id="replyAddBtn">댓글 추가g</button>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div>
-				<h5>
-					리뷰 등록을 원하시면 로그인을 해주세요<a href="user/login?uri=">로그인하러가기</a>
-				</h5>
-			</div>
-
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal">로그인하러가기</button>
-
-			<!-- The Modal -->
-			<div class="modal" id="myModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h4 class="modal-title">Modal Heading</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-
-						<!-- Modal body -->
-						<div class="modal-body">
-							<form action="user/loginPost" method="post">
-							<input type="hidden" name="uri" value='detail?pno=${detail.pno}&pageNum=1&keyword='>
-								<input class="w3-input w3-border" type="text" name="uid" placeholder="아이디">
-								<input class="w3-input w3-border" type="password" name="upw" placeholder="비밀번호" >
-								<input class="w3-input w3-border" type="submit" value="로그인">
-							</form>
-						</div>
-
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-						</div>
-
-					</div>
-				</div>
-			</div>
-
-
-		</c:otherwise>
-	</c:choose>
+		<button onclick="location.href='main'">목록</button>
 </div>
 
 <div id="modDiv">
@@ -254,9 +262,56 @@
 </div>
 
 <script>
+function checkImageType(fileName){
+	var pattern = /jpg|gif|png|jpeg/i;
+	var fn3 = new String(fileName);
+	return fn3.match(pattern);
+}
+
+function getImageLink(fileName){
+	if(!checkImageType(fileName)){
+		return;
+	} 
+	var fn2 = new String(fileName);
+	console.log(typeof(fileName));
+	var front = fn2.substring(0,12); //   /2020/01/07/
+	var end = fn2.substring(14);	//  7163ad49-a36d-4afe-bf82-e496526b4b40_coffee2.jpg 앞에 s_를 떼준다.
 	
+	
+	//alert("front"+front);
+	//alert("end"+end);
+	
+	return front+end;
+}
+
+function getOriginalName(fileName){
+	 if(checkImageType(fileName)){ //이미지 파일이면 skip
+         return;
+     }
+     
+     var idx=fileName.indexOf("_")+1; //uuid를 제외한 파일이름을 리턴함
+     return fileName.substr(idx);
+	/*alert("fileName :" + fileName);
+	return fileName;*/
+}
+	
+
+var str = "";
+var pno = ${detail.pno};
+$.getJSON("detailJSON?pno=" + pno, function(data) {
+	console.log(data.length);
+	$(data).each(function(index,data) {
+		//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
+		// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미합니다.
+		str += "<a href='#'>"+data+"</a><img class ='thumbnail' width='1000px' height='500px' src='displayFile?fileName="+getImageLink(data)+"'/>";
+		 	
+	});
+
+	$(".attach").append(str);
+
+});
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=62"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=64"></script>
 

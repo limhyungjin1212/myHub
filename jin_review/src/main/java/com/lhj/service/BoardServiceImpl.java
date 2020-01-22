@@ -52,6 +52,8 @@ public class BoardServiceImpl implements BoardService {
 			return;
 		}
 		for(String filename : files) {
+			System.out.println("수정시 재등록 파일네임="+filename);
+			System.out.println("수정시 재등록 pno="+pno);
 			bm.replaceAttach(filename, pno);
 		}
 	}

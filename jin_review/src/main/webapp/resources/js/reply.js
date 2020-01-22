@@ -17,54 +17,91 @@ $(document).ready(function(){
 	if(pct == '제품'){
 		$("#map").hide();
 	}
-	/*//이미지 사이즈 조정
+	$(".fileDrop").on("dragenter dragover",function(event){
+		event.preventDefault();
+	});
 	
-	$('.thumbnail').each(function() {
-			    var maxWidth = 500; // Max width for the image
-			    var maxHeight = 300;    // Max height for the image
-			    var ratio = 0;  // Used for aspect ratio
-			    var width = $(this).width();    // Current image width
-			    var height = $(this).height();  // Current image height
-			  
-			    // Check if the current width is larger than the max
-			    if(width > maxWidth){
-			        ratio = maxWidth / width;   // get ratio for scaling image
-			        $(this).css("width", maxWidth); // Set new width
-			        $(this).css("height", height * ratio);  // Scale height based on ratio
-			        height = height * ratio;    // Reset height to match scaled image
-			    }
-			  
-			    var width = $(this).width();    // Current image width
-			    var height = $(this).height();  // Current image height
-			  
-			    // Check if current height is larger than max
-			    if(height > maxHeight){
-			        ratio = maxHeight / height; // get ratio for scaling image
-			        $(this).css("height", maxHeight);   // Set new height
-			        $(this).css("width", width * ratio);    // Scale width based on ratio
-			        width = width * ratio;    // Reset width to match scaled image
-			    }
-	});*/
+	$(".fileDrop").on("drop",function(event){
+		event.preventDefault();
+		
+		var files = event.originalEvent.dataTransfer.files; //?
+		var file = files[0]; //?
+		//console.log(file);
+		
+		var formData = new FormData(); //FormData는 가상의 form태그 . 
+		
+		formData.append("file",file); //파일을 추가. 드래그앤드랍된 파일을 담는다.
+		
+		
+		$.ajax({
+			url:"uploadAjax",
+			data : formData,
+			dataType : 'text',
+			processData : false,
+			contentType : false,
+			type : "POST",
+			
+			success : function(data){
+				//console.log(data);
+				//alert(data);
+				//alert(checkImageType(data));
+				var str = "";
+				console.log(checkImageType(data));
+				if(checkImageType(data)){
+					str="<div>"
+						+"<a href=displayFile?fileName="+data+"><img src='displayFile?fileName="+data+"'/>"
+						+ "</a><small data-src="+data+">X</small>" +"</div>";
+				} else {
+					str = "<div><a href='displayFile?fileName="+data+"'>"
+						+getOriginalName(data) +"</a>" +
+						"<small data-src="+data+">X</small></div>";
+				}
+				
+				$(".rvUploadedlist").append(str);
+			}
+		});
+		});	//drop end
+	
+	
+	
 	
 	//댓글쓰기 버튼 클릭 start
-	$("#replyAddBtn").on("click",function(){
+	$("#replyAddBtn").on("click",function(event){
 		var pno = $("#newPno").val();
 		var writer = $("#newWriter").val();
 		var content = $("#newReplyText").val();
 		
+		
+		var str = "";
+		
+		$(".rvUploadedlist small").each(function(index){
+			str += "<input type='hidden' class='rvf' name='files["+index+"]' value='"+$(this).attr("data-src")+"' > ";
+		});
+		
+		$("#rvWrite").append(str);
+		
+		alert(str);
+		/*var files = {
+					"files[0]" = $(".rvf").val()
+				};*/
+			
+		alert(files);
 		$.ajax({
 			type : 'post',
 			url : 'replies',
 			contentType : "application/json",
 			dataType : 'text',
-			data : JSON.stringify({
+			data : 
+				JSON.stringify({
 				pno:pno , 
 				writer:writer, 
-				content : content
-				}),
+				content : content,
+				files : files
+				})
+				,
 			success:function(result){
 				if(result =='success'){
-					getAllList();
+					getPageList(replyPage);
 					$("#newReplyText").val("");
 				}
 			},
@@ -111,7 +148,7 @@ $(document).ready(function(){
 			success:function(data){
 				if(data == 'success'){
 					alert("수정 정상처리 됨");
-					getAllList();
+					getPageList(replyPage);
 				$("#modDiv").hide("slow");
 				}
 			},
@@ -132,7 +169,7 @@ $(document).ready(function(){
 				
 				if(data == 'success'){
 					alert("삭제 정상처리 됨");
-					getAllList();
+					getPageList(replyPage);
 					$("#modDiv").hide("slow");
 				}
 			},
