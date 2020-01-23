@@ -129,18 +129,16 @@
 	<c:choose>
 		<c:when test="${!empty login }">
 			<div>
-			<form id="rvWrite" name="rvWrite">
+			<form id="rvWrite" name="rvWrite" enctype="multipart/form-data">
 				<input type="hidden" name="writer" id="newWriter" value="${login.uname}">
 				<input type="hidden" name="pno" id="newPno" value="${detail.pno }">
 				리뷰
 				<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5" name="replytext" id="newReplyText"></textarea>
-				<div class="fileDrop">
-					<h1>여기다 파일을 끌어다 놓으세요.</h1>
-				</div>
+				<input type="file" id="files" name="filename">
 				<div class="rvUploadedlist">
 					
 				</div>
-				<button id="replyAddBtn" class="btn btn-primary">리뷰 등록</button>
+				<input type="submit" id="replyAddBtn" class="btn btn-primary" value="등록">
 				</form>
 				
 			</div>
@@ -264,24 +262,21 @@
 <script>
 function checkImageType(fileName){
 	var pattern = /jpg|gif|png|jpeg/i;
-	var fn3 = new String(fileName);
-	return fn3.match(pattern);
+	return fileName.match(pattern);
 }
 
 function getImageLink(fileName){
 	if(!checkImageType(fileName)){
 		return;
-	} 
-	var fn2 = new String(fileName);
-	console.log(typeof(fileName));
-	var front = fn2.substring(0,12); //   /2020/01/07/
-	var end = fn2.substring(14);	//  7163ad49-a36d-4afe-bf82-e496526b4b40_coffee2.jpg 앞에 s_를 떼준다.
+	}
+	var front = fileName.substr(0,12); //   /2020/01/07/
+	var end = fileName.substr(14);	//  7163ad49-a36d-4afe-bf82-e496526b4b40_coffee2.jpg 앞에 s_를 떼준다.
 	
 	
 	//alert("front"+front);
 	//alert("end"+end);
 	
-	return front+end;
+	return front + end;
 }
 
 function getOriginalName(fileName){
@@ -303,7 +298,7 @@ $.getJSON("detailJSON?pno=" + pno, function(data) {
 	$(data).each(function(index,data) {
 		//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
 		// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미합니다.
-		str += "<a href='#'>"+data+"</a><img class ='thumbnail' width='1000px' height='500px' src='displayFile?fileName="+getImageLink(data)+"'/>";
+		str += "<a href='#'>"+data+"</a><img class ='thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/>";
 		 	
 	});
 

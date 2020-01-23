@@ -44,7 +44,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 		
 		var files = event.originalEvent.dataTransfer.files; //?
 		var file = files[0]; //?
-		//console.log(file);
+		console.log(file);
 		
 		var formData = new FormData(); //FormData는 가상의 form태그 . 
 		
@@ -60,7 +60,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 			type : "POST",
 			
 			success : function(data){
-				//console.log(data);
+				console.log("data="+data);
 				//alert(data);
 				//alert(checkImageType(data));
 				var str = "";

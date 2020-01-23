@@ -30,7 +30,7 @@ public class UploadFileUtils {
 		// 원래 이름에서 확장자를 확인하기위해 .뒤를 탐색
 		// lastIndexOf : 문자열에서 탐색하는 문자열이 마지막으로 등장하는 위치에 대한 index를 반환
 		String formatName = originalName.substring(originalName.lastIndexOf(".") + 1);
-
+		
 		String uploadFileName = null;
 
 		if (MediaUtils.getMediaType(formatName) != null) { // 확장자를 확인해서 이미지이면
@@ -38,7 +38,7 @@ public class UploadFileUtils {
 		} else {
 			uploadFileName = makeIcon(uploadPath, savedPath, savedName); // 아니면 아이콘을 생성
 		}
-
+		System.out.println("업로드파일네임="+uploadFileName);
 		return uploadFileName;
 	}
 

@@ -1,5 +1,6 @@
 package com.lhj.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lhj.model.Criteria;
 import com.lhj.model.PageVO;
@@ -32,10 +34,9 @@ public class ReplyController {
 	/* 댓글 등록 */
 	@RequestMapping(value = "", method = RequestMethod.POST) // post는 등록
 	public ResponseEntity<String> register(@RequestBody ReviewVO rv) {
-
-		logger.info("ReviewVO :" + rv);
+		logger.info("댓글등록으로 오셧나요 ..?");
+		logger.info("댓글 등록할 데이터 =" + rv);
 		ResponseEntity<String> entity = null;
-
 		try {
 			rs.repWrite(rv);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
@@ -50,7 +51,7 @@ public class ReplyController {
 	/* 댓글 목록 */
 	@RequestMapping(value = "/all/{pno}", method = RequestMethod.GET)
 	public ResponseEntity<List> list(@PathVariable("pno") int pno) {
-
+		logger.info("댓글목록으로 오셧다.");
 		logger.info("ReviewVO :" + pno);
 		ResponseEntity<List> entity = null;
 

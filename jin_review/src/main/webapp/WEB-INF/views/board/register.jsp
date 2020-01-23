@@ -43,6 +43,6 @@
 	<div class="uploadedList"></div>
 </form>
 </div>
-<script type="text/javascript" src="resources/js/upload.js?ver=11"></script>
+<script type="text/javascript" src="resources/js/upload.js?ver=123"></script>
  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&libraries=places&callback=initMap"
         async defer></script>

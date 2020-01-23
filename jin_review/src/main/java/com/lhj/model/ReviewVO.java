@@ -2,6 +2,9 @@ package com.lhj.model;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class ReviewVO {
 	private int pno,rno;
@@ -9,6 +12,8 @@ public class ReviewVO {
 	private Date regdate;
 	
 	private String[] files;
+	
+	
 	
 	public int getPno() {
 		return pno;
@@ -40,7 +45,6 @@ public class ReviewVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	
 	
 	public String[] getFiles() {
 		return files;

@@ -17,21 +17,15 @@ $(document).ready(function(){
 	if(pct == '제품'){
 		$("#map").hide();
 	}
-	$(".fileDrop").on("dragenter dragover",function(event){
-		event.preventDefault();
-	});
 	
-	$(".fileDrop").on("drop",function(event){
-		event.preventDefault();
-		
-		var files = event.originalEvent.dataTransfer.files; //?
-		var file = files[0]; //?
-		//console.log(file);
-		
-		var formData = new FormData(); //FormData는 가상의 form태그 . 
-		
-		formData.append("file",file); //파일을 추가. 드래그앤드랍된 파일을 담는다.
-		
+	 $("#files").change(function(event){
+		 
+		//var files = event.originalEvent.dataTransfer.files; //?
+		var file = $("#files")[0].files[0]; //?
+		alert($("#files")[0].files[0]);
+	   	var formData = new FormData(); //FormData는 가상의 form태그 . 
+		formData.append("file",file); //파일을 추가. 드래그앤드랍된 파일을 담는다.  
+		alert(file);
 		
 		$.ajax({
 			url:"uploadAjax",
@@ -49,7 +43,7 @@ $(document).ready(function(){
 				console.log(checkImageType(data));
 				if(checkImageType(data)){
 					str="<div>"
-						+"<a href=displayFile?fileName="+data+"><img src='displayFile?fileName="+data+"'/>"
+						+"<a href=displayFile?fileName="+getImageLink(data)+"><img src='displayFile?fileName="+getImageLink(data)+"'/>"
 						+ "</a><small data-src="+data+">X</small>" +"</div>";
 				} else {
 					str = "<div><a href='displayFile?fileName="+data+"'>"
@@ -60,45 +54,47 @@ $(document).ready(function(){
 				$(".rvUploadedlist").append(str);
 			}
 		});
-		});	//drop end
-	
-	
-	
+		       
+    });
 	
 	//댓글쓰기 버튼 클릭 start
+	 $("#rvWrite").submit(function(event){
+			event.preventDefault();
+			var that = $(this);
+			
+			var str = "";
+			
+			$(".rvUploadedlist small").each(function(index){
+				str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("data-src")+"' > ";
+			});
+			
+			that.append(str);
+			that.get(0).submit();
+			
+			
+		});
 	$("#replyAddBtn").on("click",function(event){
-		var pno = $("#newPno").val();
-		var writer = $("#newWriter").val();
-		var content = $("#newReplyText").val();
-		
+		//var pno = $("#newPno").val();
+		//var writer = $("#newWriter").val();
+		//var content = $("#newReplyText").val();
+		/*				JSON.stringify({
+		pno:pno , 
+		writer:writer, 
+		content : content,
+		})
+*/	
+		event.preventDefault();
 		
 		var str = "";
+		var formData = new FormData($("#rvWrite")[0]);
 		
-		$(".rvUploadedlist small").each(function(index){
-			str += "<input type='hidden' class='rvf' name='files["+index+"]' value='"+$(this).attr("data-src")+"' > ";
-		});
-		
-		$("#rvWrite").append(str);
-		
-		alert(str);
-		/*var files = {
-					"files[0]" = $(".rvf").val()
-				};*/
-			
-		alert(files);
 		$.ajax({
 			type : 'post',
 			url : 'replies',
-			contentType : "application/json",
+			contentType : false, //FormData를 사용할때는 false로
+			processData : false, //FormData를 사용할때는 false로
 			dataType : 'text',
-			data : 
-				JSON.stringify({
-				pno:pno , 
-				writer:writer, 
-				content : content,
-				files : files
-				})
-				,
+			data : formData,
 			success:function(result){
 				if(result =='success'){
 					getPageList(replyPage);

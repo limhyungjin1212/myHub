@@ -13,7 +13,7 @@
 		var pno = ${update.pno};
 		$.getJSON("detailJSON?pno=" + pno, function(data) {
 			$(data).each(function(index,data) {
-				str += "<div><img src='displayFile?fileName=" + data + "'/>"
+			str += "<a href='#'>"+data+"</a><img class ='thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/>"
 				+ "<small class='imgdelBtn' data-src="+data+">[삭제]</small></div>";
 			});
 
@@ -172,7 +172,7 @@
 				
 				
 				<div class="attach"></div>
-				<div class="fileDrop">파일을 드래그앤 드랍</div>
+				<div class="fileDrop">파일을 드래그앤 드랍aaa</div>
 				<div class="uploadedList">
 					<h3>이곳이 업로드 되는 위치입니다.</h3>
 				</div>
@@ -249,7 +249,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 				console.log(checkImageType(data));
 				if(checkImageType(data)){
 					str="<div>"
-						+"<a href=displayFile?fileName="+getImageLink(data)+"><img src='displayFile?fileName="+getImageLink(data)+"'/>"
+						+"<a href='#'>"+data+"</a><img src='displayFile?fileName="+getImageLink(data)+"'/>"
 						+ "</a><small data-src="+data+">[삭제]</small>" +"</div>";
 				} else {
 					str = "<div><a href='displayFile?fileName="+data+"'>"
