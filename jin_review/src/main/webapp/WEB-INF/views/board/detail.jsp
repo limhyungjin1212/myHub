@@ -132,13 +132,29 @@
 			<form id="rvWrite" name="rvWrite" enctype="multipart/form-data">
 				<input type="hidden" name="writer" id="newWriter" value="${login.uname}">
 				<input type="hidden" name="pno" id="newPno" value="${detail.pno }">
-				리뷰
-				<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5" name="replytext" id="newReplyText"></textarea>
-				<input type="file" id="files" name="filename">
+				리뷰 
+				<span class="rate">
+				<i class='fas fa-star' style="color:#99ccff;"></i>
+				<i class='fas fa-star'></i>
+				<i class='fas fa-star'></i>
+				<i class='fas fa-star'></i>
+				<i class='fas fa-star'></i>
+				</span>
+				<input type="hidden" id="rate" name="rate"  >
+				<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5" name="content" id="newReplyText"></textarea>
+				
+				
+				<!-- // 파일 선택창에서 하나의 파일만 선택 가능
+				<input name="files" id="fileupload" type="file" />
+				// 파일 선택창에서 여러개의 파일을 한번에 
+				<input name="files" id="fileupload" type="file" multiple />
+ -->
+
+				<input type="file" id="files" multiple="multiple">
 				<div class="rvUploadedlist">
 					
 				</div>
-				<input type="submit" id="replyAddBtn" class="btn btn-primary" value="등록">
+				<button id="replyAddBtn" class="btn btn-primary" >리뷰 등록</button> 
 				</form>
 				
 			</div>
@@ -185,7 +201,6 @@
 
 		</c:otherwise>
 	</c:choose>
-	
 	<script>
 	  var str2="";
   	var pno = ${detail.pno};
@@ -197,8 +212,13 @@
   			var str2 = "";
   			$(data.list).each(function(){
   				str2 += "<li data-rno='"+this.rno+"' class='replyLi'>" 
-					+this.writer + "<br>" +"<span>"+  this.content+"<br><i class='far fa-star'></i> </span>";
-					
+					+this.writer + "<br>"
+					if(this.fn !=null){
+						str2 +="<a href='#'>"+this.fn+"</a><img class ='thumbnail'  src='displayFile?fileName="+this.fn+"'/>"
+								+"<br><span>"+  this.content+"<br>"+this.regdate+"<i class='far fa-star'>"+this.rate+"</i> </span>";
+					} else{
+						str2 +="<br><span>"+  this.content+"<br>"+this.regdate+"<i class='far fa-star'>"+this.rate+"</i> </span>";	
+					}
 				if(loginfo == this.writer){
 					str2+="<button>수정</button></li>";
 					} else{
@@ -241,10 +261,24 @@
   	
   	getPageList(1); //첫댓글은 1페이지.
   	
+  	
+  	
+  	$(".rate i").on("click",function(){
+  		var thisrate = $(this);
+  		$(".rate i").css("color","");
+		
+		$(this).css("color","#99ccff").prevAll().css("color","#99ccff");
+  		var j = $(this).index();
+  		alert(j);
+  		$("#rate").val(j);
+  		
+  	});
+  
+  	
   	</script>
 	
 	
-		<button onclick="location.href='main'">목록</button>
+		<button onclick="location.href='main'">목록aa</button>
 </div>
 
 <div id="modDiv">
@@ -308,5 +342,5 @@ $.getJSON("detailJSON?pno=" + pno, function(data) {
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=64"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=67"></script>
 

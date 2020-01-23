@@ -1,5 +1,6 @@
 package com.lhj.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ReplyController {
 
 	/* 댓글 등록 */
 	@RequestMapping(value = "", method = RequestMethod.POST) // post는 등록
-	public ResponseEntity<String> register(@RequestBody ReviewVO rv) {
+	public ResponseEntity<String> register(ReviewVO rv) {
 		logger.info("댓글등록으로 오셧나요 ..?");
 		logger.info("댓글 등록할 데이터 =" + rv);
 		ResponseEntity<String> entity = null;
@@ -123,9 +124,19 @@ public class ReplyController {
 			List<ReviewVO> pagelist = rs.repListPage(pno, cri);
 			logger.info("pagelist="+pagelist);
 			
+			
+			
+			
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", pagelist);
 			map.put("page", pv);
+			
+			
+			
+			
+			
+			
 			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 			logger.info("entity = "+entity);

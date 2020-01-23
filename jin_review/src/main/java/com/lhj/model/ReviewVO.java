@@ -1,5 +1,6 @@
 package com.lhj.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -9,12 +10,22 @@ import org.springframework.web.multipart.MultipartFile;
 public class ReviewVO {
 	private int pno,rno;
 	private String content , writer;
-	private Date regdate;
+	
+	private String regdate;
+	private int rate;
+	private String fn;
 	
 	private String[] files;
 	
 	
 	
+	
+	public int getRate() {
+		return rate;
+	}
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
 	public int getPno() {
 		return pno;
 	}
@@ -39,10 +50,10 @@ public class ReviewVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 	
@@ -52,10 +63,19 @@ public class ReviewVO {
 	public void setFiles(String[] files) {
 		this.files = files;
 	}
+	
+	
+	
+	public String getFn() {
+		return fn;
+	}
+	public void setFn(String fn) {
+		this.fn = fn;
+	}
 	@Override
 	public String toString() {
 		return "ReviewVO [pno=" + pno + ", rno=" + rno + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", files=" + Arrays.toString(files) + "]";
+				+ regdate + ", rate=" + rate + ", fn=" + fn + ", files=" + Arrays.toString(files) + "]";
 	}
 	
 	

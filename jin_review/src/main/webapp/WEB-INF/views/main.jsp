@@ -47,10 +47,6 @@
 	<div>
 		<jsp:include page="include/header.jsp"></jsp:include>
 	</div>
-	<h1>
-		URI : ${uri } <a href="test">지도 테스트</a>
-	</h1>
-
 
 
 	<!-- Page Content -->

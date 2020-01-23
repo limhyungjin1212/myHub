@@ -60,7 +60,7 @@ public class ReviewMapperImpl implements ReviewMapper {
 
 	@Override
 	public void revAddAttach(String filename) throws Exception {
-		session.insert(namespace+"revAddAttach",filename);
+		session.insert(namespace+".revAddAttach",filename);
 	}
 	
 	

@@ -37,6 +37,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("로그인한후"+uri);
 		if(userVO !=null) { //사용자의 정보가 있다면 HttpSession에 로그인 처리
 			logger.info("new login success");
+			System.out.println("로그인확인");
 			session.setAttribute(LOGIN, userVO); //세션에 회원 정보 저장
 			
 			if(uri !=null ) { //받아온 uri 가 null이 아닐경우 

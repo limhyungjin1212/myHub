@@ -1,6 +1,11 @@
 /**
 
 
+
+
+
+
+
  * 
  */
 
@@ -8,6 +13,66 @@
 
 	 
 	//	
+
+
+
+
+
+
+	
+	$("#replyAddBtn").on("click",function(event){
+		
+		/*
+		FormData 인터페이스는 XMLHttpRequest.send()로 쉽게 보내질 수 있는 폼 field와 
+		그 값들로 나타나는 key/value쌍들을 쉽게 만들 수 있는 방법을 제공한다. 
+		만약에 인코딩 타입이 "multipart/form-data"로 설정이 되어 있으면 폼이 사용하는 것과 같은 포맷으로 사용한다.
+*/
+		
+		
+		var pno = $("#newPno").val();
+		var writer = $("#newWriter").val();
+		var content = $("#newReplyText").val();
+		
+		var str5 = "";
+		$(".rvUploadedlist small").each(function(index){
+			str5 += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("data-src")+"' > ";
+		});
+		
+		$("#rvWrite").append(str5);
+		
+		var rvForm = document.getElementById("rvWrite");
+		var formData2 = new FormData(rvForm);
+		console.log(formData2);
+		
+		$.ajax({
+			type : 'post',
+			url : 'replies',
+			contentType : false,
+			processData: false,
+			dataType : 'text',
+			data : formData2 ,
+			success:function(result){
+				if(result =='success'){
+					getPageList(replyPage);
+					$("#newReplyText").val("");
+				}
+			},
+			error : function(err){
+				alert("등록 실패!!");
+			}
+		});
+		
+		/*JSON.stringify({
+			pno:pno , 
+			writer:writer, 
+			content : content,
+			})*/
+		
+	}); //댓글쓰기 버튼 end
+	
+  	
+
+
 $(document).ready(function(){
 	
 	
@@ -57,55 +122,6 @@ $(document).ready(function(){
 		       
     });
 	
-	//댓글쓰기 버튼 클릭 start
-	 $("#rvWrite").submit(function(event){
-			event.preventDefault();
-			var that = $(this);
-			
-			var str = "";
-			
-			$(".rvUploadedlist small").each(function(index){
-				str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("data-src")+"' > ";
-			});
-			
-			that.append(str);
-			that.get(0).submit();
-			
-			
-		});
-	$("#replyAddBtn").on("click",function(event){
-		//var pno = $("#newPno").val();
-		//var writer = $("#newWriter").val();
-		//var content = $("#newReplyText").val();
-		/*				JSON.stringify({
-		pno:pno , 
-		writer:writer, 
-		content : content,
-		})
-*/	
-		event.preventDefault();
-		
-		var str = "";
-		var formData = new FormData($("#rvWrite")[0]);
-		
-		$.ajax({
-			type : 'post',
-			url : 'replies',
-			contentType : false, //FormData를 사용할때는 false로
-			processData : false, //FormData를 사용할때는 false로
-			dataType : 'text',
-			data : formData,
-			success:function(result){
-				if(result =='success'){
-					getPageList(replyPage);
-					$("#newReplyText").val("");
-				}
-			},
-			error : function(err){
-				alert("등록 실패!!");
-			}
-		});
-	}); //댓글쓰기 버튼 end
 	
 	
 	//댓글 수정 버튼 클릭
