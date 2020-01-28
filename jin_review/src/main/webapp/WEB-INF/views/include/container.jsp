@@ -4,6 +4,7 @@
 
 
 <!-- Jumbotron Header -->
+<div class="container">
 <header class="jumbotron my-4">
 	<h1 class="display-3">안녕하세요</h1>
 	<p class="lead">세상의 모든 리뷰를 담다.</p>
@@ -103,5 +104,6 @@
 								<a href="?pageNum=${page.endPage +1 }&keyword=${page.cri.keyword}">[다ㅁ음]</a>
 							</c:if>
 
+</div>
 </div>
 <!-- /.row -->

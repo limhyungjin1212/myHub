@@ -6,8 +6,8 @@
 
 	<!-- 댓글 작성 -->
 	<insert id="repWrite">
-		insert into review(pno,content,writer,rate)
-		values (#{pno},#{content},#{writer},#{rate})
+		insert into review(pno,content,writer,rate,rev_subject)
+		values (#{pno},#{content},#{writer},#{rate},#{rev_subject})
 	</insert>
 
 	<!-- 댓글 목록 조회 -->
@@ -32,9 +32,9 @@
 		
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful
 				from review r left join review_attach ra on (r.rno = ra.rno) join (select @rownum:=0) as rn 
-						where content like '%%' group by r.rno ) 
+						where content like '%%' and r.pno = #{pno} group by r.rno ) 
                         as R order by R.rno desc)  as C 
               <![CDATA[
 			where rownum >(#{cri.pageNum}-1) * #{cri.amount} and rownum<= #{cri.amount} * #{cri.pageNum} 
@@ -53,5 +53,19 @@
 		insert into review_attach(filename,rno) values (#{filename},LAST_INSERT_ID())
 	</insert>
 
+	<!-- 리뷰 총갯수와 도움이 된수  -->
+	<select id="revCntHelpful">
+	select count(*) as reviewCnt , sum(helpful) as helpful from review where writer = #{writer};
+	</select>
+
+	<!-- 도움이 된 수 증가 -->
+	<update id="HelpfulAdd">
+		update review set helpful = helpful+1 where rno = #{rno}
+	</update>
+
+	<!-- 도움이 된 수 감소 -->
+	<update id="Helpfuldis">
+		update review set helpful = helpful-1 where rno = #{rno}
+	</update>
 
 </mapper>

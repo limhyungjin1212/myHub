@@ -10,16 +10,28 @@ import org.springframework.web.multipart.MultipartFile;
 public class ReviewVO {
 	private int pno,rno;
 	private String content , writer;
-	
+	private String rev_subject;
 	private String regdate;
 	private int rate;
 	private String fn;
-	
+	private int helpful;
 	private String[] files;
 	
 	
 	
 	
+	public int getHelpful() {
+		return helpful;
+	}
+	public void setHelpful(int helpful) {
+		this.helpful = helpful;
+	}
+	public String getRev_subject() {
+		return rev_subject;
+	}
+	public void setRev_subject(String rev_subject) {
+		this.rev_subject = rev_subject;
+	}
 	public int getRate() {
 		return rate;
 	}
@@ -74,8 +86,9 @@ public class ReviewVO {
 	}
 	@Override
 	public String toString() {
-		return "ReviewVO [pno=" + pno + ", rno=" + rno + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", rate=" + rate + ", fn=" + fn + ", files=" + Arrays.toString(files) + "]";
+		return "ReviewVO [pno=" + pno + ", rno=" + rno + ", content=" + content + ", writer=" + writer
+				+ ", rev_subject=" + rev_subject + ", regdate=" + regdate + ", rate=" + rate + ", fn=" + fn
+				+ ", helpful=" + helpful + ", files=" + Arrays.toString(files) + "]";
 	}
 	
 	

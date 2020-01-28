@@ -50,7 +50,7 @@
 
 
 	<!-- Page Content -->
-	<div class="container">
+	<div class="container-fluid">
 		<c:choose>
 			<c:when test="${login.uid eq 'admin'}">
 				<c:choose>

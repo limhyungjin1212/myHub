@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<style>
+	#navbar a{
+		color: #99ccff;
+		
+	}
+	.uinfo{
+		color: white;
+	}
+</style>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="main">JinsReview</a>
+		<a class="navbar-brand" href="main">SemoRE</a>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -32,7 +40,7 @@
 				<c:choose>
 					<c:when test="${login ne null }">
 					<li class="nav-item active" >
-					${login.uname } 님 환영합니다.<a class="nav-link" href="user/logout">로그아웃</a></li>
+					<label class="uinfo">${login.uname } 님 환영합니다.</label><a class="nav-link" href="user/logout">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 					<li class="nav-item active"><a class="nav-link" href="user/join">회원가입</a>	</li>

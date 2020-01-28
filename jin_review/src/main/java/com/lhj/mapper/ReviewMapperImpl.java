@@ -62,6 +62,22 @@ public class ReviewMapperImpl implements ReviewMapper {
 	public void revAddAttach(String filename) throws Exception {
 		session.insert(namespace+".revAddAttach",filename);
 	}
+
+	@Override
+	public List<Integer> revCntHelpful(String writer) throws Exception {
+		List list = session.selectList(namespace+".revCntHelpful",writer);
+		return list;
+	}
+
+	@Override
+	public void HelpfulAdd(int rno) throws Exception {
+		session.update(namespace+".HelpfulAdd",rno);
+	}
+
+	@Override
+	public void Helpfuldis(int rno) throws Exception {
+		session.update(namespace+".Helpfuldis",rno);
+	}
 	
 	
 	

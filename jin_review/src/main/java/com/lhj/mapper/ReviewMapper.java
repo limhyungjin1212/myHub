@@ -26,4 +26,14 @@ public interface ReviewMapper {
 		
 		//리뷰 쓸때 파일 업로드
 		public void revAddAttach(String filename) throws Exception;
+		
+		//한 작성자 댓글 총 갯수와 도움이 된수
+		public List<Integer> revCntHelpful(String writer) throws Exception;
+		
+		//도움이 된 수 증가
+		public void HelpfulAdd(int rno) throws Exception;
+		
+		//도움이 된 수 감소
+		public void Helpfuldis(int rno) throws Exception;
+		
 }

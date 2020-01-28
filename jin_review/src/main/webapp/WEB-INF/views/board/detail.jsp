@@ -4,21 +4,58 @@
 
 <style>
 #map {
-	width: 100%;
-	height: 400px;
+	width: 300px;
+	height: 300px;
 	background-color: grey;
 }
 
 #reply {
-	background-color: grey;
+	background-color: #66ccff;
 }
 
-.replyLi{
-	background-color: grey;
-}
-
+ .carousel-inner img {
+    width: 25%;
+    height: 100%;
+  }
+  .attach{
+  	 list-style-type: none;
+  }
+  .attach li{
+  	 display: inline;
+  }
 </style>
-<div>
+
+
+	<div id="demo" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+    	<ul class="attach"></ul>
+    </div>
+    <div class="carousel-item">
+    	<ul class="attach"></ul>
+    </div>
+    <div class="carousel-item">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+
 	<script>
 	var result = "${msg}";
 
@@ -85,22 +122,51 @@
 
 
 	<script	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBggZ8qinjU9aNYY_vCqfzv_C7PBA5v680&libraries=places&callback=initMap"	async defer></script>
-	<div id="map"></div>
-	<div class="attach"></div>
-	<div class="row text-center">
-		<table class="w3-table-all" border="1">
-			<tr>
-				<td class="pcate">${detail.pcate }</td>
-				<td>이름 : ${detail.pname }</td>
-			</tr>
-			<tr>
-				<td>연락처 :${detail.ptel }</td>
-				<td>등록일 :${detail.regdate }</td>
-			</tr>
-		</table>
 
+	
+	
+	<div class="container">
+	
+		<div class="row">
+		<div class="col-sm-4">
+		<table class="table table-borderless">
+		<tr>
+			<td><strong>${detail.pname }</strong></td>
+		</tr>
+		<tr>
+			<td>${detail.rate }
+			<c:forEach  begin="0" end="${detail.rate }" var="rateAvg">
+				<i class='fas fa-star'></i>
+			</c:forEach>
+			</td>
+			<td>리뷰 총 갯수 : ${cnt }</td>
+		</tr>
+		<tr>
+			<td class="pcate">${detail.pcate }</td>
+		</tr>
+		</table>
+		</div>
+		<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				연락처 :${detail.ptel } <br>
+				등록일 :${detail.regdate }
+			</div>
+		</div>	
+		
+		<div class="bestReviewBox"></div>
+		<div class="col-md-6">
+		<div id="map"></div>
+		</div>
+		<div class="col-md-6">
 		<div>
-			<textarea>설명 : ${detail.pinfo }</textarea>
+			영업시간 : 
+		</div>
+		</div>
+		
+		
+		<div class="form-group">
+		<label for="comment">Comment:</label>
+			<textarea rows="5" class="form-control" readonly>${detail.pinfo }</textarea>
 
 			<c:if test="${login.uid eq 'admin' }">
 				<button class="btn-primary"
@@ -112,11 +178,8 @@
 		</div>
 		<br>
 
-
-	</div>
-
 	<div class="reviewBox">
-	<ul id="replies" class="w3-ul w3-border"></ul>
+	<ul id="replies" class="w3-ul"></ul>
 	</div>
 	<br> 
 	
@@ -134,13 +197,15 @@
 				<input type="hidden" name="pno" id="newPno" value="${detail.pno }">
 				리뷰 
 				<span class="rate">
-				<i class='fas fa-star' style="color:#99ccff;"></i>
+				<i class='fas fa-star'></i>
 				<i class='fas fa-star'></i>
 				<i class='fas fa-star'></i>
 				<i class='fas fa-star'></i>
 				<i class='fas fa-star'></i>
 				</span>
-				<input type="hidden" id="rate" name="rate"  >
+				<br>
+				<input type="hidden" id="rate" name="rate" value="1">
+				<input type="text" class="form-control" id="rev_subject" name="rev_subject" placeholder="한줄 요약을 해주세요"><br>
 				<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5" name="content" id="newReplyText"></textarea>
 				
 				
@@ -206,21 +271,35 @@
   	var pno = ${detail.pno};
   	var loginfo =document.getElementById("loginfo").value;
   	
-  	function getPageList(page){
-  		$.getJSON("replies/"+pno+"/"+page,function(data){
+  	function getPageList(page){ 
+  		$.getJSON("replies/"+pno+"/"+page,function(data){ //getJSON으로 데이터를 불러온다.
   			console.log(data.length);
   			var str2 = "";
   			$(data.list).each(function(){
-  				str2 += "<li data-rno='"+this.rno+"' class='replyLi'>" 
-					+this.writer + "<br>"
-					if(this.fn !=null){
-						str2 +="<a href='#'>"+this.fn+"</a><img class ='thumbnail'  src='displayFile?fileName="+this.fn+"'/>"
-								+"<br><span>"+  this.content+"<br>"+this.regdate+"<i class='far fa-star'>"+this.rate+"</i> </span>";
-					} else{
-						str2 +="<br><span>"+  this.content+"<br>"+this.regdate+"<i class='far fa-star'>"+this.rate+"</i> </span>";	
+  				str2 += "<li data-rno='"+this.rno+"' class='replyLi'>"
+  					+this.writer + "<br>";
+  					
+  					
+  					for(var i=0; i<this.rate;i++){ //댓글의 별점에따른 별 갯수
+  						str2 += "<i class='fas fa-star' style='color :#99ccff;'></i> ";
+  					}
+  					if(this.rate !=5){ //5점이아니면 
+	  						for(var j=this.rate;j<5;j++){ 
+	  							str2 += "<i class='fas fa-star'></i> ";
+	  						}	
+	  				}
+						
+  					
+  					str2 += ""+this.regdate+"<br>도움이 된 수 :"+this.helpful+"리뷰 작성 건수 : <br>"  
+  					
+					if(this.fn !=null){ //첨부파일이 있으면
+						str2 +="<img class ='thumbnail'  src='displayFile?fileName="+this.fn+"'/>"
 					}
+  					str2 += "<br><span><strong>"+  this.rev_subject+"</strong></span><br><br><span>"+  this.content+"</span>"
+  					str2 +="<br><span>도움이 되셧나요? <button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm'>도움이 돼요</button>" 
+  						+"<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'>도움 안 돼요</button> </span>";
 				if(loginfo == this.writer){
-					str2+="<button>수정</button></li>";
+					str2+="<button id='btnUpdate'>수정</button></li>";
 					} else{
 						str2+="</li>";
 					}
@@ -269,8 +348,8 @@
 		
 		$(this).css("color","#99ccff").prevAll().css("color","#99ccff");
   		var j = $(this).index();
-  		alert(j);
-  		$("#rate").val(j);
+  		alert(j+1);
+  		$("#rate").val(j+1);
   		
   	});
   
@@ -279,7 +358,6 @@
 	
 	
 		<button onclick="location.href='main'">목록aa</button>
-</div>
 
 <div id="modDiv">
 	<div class="modal-title"></div>
@@ -292,7 +370,7 @@
 		<button id="closeBtn">닫기</button>
 	</div>
 </div>
-
+</div>
 <script>
 function checkImageType(fileName){
 	var pattern = /jpg|gif|png|jpeg/i;
@@ -331,8 +409,8 @@ $.getJSON("detailJSON?pno=" + pno, function(data) {
 	console.log(data.length);
 	$(data).each(function(index,data) {
 		//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
-		// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미합니다.
-		str += "<a href='#'>"+data+"</a><img class ='thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/>";
+		// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.
+		str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/></li>";
 		 	
 	});
 
@@ -342,5 +420,5 @@ $.getJSON("detailJSON?pno=" + pno, function(data) {
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=67"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=70"></script>
 

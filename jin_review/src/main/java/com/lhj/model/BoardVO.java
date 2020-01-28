@@ -10,18 +10,24 @@ public class BoardVO {
 	private String pcate;
 	private String ptel;
 	private String pinfo;
-	private Date regdate;
+	private String regdate;
 	private String place;
 	
 	private String fn;
-	
+	private float rate;
 	private String[] files;
 	
 	
-	public Date getRegdate() {
+	public float getRate() {
+		return rate;
+	}
+	public void setRate(float rate) {
+		this.rate = rate;
+	}
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 	public int getPno() {

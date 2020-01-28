@@ -11,7 +11,7 @@
 		alert('글 삭제 완료');
 	}
 </script>
-
+<div class="container">
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
@@ -40,7 +40,7 @@
 
 	<div class="card-body">
 		<div class="table-responsive">
-			<table class="table table-bordered" id="dataTable" width="100%"
+			<table class="table table-dark" id="dataTable" width="100%"
 				cellspacing="0">
 				<thead>
 					<tr>
@@ -131,4 +131,4 @@
 		</div>
 	</div>
 </div>
-
+</div>

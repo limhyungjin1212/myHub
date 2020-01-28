@@ -56,5 +56,20 @@ public class ReviewServiceImpl implements ReviewService {
 	public int repCount(int pno) throws Exception {
 		return rm.repCount(pno);
 	}
+
+	@Override
+	public List<Integer> revCntHelpful(String writer) throws Exception {
+		return rm.revCntHelpful(writer);
+	}
+
+	@Override
+	public void HelpfulAdd(int rno) throws Exception {
+		rm.HelpfulAdd(rno);
+	}
+
+	@Override
+	public void Helpfuldis(int rno) throws Exception {
+		rm.Helpfuldis(rno);
+	}
 	
 }

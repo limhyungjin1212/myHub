@@ -22,6 +22,7 @@ import com.lhj.model.Criteria;
 import com.lhj.model.LoginVO;
 import com.lhj.model.PageVO;
 import com.lhj.service.BoardService;
+import com.lhj.service.ReviewService;
 
 
 @Controller
@@ -29,6 +30,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReviewService rs;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
@@ -42,6 +46,7 @@ public class BoardController {
 	public String index(BoardVO boardVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
 		logger.info("index.."+cri);
 		//List<BoardVO> list = boardService.boardList(); 
+		cri.setAmount(8);
 		logger.info("22.."+cri);
 		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
 				
@@ -49,7 +54,6 @@ public class BoardController {
 		list = boardService.boardListAttach(cri);
 		logger.info("");
 		model.addAttribute("list", list);
-		
 		model.addAttribute("page",pv);
 		
 		
@@ -102,6 +106,7 @@ public class BoardController {
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
 		model.addAttribute("detail",boardService.boardDetail(pno));
+		model.addAttribute("cnt",rs.repCount(pno));
 		
 		return "main";
 	}

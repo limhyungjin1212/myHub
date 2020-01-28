@@ -24,6 +24,11 @@ public interface ReviewService {
 	// 댓글 총 갯수
 	public int repCount(int pno) throws Exception;
 	
+	//한 작성자 댓글 총 갯수와 도움이 된수
+	public List<Integer> revCntHelpful(String writer) throws Exception;
 	
-	
+	//도움이 된 수 증가
+	public void HelpfulAdd(int rno) throws Exception;
+	//도움이 된 수 감소
+	public void Helpfuldis(int rno) throws Exception;
 }
