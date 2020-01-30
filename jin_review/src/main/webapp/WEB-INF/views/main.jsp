@@ -47,7 +47,7 @@
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 </head>
 <body>
-	<div>
+	<div class="container-fluid">
 		<jsp:include page="include/header.jsp"></jsp:include>
 	</div>
 

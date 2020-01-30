@@ -9,8 +9,12 @@
 	.uinfo{
 		color: white;
 	}
+	#headTop{
+		background-image: url("resources/image/coffee1.jpg");
+	}
 </style>
 <!-- Navigation -->
+<div id="headTop">
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">
 		<a class="navbar-brand" href="main">SemoRE</a>
@@ -52,3 +56,4 @@
 		</div>
 	</div>
 </nav>
+</div>

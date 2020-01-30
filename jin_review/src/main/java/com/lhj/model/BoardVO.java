@@ -1,7 +1,6 @@
 package com.lhj.model;
 
 import java.util.Arrays;
-import java.util.Date;
 
 public class BoardVO {
 	
@@ -15,9 +14,18 @@ public class BoardVO {
 	
 	private String fn;
 	private double rate;
+	
+	private int rcnt;
+	
 	private String[] files;
 	
 	
+	public int getRcnt() {
+		return rcnt;
+	}
+	public void setRcnt(int rcnt) {
+		this.rcnt = rcnt;
+	}
 	public double getRate() {
 		return Math.ceil(rate*2)/2; //리뷰 총 평점을 0.5단위로 나타내기 위함
 	}

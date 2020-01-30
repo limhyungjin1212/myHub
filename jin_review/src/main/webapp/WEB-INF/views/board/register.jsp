@@ -21,6 +21,9 @@
 		<option value="제품">제품</option>
 		<option value="헬스장">헬스장</option>
 		<option value="세탁소">세탁소</option>
+		<option value="호텔">호텔</option>
+		<option value="pc방">pc방</option>
+		
 	</select>
 	제목 : <input type="text" name="pname" required> <br>
 	

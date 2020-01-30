@@ -33,39 +33,172 @@
 </header>
 
   
-  <!-- Left and right controls -->
-  <a class="carousel-control-prev" href="#demo" data-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </a>
-  <a class="carousel-control-next" href="#demo" data-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </a>
-
-
-<!-- Page Features -->
+  
 
 <div class="row text-center">
-	<%-- <c:forEach items="${list }" var="reviewVO">
-	<div class="col-lg-3 col-md-6 mb-4">
+	<div class="col-md-12">
+		<h1> Hot & new Businesses</h1>
+	</div>
+	
+	<c:forEach items="${plist }" var="pVO">
+		<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card h-100" id="attach">
-			<img class="card-img-top" width="200px;" height="150px;"  src='displayFile?fileName=${reviewVO.fn }' alt="not image">
+			<img class="card-img-top" width="200px;" height="150px;"  src='displayFile?fileName=${pVO.fn }' alt="not image">
 			<div class="card-body">
-				<h4 class="card-title">${reviewVO.pname }</h4>
-				<p class="card-text">${boardVO.pinfo }</p>
+				<h4 class="card-title"><a href="detail?pno=${pVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${pVO.pname }</a></h4>
+				<c:forEach  begin="1" end="${pVO.rate }" var="rateAvg">
+				<i class='fas fa-star' style='color :#99ccff;' ></i>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${(pVO.rate *2) % 2 eq 1}">
+					<i class="fas fa-star-half-alt" style='color :#99ccff;'></i>
+					<c:forEach begin="${pVO.rate+1 }" end="4">
+						<i class='far fa-star' style='color :#99ccff;' ></i>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach begin="${pVO.rate }" end="4">
+						<i class='far fa-star' style='color :#99ccff;' ></i>
+					</c:forEach>	
+				</c:otherwise>
+			</c:choose>
+			<p class="card-text">${pVO.rcnt } reviews</p>
 			</div>
 			<div class="card-footer">
-				<a href="detail?pno=${boardVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">리뷰</a>
+				언제 오픈을 했는감?
+			</div>
+		</div>
+	</div>
+	</c:forEach>
+	
+	<div class="col-md-8 ">
+		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
+		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
+		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
+		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
+		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
+	</div>
+	
+	<div class="col-md-4 ">
+		<h1>오른쪽 뭘 넣을까</h1>
+		<h1>오른쪽 뭘 넣을까</h1>
+		<h1>오른쪽 뭘 넣을까</h1>
+		<h1>오른쪽 뭘 넣을까</h1>
+		
+	</div>
+</div>
+<!-- Page Features -->
+<div id="revBox" class="row text-center">
+	
+	<c:forEach items="${revlist }" var="reviewVO">
+	<div class="col-lg-3 col-md-6 mb-4">
+		<div class="card h-100" id="attach">
+			<div class="card-header">
+				${reviewVO.writer }
+				<c:choose>
+					<c:when test="${reviewVO.content eq null }">
+						사진만나온것입니다
+					</c:when>
+					<c:otherwise>
+						리뷰적은것
+					</c:otherwise>
+				</c:choose>	
+			</div>
+			<c:if test="${reviewVO.fn != null }">
+				<img class="card-img-top" width="200px;" height="150px;"  src='displayFile?fileName=${reviewVO.fn }' alt="not image">
+			</c:if>
+			<div class="card-body">
+				<h4 class="card-title">${reviewVO.pname }</h4>
+				<c:forEach  begin="1" end="${reviewVO.rate }" var="rateAvg">
+				<i class='fas fa-star' style='color :#99ccff;' ></i>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${(reviewVO.rate *2) % 2 eq 1}">
+					<i class="fas fa-star-half-alt" style='color :#99ccff;'></i>
+					<c:forEach begin="${reviewVO.rate+1 }" end="4">
+						<i class='far fa-star' style='color :#99ccff;' ></i>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach begin="${reviewVO.rate }" end="4">
+						<i class='far fa-star' style='color :#99ccff;' ></i>
+					</c:forEach>	
+				</c:otherwise>
+			</c:choose>
+				<p class="card-text">${reviewVO.content }</p>
+			</div>
+			<div class="card-footer">
+				<a href="detail?pno=${reviewVO.pno }&pageNum=${rpage.cri.pageNum}&keyword=${rpage.cri.keyword}">리뷰</a>
 				<i class="far fa-heart"></i>
 				<i class="far fa-bell"></i>
 			</div>
 		</div>
 	</div>
-</c:forEach> --%>
+</c:forEach>
+</div>
 	<div>
-		<button type="button" >더보기</button>				
+		<button type="button" id="addRevList" class="btn btn-link btn-block">
+		<i class=""></i>더보기</button>				
 	</div>
-			
+</div>
+<script>
 
-</div>
-</div>
+var pageNum = ${page.cri.pageNum};
+
+	
+	$("#addRevList").on("click",function(){
+		console.log(pageNum);
+		
+		$.getJSON("addRevList?pageNum="+pageNum, function(data) {
+			console.log(data.length);
+			var str = "";
+			$(data).each(function(index,data) {
+				//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
+				// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.
+				if(index == data.length){
+					return false;
+				}
+				str += "<div class='col-lg-3 col-md-6 mb-4'><div class='card h-100' id='attach'>";
+				str += "<div class='card-header'>"+data.writer;
+				  if(data.content == null){
+					  str +="사진만 나온 것입니다";
+				} else{
+					str += "리뷰적은것</div>";
+				} 
+				if(data.fn != null){
+					str += "<img class='card-img-top' width='200px;' height='150px;'  src='displayFile?fileName="+data.fn+"' alt='not image'>";
+				}		
+				str += "<div class='card-body'><h4 class='card-title'>"+data.pname+"</h4>";
+				for(var i =1; i<=data.rate;i++){
+					str+="<i class='fas fa-star' style='color :#99ccff;' ></i>"
+				}
+				if((data.rate*2) % 2 == 1 ){
+					str += "<i class='fas fa-star-half-alt' style='color :#99ccff;'></i>";
+					for(var i = data.rate+1;i<=4;i++){
+						str += "<i class='far fa-star' style='color :#99ccff;' ></i>";
+					}
+				} else{
+					for(var i = data.rate;i<=4;i++){
+						str += "<i class='far fa-star' style='color :#99ccff;' ></i>";
+					}
+				}
+				str += "<p class='card-text'>"+data.content+"</p></div>";
+				str += "<div class='card-footer'><a href='detail?pno="+data.pno+"&pageNum=${rpage.cri.pageNum}&keyword=${rpage.cri.keyword}'>리뷰</a>";
+				str += "<i class='far fa-heart'></i><i class='far fa-bell'></i></div>" ;
+				str += "</div></div>";
+				
+			});
+			console.log(str);
+			if(data.length == 0){
+				$("#addRevList").hide();
+			}
+			
+			$("#revBox").append(str);
+			pageNum++;
+		});
+		
+	});
+
+</script>
+
 <!-- /.row -->

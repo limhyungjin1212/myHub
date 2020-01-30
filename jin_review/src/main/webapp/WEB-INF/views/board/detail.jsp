@@ -251,7 +251,6 @@
 
 			<button type="button" class="btn btn-primary" data-toggle="modal"
 				data-target="#myModal">로그인하러가기a</button>
-
 			<!-- The Modal -->
 			<div class="modal" id="myModal">
 				<div class="modal-dialog">
@@ -424,6 +423,8 @@ function getOriginalName(fileName){
 var str = "";
 var strr = "";
 var pno = ${detail.pno};
+
+
 $.getJSON("detailJSON?pno=" + pno, function(data) {
 	console.log(data.length);
 	$(data).each(function(index,data) {

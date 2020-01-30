@@ -78,8 +78,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewVO> revListPage(Criteria cri) throws Exception {
-		return rm.revListPage(cri);
+	public List<ReviewVO> revListPage(Criteria criteria) throws Exception {
+		return rm.revListPage(criteria);
 	}
 	
 }

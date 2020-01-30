@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lhj.model.BoardVO;
 import com.lhj.model.Criteria;
-import com.lhj.model.LoginVO;
 import com.lhj.model.PageVO;
 import com.lhj.model.ReviewVO;
 import com.lhj.service.BoardService;
@@ -47,14 +44,31 @@ public class BoardController {
 		logger.info("index.."+cri);
 		//List<BoardVO> list = boardService.boardList(); 
 		
-		PageVO pv = new PageVO(cri, reviewService.revCount());
-		logger.info("pv.."+pv);	
+		PageVO rpv = new PageVO(cri, reviewService.revCount());
+		logger.info("rpv.."+rpv);	
 		
 		
-		List list = new ArrayList();
-		list = reviewService.revListPage(cri);
-		logger.info("리스트.."+list);
-		model.addAttribute("list", list);
+		List revlist = new ArrayList();
+		cri.setAmount(2);
+		revlist = reviewService.revListPage(cri);
+		logger.info("리스트.."+revlist);
+		
+		List plist = new ArrayList();
+		cri.setAmount(4);
+		plist = boardService.boardListAttach(cri);
+		
+		
+		cri.setAmount(10);
+		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
+		logger.info("pv="+pv);
+		List adminList = new ArrayList();
+		adminList = boardService.boardListPage(cri);
+		
+		model.addAttribute("revlist", revlist);
+		model.addAttribute("plist", plist);
+		model.addAttribute("adminList", adminList);
+		
+		model.addAttribute("rpage",rpv);
 		model.addAttribute("page",pv);
 		
 		
@@ -119,6 +133,18 @@ public class BoardController {
 		logger.info("상세보기"+boardService.getAttach(pno));
 		
 		return boardService.getAttach(pno);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/addRevList" , method = RequestMethod.GET)
+	public List<ReviewVO> addrevlist(@RequestParam int pageNum) throws Exception{
+		
+		logger.info("더보기버튼 왓나요?"+pageNum);
+		Criteria criteria = new Criteria();
+		criteria.setPageNum(pageNum+1);
+		criteria.setAmount(2);
+		logger.info("이거는요?"+criteria);
+		return reviewService.revListPage(criteria);
 	}
 	
 	

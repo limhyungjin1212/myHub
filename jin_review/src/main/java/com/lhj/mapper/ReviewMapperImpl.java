@@ -85,8 +85,8 @@ public class ReviewMapperImpl implements ReviewMapper {
 	}
 
 	@Override
-	public List<ReviewVO> revListPage(Criteria cri) throws Exception {
-		List revlist = session.selectList(namespace+".revListPage",cri);
+	public List<ReviewVO> revListPage(Criteria criteria) throws Exception {
+		List revlist = session.selectList(namespace+".revListPage",criteria);
 		System.out.println("revlist="+revlist);
 		return revlist;
 	}

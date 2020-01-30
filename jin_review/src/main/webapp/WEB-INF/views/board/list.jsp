@@ -110,10 +110,10 @@
 					</tr>
 				</tfoot>
 				<tbody>
-					<c:if test="${list.size() == 0 }">
+					<c:if test="${plist.size() == 0 }">
 						<h3>데이터가 없습니다.</h3>
 					</c:if>
-					<c:forEach items="${list }" var="boardVO">
+					<c:forEach items="${adminList }"  var="boardVO">
 						<tr>
 							<td>${boardVO.pno }</td>
 							<td>${boardVO.pcate }</td>

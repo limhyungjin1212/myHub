@@ -1,11 +1,6 @@
 package com.lhj.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class ReviewVO {
 	private int pno,rno;
