@@ -14,14 +14,14 @@ public class BoardVO {
 	private String place;
 	
 	private String fn;
-	private float rate;
+	private double rate;
 	private String[] files;
 	
 	
-	public float getRate() {
-		return rate;
+	public double getRate() {
+		return Math.ceil(rate*2)/2; //리뷰 총 평점을 0.5단위로 나타내기 위함
 	}
-	public void setRate(float rate) {
+	public void setRate(double rate) {
 		this.rate = rate;
 	}
 	public String getRegdate() {

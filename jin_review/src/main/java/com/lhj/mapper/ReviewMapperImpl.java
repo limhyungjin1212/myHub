@@ -59,6 +59,11 @@ public class ReviewMapperImpl implements ReviewMapper {
 	}
 
 	@Override
+	public int revCount() throws Exception {
+		int cnt = session.selectOne(namespace+".revCount"); 
+		return cnt;
+	}
+	@Override
 	public void revAddAttach(String filename) throws Exception {
 		session.insert(namespace+".revAddAttach",filename);
 	}
@@ -77,6 +82,13 @@ public class ReviewMapperImpl implements ReviewMapper {
 	@Override
 	public void Helpfuldis(int rno) throws Exception {
 		session.update(namespace+".Helpfuldis",rno);
+	}
+
+	@Override
+	public List<ReviewVO> revListPage(Criteria cri) throws Exception {
+		List revlist = session.selectList(namespace+".revListPage",cri);
+		System.out.println("revlist="+revlist);
+		return revlist;
 	}
 	
 	

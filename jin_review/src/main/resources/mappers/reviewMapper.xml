@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lhj.mapper.ReviewMapper">
-
 	<!-- 댓글 작성 -->
 	<insert id="repWrite">
 		insert into review(pno,content,writer,rate,rev_subject)
@@ -29,7 +28,6 @@
 
 	<!-- 댓글 페이징처리  -->
 	<select id="repListPage" resultType="com.lhj.model.ReviewVO">
-		
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
 		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful
@@ -39,15 +37,38 @@
               <![CDATA[
 			where rownum >(#{cri.pageNum}-1) * #{cri.amount} and rownum<= #{cri.amount} * #{cri.pageNum} 
 		]]>
-		
-		
 	</select>
-
+	
+<sql id="keyword">
+		<if test="keyword != null">
+				where rev_subject like concat('%',trim(#{keyword}),'%')
+		</if>
+</sql>	
+	<!-- 댓글   -->
+	<select id="revListPage" parameterType="com.lhj.model.Criteria" resultType="com.lhj.model.ReviewVO">
+		select * from (
+	select R.* , @rownum:=@rownum+1 as rownum from (
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,p.pname
+				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join (select @rownum:=0) as rn 
+						<include refid="keyword"></include>
+						 group by r.pno ) 
+                        as R order by R.rno desc) as C 
+                         <![CDATA[
+			where rownum >(#{cri.pageNum}-1) * #{cri.amount} and rownum<= #{cri.amount} * #{cri.pageNum} 
+		]]>
+	</select>
+	
+	
+	
 	<!--댓글 총 갯수  -->
+	<select id="revCount" resultType="int">
+		select count(*) from review
+	</select>
+	
+	
 	<select id="repCount" resultType="int">
 		select count(*) from review where pno = #{pno}
 	</select>
-
 	<!--리뷰 게시판 파일 업로드  -->
 	<insert id="revAddAttach">
 		insert into review_attach(filename,rno) values (#{filename},LAST_INSERT_ID())

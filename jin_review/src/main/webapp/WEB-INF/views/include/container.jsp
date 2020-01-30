@@ -32,28 +32,6 @@
 </form>
 </header>
 
-<div id="demo" class="carousel slide" data-ride="carousel">
-
-  <!-- Indicators -->
-  <ul class="carousel-indicators">
-    <li data-target="#demo" data-slide-to="0" class="active"></li>
-    <li data-target="#demo" data-slide-to="1"></li>
-    <li data-target="#demo" data-slide-to="2"></li>
-  </ul>
-  
-  <%-- <!-- The slideshow -->
-  <div class="carousel-inner">
-  
-    <div class="carousel-item active">
-      <img src='displayFile?fileName=${list.get(0).fn}' alt="Los Angeles" width="300" height="200">
-    </div>
-    <c:forEach items="${list }" var="boardVO">
-    <div class="carousel-item">
-    	<a href="#">크크</a>
-      <img src='displayFile?fileName=${boardVO.fn}' alt="Chicago" width="300" height="200">
-    </div>
-    </c:forEach>
-  </div> --%>
   
   <!-- Left and right controls -->
   <a class="carousel-control-prev" href="#demo" data-slide="prev">
@@ -62,47 +40,31 @@
   <a class="carousel-control-next" href="#demo" data-slide="next">
     <span class="carousel-control-next-icon"></span>
   </a>
-</div>
+
 
 <!-- Page Features -->
 
 <div class="row text-center">
-	<c:forEach items="${list }" var="boardVO">
+	<%-- <c:forEach items="${list }" var="reviewVO">
 	<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card h-100" id="attach">
-			<img class="card-img-top"  src='displayFile?fileName=${boardVO.fn }' alt="not image">
+			<img class="card-img-top" width="200px;" height="150px;"  src='displayFile?fileName=${reviewVO.fn }' alt="not image">
 			<div class="card-body">
-				<h4 class="card-title">${boardVO.pname }</h4>
+				<h4 class="card-title">${reviewVO.pname }</h4>
 				<p class="card-text">${boardVO.pinfo }</p>
 			</div>
 			<div class="card-footer">
 				<a href="detail?pno=${boardVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">리뷰</a>
-			</div>
-			
-			<div>
+				<i class="far fa-heart"></i>
+				<i class="far fa-bell"></i>
 			</div>
 		</div>
 	</div>
-</c:forEach>
-				<c:if test="${page.prev }">
-								<a	href="?pageNum=${page.startPage-1 }&keyword=${page.cri.keyword}">[이전]</a>
-							</c:if> <c:forEach begin="${page.startPage }" end="${page.endPage}"
-								var="num">
-								<%-- <a href="list?pageNum=${num }">${num }</a> --%>
-								<c:choose>
-									<c:when test="${page.cri.pageNum == num }">
-										<b><a
-											href="?pageNum=${num }&keyword=${page.cri.keyword}"
-											class="w3-bar-item w3-button w3-green">${num }</a></b>
-									</c:when>
-									<c:otherwise>
-										<a href="?pageNum=${num }&keyword=${page.cri.keyword}"
-											class="w3-bar-item w3-button">${num }</a>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach> <c:if test="${page.next }">
-								<a href="?pageNum=${page.endPage +1 }&keyword=${page.cri.keyword}">[다ㅁ음]</a>
-							</c:if>
+</c:forEach> --%>
+	<div>
+		<button type="button" >더보기</button>				
+	</div>
+			
 
 </div>
 </div>

@@ -51,12 +51,17 @@ public class ReviewServiceImpl implements ReviewService {
 		List list = rm.repListPage(pno, cri);
 		return list;
 	}
+	
 
 	@Override
 	public int repCount(int pno) throws Exception {
 		return rm.repCount(pno);
 	}
-
+	
+	@Override
+	public int revCount() throws Exception {
+		return rm.revCount();
+	}
 	@Override
 	public List<Integer> revCntHelpful(String writer) throws Exception {
 		return rm.revCntHelpful(writer);
@@ -70,6 +75,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public void Helpfuldis(int rno) throws Exception {
 		rm.Helpfuldis(rno);
+	}
+
+	@Override
+	public List<ReviewVO> revListPage(Criteria cri) throws Exception {
+		return rm.revListPage(cri);
 	}
 	
 }

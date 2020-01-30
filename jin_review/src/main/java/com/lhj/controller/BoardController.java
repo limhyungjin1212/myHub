@@ -21,6 +21,7 @@ import com.lhj.model.BoardVO;
 import com.lhj.model.Criteria;
 import com.lhj.model.LoginVO;
 import com.lhj.model.PageVO;
+import com.lhj.model.ReviewVO;
 import com.lhj.service.BoardService;
 import com.lhj.service.ReviewService;
 
@@ -31,11 +32,10 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@Autowired
-	private ReviewService rs;
-	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@RequestMapping(value="/test", method = RequestMethod.GET)
 	public void test() throws Exception{
@@ -43,23 +43,22 @@ public class BoardController {
 		
 	}
 	@RequestMapping(value="/main", method = RequestMethod.GET)
-	public String index(BoardVO boardVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
+	public String index(BoardVO boardVO,ReviewVO reviewVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
 		logger.info("index.."+cri);
 		//List<BoardVO> list = boardService.boardList(); 
-		cri.setAmount(8);
-		logger.info("22.."+cri);
-		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
-				
+		
+		PageVO pv = new PageVO(cri, reviewService.revCount());
+		logger.info("pv.."+pv);	
+		
+		
 		List list = new ArrayList();
-		list = boardService.boardListAttach(cri);
-		logger.info("");
+		list = reviewService.revListPage(cri);
+		logger.info("리스트.."+list);
 		model.addAttribute("list", list);
 		model.addAttribute("page",pv);
 		
 		
-		logger.info(""+boardService.boardListAttach(cri));
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
-		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
 		
 		return "index";
 	}
@@ -106,7 +105,7 @@ public class BoardController {
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
 		model.addAttribute("detail",boardService.boardDetail(pno));
-		model.addAttribute("cnt",rs.repCount(pno));
+		//model.addAttribute("cnt",rs.repCount(pno));
 		
 		return "main";
 	}

@@ -20,7 +20,9 @@ public interface ReviewService {
 
 	// 댓글 조회 페이징
 	public List<ReviewVO> repListPage(int pno, Criteria cri) throws Exception;
-
+	
+	//댓글 조회 페이징
+	public List<ReviewVO> revListPage(Criteria cri) throws Exception;
 	// 댓글 총 갯수
 	public int repCount(int pno) throws Exception;
 	
@@ -31,4 +33,9 @@ public interface ReviewService {
 	public void HelpfulAdd(int rno) throws Exception;
 	//도움이 된 수 감소
 	public void Helpfuldis(int rno) throws Exception;
+	
+	//댓글 갯수
+	public int revCount() throws Exception;
+	
+	
 }

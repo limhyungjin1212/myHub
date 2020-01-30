@@ -40,8 +40,11 @@
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 
 <link rel="stylesheet" href="resources/css/upload.css">
+<!-- icon을 사용하기위한 소스  -->
 <script src="https://kit.fontawesome.com/474aec6043.js" crossorigin="anonymous"></script>
-
+<!-- bxslider 위한 소스  -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 </head>
 <body>
 	<div>

@@ -15,7 +15,7 @@
 
  .carousel-inner img {
     width: 25%;
-    height: 100%;
+    height: 300px;
   }
   .attach{
   	 list-style-type: none;
@@ -23,6 +23,13 @@
   .attach li{
   	 display: inline;
   }
+  .attachh{
+  	 list-style-type: none;
+  }
+  .attachh li{
+  	 display: inline;
+  }
+  
 </style>
 
 
@@ -40,10 +47,8 @@
     	<ul class="attach"></ul>
     </div>
     <div class="carousel-item">
-    	<ul class="attach"></ul>
-    </div>
-    <div class="carousel-item">
-    </div>
+    	<ul class="attachh"></ul>
+    </div> 
   </div>
 
   <!-- Left and right controls -->
@@ -135,9 +140,22 @@
 		</tr>
 		<tr>
 			<td>${detail.rate }
-			<c:forEach  begin="0" end="${detail.rate }" var="rateAvg">
-				<i class='fas fa-star'></i>
+			<c:forEach  begin="1" end="${detail.rate }" var="rateAvg">
+				<i class='fas fa-star' style='color :#99ccff;' ></i>
 			</c:forEach>
+			<c:choose>
+				<c:when test="${(detail.rate *2) % 2 eq 1}">
+					<i class="fas fa-star-half-alt" style='color :#99ccff;'></i>
+					<c:forEach begin="${detail.rate+1 }" end="4">
+						<i class='far fa-star' style='color :#99ccff;' ></i>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach begin="${detail.rate }" end="4">
+						<i class='far fa-star' style='color :#99ccff;' ></i>
+					</c:forEach>	
+				</c:otherwise>
+			</c:choose>
 			</td>
 			<td>리뷰 총 갯수 : ${cnt }</td>
 		</tr>
@@ -240,7 +258,7 @@
 					<div class="modal-content">
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4 class="modal-title">Modal Heading</h4>
+							<h4 class="modal-title">로그인</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 
@@ -285,7 +303,7 @@
   					}
   					if(this.rate !=5){ //5점이아니면 
 	  						for(var j=this.rate;j<5;j++){ 
-	  							str2 += "<i class='fas fa-star'></i> ";
+	  							str2 += "<i class='far fa-star'  style='color :#99ccff;'></i> ";
 	  						}	
 	  				}
 						
@@ -404,18 +422,24 @@ function getOriginalName(fileName){
 	
 
 var str = "";
+var strr = "";
 var pno = ${detail.pno};
 $.getJSON("detailJSON?pno=" + pno, function(data) {
 	console.log(data.length);
 	$(data).each(function(index,data) {
 		//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
-		// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.
-		str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/></li>";
-		 	
+		// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.	
+		
+		if(index < 4){
+			str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/></li>";	
+		}
+		if(index > 4){
+			strr += "<li><img class ='img-thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/></li>";
+		} 
 	});
 
 	$(".attach").append(str);
-
+	$(".attachh").append(strr);
 });
 </script>
 

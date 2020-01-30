@@ -7,12 +7,15 @@
 		height: 300px;
 		
 	}
+	
+	#selectBox{
+		width:400px;
+	}
 </style>
-<div>
-글쓰기 하기 위한 폼 입니다.
-<h1> <%=request.getRequestURI().substring(request.getContextPath().length())%></h1>
+<div class="container">
+<h1>글쓰기 하기 위한 폼 입니다.</h1>
 <form id = "registerForm" action="register" method="post" enctype="multipart/form-data">
-	<select id="selectBox" name="pcate">
+	<select id="selectBox" class="form-control" name="pcate">
 		<option value="병원">병원</option>
 		<option value="음식">음식</option>
 		<option value="제품">제품</option>
@@ -35,7 +38,6 @@
 	<br>
 	내용 : <textarea class="form-control" rows="10" cols="20" name="pinfo"></textarea> <br>
 	연락처 : <input type="text" name="ptel"> <br>
-	 파일 : <input type="file" name="filename">
 	 
 	<input type="submit" value="글쓰기">
 	<input type="button" onclick="location.href='main'" value="목록" >

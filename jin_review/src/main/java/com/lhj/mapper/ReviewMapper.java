@@ -24,6 +24,11 @@ public interface ReviewMapper {
 		//댓글 총 갯수
 		public int repCount(int pno) throws Exception;
 		
+		
+		public int revCount() throws Exception;
+		//댓글 조회 페이징
+		public List<ReviewVO> revListPage(Criteria cri) throws Exception;
+		
 		//리뷰 쓸때 파일 업로드
 		public void revAddAttach(String filename) throws Exception;
 		

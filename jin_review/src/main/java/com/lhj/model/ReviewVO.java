@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ReviewVO {
 	private int pno,rno;
+	private String pname;
 	private String content , writer;
 	private String rev_subject;
 	private String regdate;
@@ -20,6 +21,12 @@ public class ReviewVO {
 	
 	
 	
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
 	public int getHelpful() {
 		return helpful;
 	}
