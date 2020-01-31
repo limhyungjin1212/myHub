@@ -12,28 +12,23 @@
 		to action!</a>
 		
 		<!-- Topbar Search -->
-<form action="main" method="get"
-	class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-	<div class="input-group">
-		<%-- <input type="hidden" name="pageNum" value="${page.cri2.pageNum }"> --%>
-		<select>
-			<option></option>
-			<option>음식점</option>
-			<option>병원</option>
-			<option>제품</option>
-		</select> <input type="text" name="keyword"
-			class="form-control"
-			placeholder="Search for..." aria-label="Search"
-			aria-describedby="basic-addon2">
-		<div class="input-group-append">
-			<input class="btn btn-primary" type="submit" value="검색">
-		</div>
-	</div>
-</form>
 </header>
 
   
-  
+<div class="row">
+	<div class="col-md-4">
+		<img alt="" src="resources/image/health.jpg" class="img-thumbnail" >
+		<a href="productSearch?keyword=헬스&place=울산광역시">Gyms</a>
+	</div>
+	<div class="col-md-4">
+		<img alt="" src="resources/image/hotelthumbnail.jpg" class="img-thumbnail">
+		<a href="#">Hotels</a>
+	</div>
+	<div class="col-md-4">
+		<img alt="" src="resources/image/coffee1.jpg" class="img-thumbnail">
+		<a href="#">Coffee</a>
+	</div>
+</div>  
 
 <div class="row text-center">
 	<div class="col-md-12">
@@ -43,7 +38,7 @@
 	<c:forEach items="${plist }" var="pVO">
 		<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card h-100" id="attach">
-			<img class="card-img-top" width="200px;" height="150px;"  src='displayFile?fileName=${pVO.fn }' alt="not image">
+			<img class="card-img-top " src='displayFile?fileName=${pVO.fn }' alt="not image">
 			<div class="card-body">
 				<h4 class="card-title"><a href="detail?pno=${pVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${pVO.pname }</a></h4>
 				<c:forEach  begin="1" end="${pVO.rate }" var="rateAvg">
@@ -198,6 +193,7 @@ var pageNum = ${page.cri.pageNum};
 		});
 		
 	});
+	
 
 </script>
 

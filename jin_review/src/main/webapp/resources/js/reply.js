@@ -203,7 +203,6 @@ $(document)
 
 						var loginInfo = $("#loginfo").val();
 
-						alert(loginInfo);
 						console.log(loginInfo);
 						if (loginInfo == null || loginInfo == "") {
 							location.href = 'user/login';
@@ -215,7 +214,6 @@ $(document)
 								contentType : "application/json;charset=utf-8",
 								success : function(data) {
 									if (data == 'success') {
-										alert("도움 된 수 증가 ");
 										getPageList(replyPage);
 									}
 								},

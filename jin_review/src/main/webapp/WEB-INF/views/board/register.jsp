@@ -15,17 +15,21 @@
 <div class="container">
 <h1>글쓰기 하기 위한 폼 입니다.</h1>
 <form id = "registerForm" action="register" method="post" enctype="multipart/form-data">
-	<select id="selectBox" class="form-control" name="pcate">
-		<option value="병원">병원</option>
-		<option value="음식">음식</option>
-		<option value="제품">제품</option>
-		<option value="헬스장">헬스장</option>
-		<option value="세탁소">세탁소</option>
-		<option value="호텔">호텔</option>
-		<option value="pc방">pc방</option>
+	<div class="row">
+		<label class="col-sm-1 control-label">카테고리</label>
+			<select id="selectBox" class="form-control col-lg-2" name="pcate">
+				<option value="병원">병원</option>
+				<option value="음식">음식</option>
+				<option value="제품">제품</option>
+				<option value="헬스장">헬스장</option>
+				<option value="세탁소">세탁소</option>
+				<option value="호텔">호텔</option>
+				<option value="pc방">pc방</option>
+			</select>
 		
-	</select>
-	제목 : <input type="text" name="pname" required> <br>
+		<label class="col-sm-1 control-label">이름</label>
+			<input type="text" id="pname" class="col-sm-4 form-control" name="pname" required> 
+	</div>
 	
   <div id="pac-container">
         <input id="pac-input" name="place" type="text"
@@ -40,7 +44,7 @@
     </div>
 	<br>
 	내용 : <textarea class="form-control" rows="10" cols="20" name="pinfo"></textarea> <br>
-	연락처 : <input type="text" name="ptel"> <br>
+	연락처 : <input type="text" class="form-control" name="ptel"> <br>
 	 
 	<input type="submit" value="글쓰기">
 	<input type="button" onclick="location.href='main'" value="목록" >

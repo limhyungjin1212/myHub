@@ -5,7 +5,9 @@ public class Criteria {
 	private int amount;
 
 	private String keyword;
-
+	private String place;
+	
+	
 	public Criteria() {
 		this(1, 10);
 	}
@@ -39,9 +41,19 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 
+	
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
 	@Override
 	public String toString() {
-		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", keyword=" + keyword + "]";
+		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", keyword=" + keyword + ", place=" + place
+				+ "]";
 	}
 	
 	

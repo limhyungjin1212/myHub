@@ -84,7 +84,11 @@ public class BoardVO {
 	
 	
 	public String getFn() {
-		return fn;
+		String front = fn.substring(0,12);
+		String end = fn.substring(14);
+		System.out.println(front+end);
+		
+		return front+end;
 	}
 	public void setFn(String fn) {
 		this.fn = fn;

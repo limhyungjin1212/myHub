@@ -47,10 +47,10 @@
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid">
+<div class="wrap">
+	<div>
 		<jsp:include page="include/header.jsp"></jsp:include>
 	</div>
-
 
 	<!-- Page Content -->
 	<div class="container-fluid">
@@ -76,6 +76,9 @@
 					<c:when test="${uri == '/detail' }">
 						<%@ include file="board/detail.jsp"%>
 					</c:when>
+					<c:when test="${uri == '/productSearch' }">
+						<%@ include file="board/productSearch.jsp"%>
+					</c:when>
 					<c:otherwise>
 						<%@ include file="include/container.jsp"%>
 					</c:otherwise>
@@ -93,6 +96,6 @@
 	<footer class="py-5 bg-dark">
 		<jsp:include page="include/footer.jsp"></jsp:include>
 	</footer>
-
+</div>
 </body>
 </html>

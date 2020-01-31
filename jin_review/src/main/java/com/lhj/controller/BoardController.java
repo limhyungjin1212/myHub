@@ -179,7 +179,24 @@ public class BoardController {
 	
 	
 	
-	
+	@RequestMapping(value = "productSearch" , method = RequestMethod.GET)
+	public String prosearch(HttpServletRequest req , Criteria cri,Model model) throws Exception {
+		logger.info("search?cri="+cri);
+		
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		
+		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
+		logger.info("pv="+pv);
+		List searchList = new ArrayList();
+		searchList = boardService.boardListAttach(cri);
+		logger.info("searchList="+searchList);
+		
+		model.addAttribute("searchList", searchList);
+		model.addAttribute("page", pv);
+		
+		
+		return "main";
+	}
 	
 	
 	

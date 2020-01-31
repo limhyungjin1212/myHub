@@ -83,6 +83,12 @@ public class PageVO {
 		this.cri = cri;
 	}
 
+	@Override
+	public String toString() {
+		return "PageVO [startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
+				+ ", total=" + total + ", cri=" + cri + "]";
+	}
+
 	
 	
 }
