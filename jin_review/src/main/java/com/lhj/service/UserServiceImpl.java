@@ -22,5 +22,15 @@ public class UserServiceImpl implements UserService {
 	public void join(UserVO uvo) throws Exception {
 		um.join(uvo);
 	}
+
+	@Override
+	public int nameCheck(String uname) throws Exception {
+		return um.nameCheck(uname);
+	}
+
+	@Override
+	public int idCheck(String uid) throws Exception {
+		return um.idCheck(uid);
+	}
 	
 }

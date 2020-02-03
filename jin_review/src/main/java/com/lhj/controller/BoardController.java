@@ -177,7 +177,7 @@ public class BoardController {
 		return "redirect:main";
 	}
 	
-	
+	//commit
 	
 	@RequestMapping(value = "productSearch" , method = RequestMethod.GET)
 	public String prosearch(HttpServletRequest req , Criteria cri,Model model) throws Exception {

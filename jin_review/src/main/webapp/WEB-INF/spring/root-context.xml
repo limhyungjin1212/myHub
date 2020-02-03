@@ -12,9 +12,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
 			<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul"></property> -->
@@ -29,7 +29,7 @@
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
 		destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
-	</bean>	
+	</bean>
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
@@ -45,33 +45,20 @@
 	</bean>
 
 	<!-- Gmail 설정 -->
-	<!-- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
-		<property name="host" value="smtp.gmail.com"></property> <property name="port" 
-		value="587"></property> <property name="username" value="limhyungjin1212@gmail.com"></property> 
-		<property name="password" value="dla3515@"></property> <property name="javaMailProperties"> 
-		<props> <prop key="mail.smtp.auth">true</prop> <prop key="mail.smtp.starttls.enable">true</prop> 
-		</props> </property> </bean> -->
-	<!-- naver 설정 -->
-
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.naver.com"></property>
-		<property name="port" value="465"></property>
-		<property name="username" value="dkatl12"></property>
-		<property name="password" value="gudwls12!@"></property>
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="limhyungjin1212@gmail.com"></property>
+		<property name="password" value="dlagudwls12@"></property>
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
-				<!--보안 관련 SSL과 관련된 설정 -->
-				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
-				<prop key="mail.smtps.ssl.trust">*</prop>
-				<prop key="mail.debug">true</prop>
-				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
 			</props>
-
 		</property>
 	</bean>
+
 
 	<!--트랜잭션 설정 시작 -->
 	<bean id="transactionManager"
@@ -81,12 +68,12 @@
 
 	<tx:annotation-driven />
 	<!-- 트랜잭션 설정 끝 -->
-	
-	
+
+
 	<context:component-scan
 		base-package="com.lhj.mapper"></context:component-scan>
 	<context:component-scan
 		base-package="com.lhj.service"></context:component-scan>
 	<context:component-scan
-		base-package="com.lhj.aop"></context:component-scan>	
+		base-package="com.lhj.aop"></context:component-scan>
 </beans>

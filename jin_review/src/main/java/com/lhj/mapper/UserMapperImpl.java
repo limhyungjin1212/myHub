@@ -24,5 +24,16 @@ public class UserMapperImpl implements UserMapper{
 	public void join(UserVO uvo) throws Exception {
 		session.insert(namespace+".join",uvo);
 	}
+
+	@Override
+	public int nameCheck(String uname) throws Exception {
+		int result =  session.selectOne(namespace+".nameCheck",uname);
+		return result;
+	}
+
+	@Override
+	public int idCheck(String uid) throws Exception {
+		return session.selectOne(namespace+".idCheck",uid);
+	}
 	
 }

@@ -24,14 +24,10 @@
 	</select>
 	
 <sql id="keyword">
-		<if test="keyword != null">
 				where (pcate like concat('%',trim(#{keyword}),'%') or pname like concat('%',trim(#{keyword}),'%')) 
-		</if>
 </sql>
 <sql id="place">
-		<if test="place != null">
 				and place like concat('%',trim(#{place}),'%')  
-		</if>
 </sql>
 
 
@@ -88,7 +84,7 @@
 						<include refid="place"></include>
 						group by p.pno ) 
                         as B
-                order by B.regdate desc) as C 
+                order by  rand()) as C 
 			<![CDATA[
 			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
 		]]> 
