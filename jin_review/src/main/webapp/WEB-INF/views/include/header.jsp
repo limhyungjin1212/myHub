@@ -41,8 +41,8 @@
 			<form id="sform" action="productSearch" method="get"
 				class="d-none d-sm-inline-block form-inline navbar-search">
 				<div class="input-group">
-					<input type="hidden" name="pageNum" value="${page.cri.pageNum }">
-					
+					<input type="hidden" name="pageNum" value="1">
+						
 					<input type="text" size="70px" height="70px" id="category" name="keyword" class="form-control col-md-6"
 						list="cate" placeholder="Search for..." aria-label="Search"
 						aria-describedby="basic-addon2" value="">
@@ -77,6 +77,7 @@
 				<c:choose>
 					<c:when test="${login ne null }">
 						<label class="uinfo">${login.uname } 님 환영합니다!</label>
+						<a href="user/mypage">마이페이지</a>
 						<li class="nav-item active"><a class="nav-link"
 							href="user/logout">로그아웃</a></li>
 					</c:when>

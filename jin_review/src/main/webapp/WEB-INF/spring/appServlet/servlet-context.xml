@@ -42,7 +42,7 @@
 		</interceptor>
 		<interceptor>
 			<mapping path="/detail/*" />
-			<mapping path="replies/*" />
+			<mapping path="/main" />
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 		<!-- <interceptor>

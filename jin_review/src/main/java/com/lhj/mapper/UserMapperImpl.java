@@ -1,5 +1,9 @@
 package com.lhj.mapper;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,6 +38,23 @@ public class UserMapperImpl implements UserMapper{
 	@Override
 	public int idCheck(String uid) throws Exception {
 		return session.selectOne(namespace+".idCheck",uid);
+	}
+
+	@Override
+	public void keepLogin(String uid, String sessionId, Date next) {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("uid", uid);
+		paramMap.put("sessionId", sessionId);
+		paramMap.put("next", next);
+		
+		
+		session.update(namespace+".keepLogin",paramMap);
+	}
+
+	@Override
+	public UserVO checkUserWithSessionKey(String value) {
+		return session.selectOne(namespace+".checkUserWithSessionKey",value);
 	}
 	
 }

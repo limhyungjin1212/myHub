@@ -1,11 +1,13 @@
 package com.lhj.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -27,8 +29,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session = request.getSession();
 		
-		
-		Object userVO = modelAndView.getModel().get("userVO");
+		ModelMap modelMap = modelAndView.getModelMap();
+		//Object userVO = modelAndView.getModel().get("userVO");
+		Object userVO = modelMap.get("userVO");
 		
 		
 		System.out.println("userVO="+userVO);
@@ -37,14 +40,24 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("로그인한후"+uri);
 		if(userVO !=null) { //사용자의 정보가 있다면 HttpSession에 로그인 처리
 			logger.info("new login success");
-			System.out.println("로그인확인");
 			session.setAttribute(LOGIN, userVO); //세션에 회원 정보 저장
 			
-			if(uri !=null ) { //받아온 uri 가 null이 아닐경우 
-				response.sendRedirect("../"+uri);
-			} else {
-				response.sendRedirect("../main");//로그인 성공한 후 메인으로 이동
+			if(request.getParameter("useCookie") != null) { //받아온 쿠키가 널이 아니면
+				
+				Cookie loginCookie = new Cookie("loginCookie", session.getId());
+				loginCookie.setMaxAge(60 * 60 * 24 * 7); //일주일간 유지
+				loginCookie.setPath("/");
+				response.addCookie(loginCookie);
+				System.out.println("cookie...."+loginCookie.getValue());
+				System.out.println("cookie 경로...."+loginCookie.getPath());
 			}
+			Object dest = session.getAttribute("dest");
+			response.sendRedirect(dest != null ? (String) dest : "../main");	
+			
+			/*
+			 * if(uri !=null ) { //받아온 uri 가 null이 아닐경우 response.sendRedirect("../"+uri); }
+			 * else { response.sendRedirect("../main");//로그인 성공한 후 메인으로 이동 }
+			 */
 		}
 		
 		

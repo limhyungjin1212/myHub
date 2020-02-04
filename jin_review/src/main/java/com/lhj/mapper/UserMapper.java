@@ -1,5 +1,7 @@
 package com.lhj.mapper;
 
+import java.util.Date;
+
 import com.lhj.model.LoginVO;
 import com.lhj.model.UserVO;
 
@@ -17,4 +19,8 @@ public interface UserMapper {
 	//id 중복검사
 	public int idCheck(String uid) throws Exception;
 	
+	//로그인 유지
+	public void keepLogin(String uid,String sessionId,Date next);
+	
+	public UserVO checkUserWithSessionKey(String value);
 }

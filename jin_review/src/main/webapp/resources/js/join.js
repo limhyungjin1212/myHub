@@ -2,16 +2,6 @@
  * 
  */
 
-function idcheck() {
-	var id = document.getElementById("uid").value; // id가 id의 값
-	if (id.length < 8 || id.length > 12) { // id의 길이가 8보다 작거나 12보다 크면
-		document.getElementById("idcheck").innerHTML = "id는 8자이상 12자 이하로 입력하셔야 합니다.";
-	} else {
-		document.getElementById("idcheck").innerHTML = "멋진 아이디네요!";
-	}
-
-	var id_pattern = /[~!@#$%^&*()_+|<>?:{}]/;
-}
 function key() {
 	var str = document.getElementById("firstNum").value;
 	var pattern_num = /[0-9]/; // 숫자
@@ -39,7 +29,9 @@ function pwequalscheck() {
 
 	if (pw == pwchk) {
 		document.getElementById("pwequals").innerHTML = "비밀번호 일치";
-	} else {
+	} else if(pwchk == ""){
+		document.getElementById("pwequals").innerHTML = "비밀번호를 재입력 해주세요.";
+	}else {
 		document.getElementById("pwequals").innerHTML = "비밀번호가 다릅니다.";
 	}
 }
@@ -88,7 +80,7 @@ $(document).ready(function(){
 				success : function(data) {
 					console.log(data.length);
 					if(data == 0){
-						$("#nameCheckBox").text("아주 멋진 닉네임 입니다.!")
+						$("#nameCheckBox").text("아주 멋진 닉네임 입니다.!").css("color","green");
 					} else{
 						$("#nameCheckBox").text("닉네임이  이미 사용중입니다.").css("color","red");
 						$("#uname").val("");
@@ -138,7 +130,7 @@ $(document).ready(function(){
 					if (pw.length > 7 && pattern_num.test(pw) && pattern_eng.test(pw) && pattern_spc.test(pw) ) {
 						$("#pwcheck").text("비밀번호 사용 가능합니다.").css("color","green");
 						} else {
-							$("#pwcheck").text("비밀번호는 특수문자1개이상포함 , 영문자 와 숫자 포함하여야합니다.")
+							$("#pwcheck").text("8자리이상  비밀번호는 특수문자1개이상포함 , 영문자 와 숫자 포함하여야합니다.")
 							.css("color", "red");
 						}
 			});
@@ -202,8 +194,18 @@ $(document).ready(function(){
 						
 					});
 				
-				
-				
+
+				$("#uid").on("keydown",function(){
+					var uid = $("#uid").val();
+					
+					if(uid.length < 8 || uid.length >20 ){
+						$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
+						$("#uid").focus();
+					} else{
+						$("#idcheck").text("멋진 아이디네요!").css("color","green");
+					}
+					
+				});
 				
 				
 				

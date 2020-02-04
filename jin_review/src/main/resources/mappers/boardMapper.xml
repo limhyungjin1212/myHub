@@ -24,10 +24,14 @@
 	</select>
 	
 <sql id="keyword">
+		<if test="keyword != null">
 				where (pcate like concat('%',trim(#{keyword}),'%') or pname like concat('%',trim(#{keyword}),'%')) 
+		</if>
 </sql>
 <sql id="place">
+		<if test="place != null">
 				and place like concat('%',trim(#{place}),'%')  
+		</if>
 </sql>
 
 
@@ -51,7 +55,7 @@
 	<!-- 상세보기  -->
 	<select id="boardDetail" resultType="com.lhj.model.BoardVO">
 		<!--리뷰가 없을경우 null값을 0으로 대체하고 평균 평점을 round함수로 반올림한다.  -->
-		select ifnull(round(avg(rate),1),0) as rate , p.* from product_board p left join review r on p.pno=r.pno where p.pno= #{pno}
+		select ifnull(round(avg(rate),1),0) as rate , p.*,count(r.rno) as rcnt from product_board p left join review r on p.pno=r.pno where p.pno= #{pno}
 	</select>
 	
 	<!-- 수정  -->
@@ -82,9 +86,9 @@
 				from product_board p left join attach a on (p.pno = a.pno) left join review as re on (re.pno = p.pno) join (select @rownum:=0) as R 
 						<include refid="keyword"></include>
 						<include refid="place"></include>
-						group by p.pno ) 
+						group by p.pno order by rand() ) 
                         as B
-                order by  rand()) as C 
+                ) as C 
 			<![CDATA[
 			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
 		]]> 

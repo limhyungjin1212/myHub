@@ -1,6 +1,11 @@
 package com.lhj.controller;
 
+import java.util.Date;
+
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import com.lhj.model.LoginVO;
 import com.lhj.model.MailVO;
@@ -56,24 +62,51 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
-	public String loginPost(LoginVO lvo, Model model,RedirectAttributes rttr) throws Exception {
+	public String loginPost(LoginVO lvo, HttpSession session,Model model,RedirectAttributes rttr) throws Exception {
 		logger.info("loginPost..");
 		UserVO uv = us.login(lvo);
 		logger.info("loginPost" + uv);
+		
+		
 		if (uv == null) {
 			rttr.addFlashAttribute("msg","fail");
 			return "redirect:login";
 		}
+		
+		
 		model.addAttribute("userVO", uv);
+		
+		if(lvo.isUseCookie()) {
+			int amount = 60 * 60 * 24 * 7;
+			Date sessionlimit = new Date(System.currentTimeMillis()+(1000*amount));
+			us.keepLogin(uv.getUid(), session.getId(), sessionlimit);
+		}
+		
 		
 		return "user/loginPost";
 	}
 
 	@RequestMapping("logout")
-	public String logoutGet(HttpSession session) throws Exception {
+	public String logoutGet(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws Exception {
 		logger.info("logout");
-		session.removeAttribute("login");
-		session.invalidate();
+		
+		Object obj = session.getAttribute("login");
+		if(obj !=null) {
+			UserVO uv = (UserVO) obj;
+			
+			session.removeAttribute("login");
+			session.invalidate();
+			
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			
+			if(loginCookie != null) {
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(0);
+				response.addCookie(loginCookie);
+				us.keepLogin(uv.getUid(), session.getId(), new Date());
+			}
+		}
+		
 		return "redirect:/";
 
 	}
@@ -132,5 +165,14 @@ public class UserController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "mypage" , method = RequestMethod.GET)
+	public void mypageGET() throws Exception{
+		logger.info("mypage");
+		
+	}
+	
+	
+	
 
 }

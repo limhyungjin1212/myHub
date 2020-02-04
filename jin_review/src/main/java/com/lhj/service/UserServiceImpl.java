@@ -1,5 +1,7 @@
 package com.lhj.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int idCheck(String uid) throws Exception {
 		return um.idCheck(uid);
+	}
+
+	@Override
+	public void keepLogin(String uid, String sessionId, Date next) throws Exception {
+		um.keepLogin(uid, sessionId, next);
+	}
+
+
+	@Override
+	public UserVO checkLoginBefore(String value) {
+		return um.checkUserWithSessionKey(value);
 	}
 	
 }

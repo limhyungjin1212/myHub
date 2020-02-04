@@ -157,7 +157,7 @@
 				</c:otherwise>
 			</c:choose>
 			</td>
-			<td>리뷰 총 갯수 : ${cnt }</td>
+			<td>리뷰 총 갯수 : ${detail.rcnt }</td>
 		</tr>
 		<tr>
 			<td class="pcate">${detail.pcate }</td>
@@ -208,7 +208,7 @@
 	
 	
 	<c:choose>
-		<c:when test="${!empty login }">
+		<c:when test="${not empty login }">
 			<div>
 			<form id="rvWrite" name="rvWrite" enctype="multipart/form-data">
 				<input type="hidden" name="writer" id="newWriter" value="${login.uname}">
@@ -267,6 +267,7 @@
 							<input type="hidden" name="uri" value='detail?pno=${detail.pno}&pageNum=1&keyword='>
 								<input class="w3-input w3-border" type="text" name="uid" placeholder="아이디">
 								<input class="w3-input w3-border" type="password" name="upw" placeholder="비밀번호" >
+								<input type="checkbox" name="useCookie">로그인 유지<br>
 								<input class="w3-input w3-border" type="submit" value="로그인">
 							</form>
 						</div>

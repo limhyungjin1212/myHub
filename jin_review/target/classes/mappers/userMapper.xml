@@ -21,4 +21,15 @@
 		select count(*) from tbl_user where uid=#{uid}
 	</select>
 	
+	<!-- 로그인유지 -->
+	
+	<update id="keepLogin">
+		update tbl_user set sessionkey = #{sessionId} ,sessionlimit = #{next} where uid = #{uid}
+	</update>
+	
+	<select id="checkUserWithSessionKey" resultType="com.lhj.model.UserVO">
+		select * from tbl_user where sessionkey = #{value} and sessionlimit > now()
+	</select>
+	
+	
 </mapper>
