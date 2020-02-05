@@ -121,6 +121,7 @@ public class BoardController {
 		model.addAttribute("detail",boardService.boardDetail(pno));
 		//model.addAttribute("cnt",rs.repCount(pno));
 		
+		
 		return "main";
 	}
 	

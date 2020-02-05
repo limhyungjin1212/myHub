@@ -30,7 +30,7 @@
 	<select id="repListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,(select count(*) from review where writer= r.writer) as urCnt
 				from review r left join review_attach ra on (r.rno = ra.rno) join (select @rownum:=0) as rn 
 						where content like '%%' and r.pno = #{pno} group by r.rno ) 
                         as R order by R.rno desc)  as C 
@@ -41,9 +41,14 @@
 	
 <sql id="keyword">
 		<if test="keyword != null">
-				where rev_subject like concat('%',trim(#{keyword}),'%')
+				where r.rev_subject like concat('%',trim(#{keyword}),'%')
 		</if>
-</sql>	
+</sql>
+<sql id="revkeyword">
+		<if test="keyword != null">
+				and r.rev_subject like concat('%',trim(#{cri.keyword}),'%')
+		</if>
+</sql>
 	<!-- 댓글   -->
 	<select id="revListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
@@ -51,21 +56,38 @@
 		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,p.pname
 				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join (select @rownum:=0) as rn 
 						<include refid="keyword"></include>
-						 group by r.pno ) 
+						group by r.pno
+						) 
                         as R order by R.rno desc) as C 
                          <![CDATA[
 			where rownum >(#{pageNum}-1) * #{amount} and rownum<= #{amount} * #{pageNum} 
 		]]>
 	</select>
 	
-	
+	<!-- 마이페이지 나의 댓글   -->
+	<select id="revMyListPage" resultType="com.lhj.model.ReviewVO">
+		select * from (
+	select R.* , @rownum:=@rownum+1 as rownum from (
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,p.pname
+				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join (select @rownum:=0) as rn 
+					where r.writer = #{writer}
+						<include refid="revkeyword"></include>
+						) 
+                        as R order by R.rno desc) as C 
+                         <![CDATA[
+			where rownum >(#{cri.pageNum}-1) * #{cri.amount} and rownum<= #{cri.amount} * #{cri.pageNum} 
+		]]>
+	</select>
 	
 	<!--댓글 총 갯수  -->
 	<select id="revCount" resultType="int">
 		select count(*) from review
 	</select>
 	
-	
+	<!--마이페이지 나의댓글 총 갯수  -->
+	<select id="myRevCount" resultType="int">
+		select count(*) from review where writer = #{wirter}
+	</select>
 	<select id="repCount" resultType="int">
 		select count(*) from review where pno = #{pno}
 	</select>

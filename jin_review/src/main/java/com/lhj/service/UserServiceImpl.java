@@ -45,5 +45,10 @@ public class UserServiceImpl implements UserService {
 	public UserVO checkLoginBefore(String value) {
 		return um.checkUserWithSessionKey(value);
 	}
+
+	@Override
+	public UserVO userDetail(String uname) throws Exception {
+		return um.userDetail(uname);
+	}
 	
 }

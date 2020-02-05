@@ -26,8 +26,12 @@ public interface ReviewMapper {
 		
 		
 		public int revCount() throws Exception;
+		
 		//댓글 조회 페이징
 		public List<ReviewVO> revListPage(Criteria criteria) throws Exception;
+		
+		//댓글 조회 페이징
+		public List<ReviewVO> revMyListPage(String writer,Criteria criteria) throws Exception;
 		
 		//리뷰 쓸때 파일 업로드
 		public void revAddAttach(String filename) throws Exception;
@@ -40,5 +44,8 @@ public interface ReviewMapper {
 		
 		//도움이 된 수 감소
 		public void Helpfuldis(int rno) throws Exception;
+		
+		//마이페이지 나의 댓글 갯수
+		public int myRevCount(String writer) throws Exception;
 		
 }

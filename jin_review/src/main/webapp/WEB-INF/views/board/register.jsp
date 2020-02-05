@@ -11,8 +11,11 @@
 	#selectBox{
 		width:400px;
 	}
+	#reg{
+		margin-top : 200px;
+	}
 </style>
-<div class="container">
+<div class="container" id="reg">
 <h1>글쓰기 하기 위한 폼 입니다.</h1>
 <form id = "registerForm" action="register" method="post" enctype="multipart/form-data">
 	<div class="row">

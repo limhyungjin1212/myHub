@@ -85,9 +85,25 @@ public class ReviewMapperImpl implements ReviewMapper {
 	}
 
 	@Override
+	public List<ReviewVO> revMyListPage(String writer,Criteria criteria) throws Exception {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("writer", writer);
+		paramMap.put("cri", criteria);
+		
+		List<ReviewVO> revMyList = session.selectList(namespace+".revMyListPage",paramMap);
+		System.out.println("revmylist="+revMyList);
+		return revMyList;
+	}
+
+	@Override
+	public int myRevCount(String writer) throws Exception {
+		return session.selectOne(namespace+".myRevCount",writer);
+	}
+
+	@Override
 	public List<ReviewVO> revListPage(Criteria criteria) throws Exception {
-		List revlist = session.selectList(namespace+".revListPage",criteria);
-		System.out.println("revlist="+revlist);
+		List<ReviewVO> revlist = session.selectList(namespace+".revListPage",criteria);
 		return revlist;
 	}
 	

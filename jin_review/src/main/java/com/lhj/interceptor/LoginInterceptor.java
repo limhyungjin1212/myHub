@@ -52,7 +52,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				System.out.println("cookie 경로...."+loginCookie.getPath());
 			}
 			Object dest = session.getAttribute("dest");
-			response.sendRedirect(dest != null ? (String) dest : "../main");	
+			response.sendRedirect(dest != null ? (String) dest : "main");	
 			
 			/*
 			 * if(uri !=null ) { //받아온 uri 가 null이 아닐경우 response.sendRedirect("../"+uri); }

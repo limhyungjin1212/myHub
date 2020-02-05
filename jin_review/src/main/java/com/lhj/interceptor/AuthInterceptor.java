@@ -52,7 +52,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			saveDest(request); //이전에 갈려고하던 페이지
 			Cookie loginCookie = WebUtils.getCookie(request,"loginCookie"); //로그인쿠키라는값이 저장되어있는걸 가져온다.
 			//System.out.println("로그인쿠키1"+loginCookie.getValue());
-			System.out.println(loginCookie);
 			if(loginCookie != null) {
 				System.out.println("로그인쿠키2"+loginCookie.getValue());
 				UserVO uv = us.checkLoginBefore(loginCookie.getValue());
@@ -64,7 +63,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 			
-			response.sendRedirect("user/login");
+			response.sendRedirect("login");
 			return false;
 		}
 		return true;

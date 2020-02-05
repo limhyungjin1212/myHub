@@ -23,7 +23,7 @@
 	<div class="container">
 		<div class="text-center">
 			<h1>
-				<a href="../">JinsReview</a>
+				<a href="main">JinsReview</a>
 			</h1>
 		</div>
 

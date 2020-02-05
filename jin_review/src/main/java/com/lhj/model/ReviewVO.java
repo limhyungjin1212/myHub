@@ -12,10 +12,17 @@ public class ReviewVO {
 	private String fn;
 	private int helpful;
 	private String[] files;
+	private int urCnt; //리뷰의 작성자가 작성한 리뷰 총 갯수
 	
 	
 	
 	
+	public int getUrCnt() {
+		return urCnt;
+	}
+	public void setUrCnt(int urCnt) {
+		this.urCnt = urCnt;
+	}
 	public String getPname() {
 		return pname;
 	}
@@ -81,6 +88,12 @@ public class ReviewVO {
 	
 	
 	public String getFn() {
+		if(fn !=null) {
+			String front = fn.substring(0,12);
+			String end = fn.substring(14);
+			System.out.println("리뷰VO"+front+end);
+			return front+end;
+		}
 		return fn;
 	}
 	public void setFn(String fn) {

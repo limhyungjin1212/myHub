@@ -45,6 +45,11 @@
 <!-- bxslider 위한 소스  -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<style>
+	#cb{
+		margin-top:200px;
+	}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -53,7 +58,7 @@
 	</div>
 
 	<!-- Page Content -->
-	<div class="container-fluid">
+	<div class="container-fluid" id="cb">
 		<c:choose>
 			<c:when test="${login.uid eq 'admin'}">
 				<c:choose>
@@ -78,6 +83,9 @@
 					</c:when>
 					<c:when test="${uri == '/productSearch' }">
 						<%@ include file="board/productSearch.jsp"%>
+					</c:when>
+					<c:when test="${uri == '/userDetail' }">
+						<%@ include file="user/userDetail.jsp"%>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="include/container.jsp"%>

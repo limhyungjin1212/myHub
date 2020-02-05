@@ -37,12 +37,13 @@
 		class="com.lhj.interceptor.LoginInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
-			<mapping path="/user/loginPost" />
+			<mapping path="/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		<interceptor>
 			<mapping path="/detail/*" />
-			<mapping path="/main" />
+			<mapping path="/follow" />
+			<!-- <mapping path="/main" /> -->
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 		<!-- <interceptor>

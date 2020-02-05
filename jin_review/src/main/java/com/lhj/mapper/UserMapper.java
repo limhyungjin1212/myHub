@@ -23,4 +23,8 @@ public interface UserMapper {
 	public void keepLogin(String uid,String sessionId,Date next);
 	
 	public UserVO checkUserWithSessionKey(String value);
+	
+	//유저의 프로필
+	public UserVO userDetail(String uname) throws Exception;
+	
 }

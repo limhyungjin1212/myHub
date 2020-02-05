@@ -56,5 +56,10 @@ public class UserMapperImpl implements UserMapper{
 	public UserVO checkUserWithSessionKey(String value) {
 		return session.selectOne(namespace+".checkUserWithSessionKey",value);
 	}
+
+	@Override
+	public UserVO userDetail(String uname) throws Exception {
+		return session.selectOne(namespace+".userDetail",uname);
+	}
 	
 }

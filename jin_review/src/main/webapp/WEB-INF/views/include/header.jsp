@@ -23,7 +23,7 @@
 </style>
 <!-- Navigation -->
 	<nav id="navbar"
-		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		class="navbar navbar-expand-lg navbar-dark bg-light fixed-top">
 		<div class="container-fluid">
 		<a class="navbar-brand" href="main">SemoRE</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -77,15 +77,15 @@
 				<c:choose>
 					<c:when test="${login ne null }">
 						<label class="uinfo">${login.uname } 님 환영합니다!</label>
-						<a href="user/mypage">마이페이지</a>
+						<a href="mypage?writer=${login.uname }">마이페이지</a>
 						<li class="nav-item active"><a class="nav-link"
-							href="user/logout">로그아웃</a></li>
+							href="logout">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item active"><a class="nav-link"
-							href="user/join">회원가입</a></li>
+							href="join">회원가입</a></li>
 						<li class="nav-item active"><a class="nav-link"
-							href="user/login">로그인</a></li>
+							href="login">로그인</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>

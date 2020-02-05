@@ -115,12 +115,13 @@ public class ReplyController {
 			PageVO pv = new PageVO(cri, cnt);
 			List<ReviewVO> pagelist = rs.repListPage(pno, cri);
 
+			
 			logger.info("pagelist=" + pagelist);
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", pagelist);
 			map.put("page", pv);
-
+			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 			logger.info("entity = " + entity);
 		} catch (Exception e) {

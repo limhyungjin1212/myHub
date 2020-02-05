@@ -5,11 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../resources/css/join.css">
+<link rel="stylesheet" type="text/css" href="resources/css/join.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="../resources/js/join.js?ver=49"></script>
+<script src="resources/js/join.js?ver=49"></script>
 </head>
 <body>
 
@@ -113,7 +113,7 @@
 			<tr>
 				<td colspan="2" align="center">
 				<input type="submit" id="btnsubmit" class="btn btn-outline-primary" value="회원가입"> 
-				<input type="button" class="btn btn-outline-secondary" onclick="location.href='../'" value="취소"></td>
+				<input type="button" class="btn btn-outline-secondary" onclick="location.href='main'" value="취소"></td>
 			</tr>
 		</table>
 	</form>

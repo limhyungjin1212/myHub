@@ -1,6 +1,8 @@
 package com.lhj.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
@@ -17,22 +19,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.lhj.model.Criteria;
 import com.lhj.model.LoginVO;
 import com.lhj.model.MailVO;
+import com.lhj.model.PageVO;
+import com.lhj.model.ReviewVO;
 import com.lhj.model.UserVO;
+import com.lhj.service.ReviewService;
 import com.lhj.service.UserService;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
 	private UserService us;
 
+	@Autowired
+	private ReviewService rs;
+	
 	@Autowired
 	private JavaMailSender mailSender;
 	
@@ -40,9 +49,9 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(value = "join", method = RequestMethod.GET)
-	public void joinGet() {
+	public String joinGet() {
 		logger.info("joinGet..");
-
+		return "user/join";
 	}
 
 	@RequestMapping(value = "join", method = RequestMethod.POST)
@@ -50,11 +59,11 @@ public class UserController {
 		logger.info("joinPost.." + uvo);
 		us.join(uvo);
 		rttr.addFlashAttribute("msg","wsuccess");
-		return "redirect:/user/login";
+		return "redirect:/login";
 
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String loginGet() {
 		logger.info("loginGet..");
 
@@ -167,9 +176,43 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mypage" , method = RequestMethod.GET)
-	public void mypageGET() throws Exception{
-		logger.info("mypage");
+	public void mypageGET(Criteria cri,ReviewVO rv,Model model) throws Exception{
+		cri.setAmount(5);
+		PageVO pv = new PageVO(cri, rs.myRevCount(rv.getWriter()));
+		logger.info("pv"+pv);
+		List myRevList = new ArrayList(); 
+		myRevList = rs.revMyListPage(rv.getWriter(), cri);
+		logger.info("myRevList="+myRevList);
+		model.addAttribute("myRevList",myRevList);
+		model.addAttribute("page",pv);
 		
+		
+	}
+	
+	@RequestMapping(value="userDetail",method = RequestMethod.GET)
+	public String userDetail(@RequestParam String uname,HttpServletRequest req,Criteria cri,ReviewVO rv,Model model) throws Exception{
+		logger.info("+userDetail"+uname);
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		logger.info("userdetail req="+req.getRequestURI().substring(req.getContextPath().length()));
+		
+		PageVO pv = new PageVO(cri, rs.myRevCount(uname));
+		logger.info("pv"+pv);
+		List myRevList = new ArrayList(); 
+		myRevList = rs.revMyListPage(uname, cri);
+		
+		model.addAttribute("user",us.userDetail(uname));
+		
+		model.addAttribute("myRevList",myRevList);
+		model.addAttribute("page",pv);
+		
+		
+		
+		return "main";
+	}
+	
+	@RequestMapping(value ="follow" , method = RequestMethod.POST)
+	public void follow() {
+		logger.info("follow~~");
 	}
 	
 	

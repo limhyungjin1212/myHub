@@ -86,7 +86,8 @@
 					</div>
 					<tr>
 						<td><a href="register">글쓰기</a></td>
-						<td colspan="4"><c:if test="${page.prev }">
+						<td colspan="4">
+						<c:if test="${page.prev }">
 								<a
 									href="main?pageNum=${page.startPage-1 }&keyword=${page.cri.keyword}">[이전]</a>
 							</c:if> <c:forEach begin="${page.startPage }" end="${page.endPage}"

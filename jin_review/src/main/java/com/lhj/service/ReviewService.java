@@ -21,8 +21,12 @@ public interface ReviewService {
 	// 댓글 조회 페이징
 	public List<ReviewVO> repListPage(int pno, Criteria cri) throws Exception;
 	
+	//댓글 my 조회 페이징
+	public List<ReviewVO> revMyListPage(String writer,Criteria criteria) throws Exception;
+	
 	//댓글 조회 페이징
 	public List<ReviewVO> revListPage(Criteria criteria) throws Exception;
+	
 	// 댓글 총 갯수
 	public int repCount(int pno) throws Exception;
 	
@@ -37,5 +41,7 @@ public interface ReviewService {
 	//댓글 갯수
 	public int revCount() throws Exception;
 	
+	//마이페이지 나의 댓글 갯수
+	public int myRevCount(String writer) throws Exception;
 	
 }

@@ -31,5 +31,9 @@
 		select * from tbl_user where sessionkey = #{value} and sessionlimit > now()
 	</select>
 	
+	<!--유저의 정보  -->
+	<select id="userDetail" resultType="com.lhj.model.UserVO">
+		select uid,uname from tbl_user where uname=#{uname}
+	</select>
 	
 </mapper>

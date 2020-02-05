@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
 <!-- Jumbotron Header -->
 <div class="container">
 <header class="jumbotron my-4">
@@ -38,7 +37,7 @@
 	<c:forEach items="${plist }" var="pVO">
 		<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card h-100" id="attach">
-			<img class="card-img-top " src='displayFile?fileName=${pVO.fn }' alt="not image">
+			<img class="card-img-top" src='displayFile?fileName=${pVO.fn }' height="" alt="not image">
 			<div class="card-body">
 				<h4 class="card-title"><a href="detail?pno=${pVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${pVO.pname }</a></h4>
 				<c:forEach  begin="1" end="${pVO.rate }" var="rateAvg">
@@ -75,21 +74,21 @@
 	</div>
 	
 	<div class="col-md-4 ">
-		<h1>오른쪽 뭘 넣을까</h1>
-		<h1>오른쪽 뭘 넣을까</h1>
-		<h1>오른쪽 뭘 넣을까</h1>
-		<h1>오른쪽 뭘 넣을까</h1>
+		<table>
+			
+		</table>
 		
 	</div>
 </div>
 <!-- Page Features -->
 <div id="revBox" class="row text-center">
-	
+	<div class="card-columns">
 	<c:forEach items="${revlist }" var="reviewVO">
-	<div class="col-lg-3 col-md-6 mb-4">
-		<div class="card h-100" id="attach">
+	<!-- <div class="col-lg-3 col-md-6 mb-4"> -->
+	
+		<div class="card" id="attach">
 			<div class="card-header">
-				${reviewVO.writer }
+				<a href="userDetail?uname=${reviewVO.writer }">${reviewVO.writer }</a>
 				<c:choose>
 					<c:when test="${reviewVO.content eq null }">
 						사진만나온것입니다
@@ -100,7 +99,7 @@
 				</c:choose>	
 			</div>
 			<c:if test="${reviewVO.fn != null }">
-				<img class="card-img-top" width="200px;" height="150px;"  src='displayFile?fileName=${reviewVO.fn }' alt="not image">
+				<img class="card-img-top" style="width:100%" src='displayFile?fileName=${reviewVO.fn }' alt="not image">
 			</c:if>
 			<div class="card-body">
 				<h4 class="card-title">${reviewVO.pname }</h4>
@@ -128,8 +127,9 @@
 				<i class="far fa-bell"></i>
 			</div>
 		</div>
-	</div>
+	<!-- </div> -->
 </c:forEach>
+	</div>
 </div>
 	<div>
 		<button type="button" id="addRevList" class="btn btn-link btn-block">
@@ -153,15 +153,15 @@ var pageNum = ${page.cri.pageNum};
 				if(index == data.length){
 					return false;
 				}
-				str += "<div class='col-lg-3 col-md-6 mb-4'><div class='card h-100' id='attach'>";
-				str += "<div class='card-header'>"+data.writer;
+				str += "<div class='card' id='attach'>";
+				str += "<div class='card-header'><a href='userDetail?uname="+data.writer+"'>"+data.writer+"</a>";
 				  if(data.content == null){
 					  str +="사진만 나온 것입니다";
 				} else{
 					str += "리뷰적은것</div>";
 				} 
 				if(data.fn != null){
-					str += "<img class='card-img-top' width='200px;' height='150px;'  src='displayFile?fileName="+data.fn+"' alt='not image'>";
+					str += "<img class='card-img-top' style='width:100%'  src='displayFile?fileName="+data.fn+"' alt='not image'>";
 				}		
 				str += "<div class='card-body'><h4 class='card-title'>"+data.pname+"</h4>";
 				for(var i =1; i<=data.rate;i++){
@@ -180,7 +180,7 @@ var pageNum = ${page.cri.pageNum};
 				str += "<p class='card-text'>"+data.content+"</p></div>";
 				str += "<div class='card-footer'><a href='detail?pno="+data.pno+"&pageNum=${rpage.cri.pageNum}&keyword=${rpage.cri.keyword}'>리뷰</a>";
 				str += "<i class='far fa-heart'></i><i class='far fa-bell'></i></div>" ;
-				str += "</div></div>";
+				str += "</div>";
 				
 			});
 			console.log(str);
@@ -188,7 +188,7 @@ var pageNum = ${page.cri.pageNum};
 				$("#addRevList").hide();
 			}
 			
-			$("#revBox").append(str);
+			$(".card-columns").append(str);
 			pageNum++;
 		});
 		

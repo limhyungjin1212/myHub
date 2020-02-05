@@ -294,8 +294,12 @@
   			console.log(data.length);
   			var str2 = "";
   			$(data.list).each(function(){
-  				str2 += "<li data-rno='"+this.rno+"' class='replyLi'>"
-  					+this.writer + "<br>";
+  				str2 += "<div class='row p-3 my-3 border'><div class='col-md-2'><div class='card'>";
+  				str2 += "<img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'>";
+  			    str2 += "<div class='card-body'><h4 class='card-title'>"+this.writer + "</h4>";
+  			    str2 += "<p class='card-text'>"+this.urCnt+" 리뷰 갯수</p>";
+  			    str2 += "<a href='userDetail' class='btn btn-primary'>follow</a></div></div></div>";
+  				str2 +=	"<div class='col-md-9'><li data-rno='"+this.rno+"' class='replyLi'><br>";
   					
   					
   					for(var i=0; i<this.rate;i++){ //댓글의 별점에따른 별 갯수
@@ -308,7 +312,7 @@
 	  				}
 						
   					
-  					str2 += ""+this.regdate+"<br>도움이 된 수 :"+this.helpful+"리뷰 작성 건수 : <br>"  
+  					str2 += ""+this.regdate+"<br>도움이 된 수 :"+this.helpful+"<br>"  
   					
 					if(this.fn !=null){ //첨부파일이 있으면
 						str2 +="<img class ='thumbnail'  src='displayFile?fileName="+this.fn+"'/>"
@@ -317,9 +321,9 @@
   					str2 +="<br><span>도움이 되셧나요? <button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm'>도움이 돼요</button>" 
   						+"<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'>도움 안 돼요</button> </span>";
 				if(loginfo == this.writer){
-					str2+="<button id='btnUpdate'>수정</button></li>";
+					str2+="<button id='btnUpdate'>수정</button></li></div></div>";
 					} else{
-						str2+="</li>";
+						str2+="</li></div></div>";
 					}
   			});
   			$("#replies").html(str2);
