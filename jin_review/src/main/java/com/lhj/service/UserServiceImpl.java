@@ -1,6 +1,7 @@
 package com.lhj.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserVO userDetail(String uname) throws Exception {
 		return um.userDetail(uname);
+	}
+
+	@Override
+	public void follow(String uname, String myname) throws Exception {
+		um.follow(uname, myname);
+	}
+
+	@Override
+	public List<UserVO> followList(String uid) throws Exception {
+		return um.followList(uid);
+	}
+
+	@Override
+	public List<UserVO> followerList(String uid) throws Exception {
+		return um.followerList(uid);
 	}
 	
 }

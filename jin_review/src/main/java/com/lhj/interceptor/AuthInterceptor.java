@@ -42,7 +42,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
 		
-		
 		HttpSession session = request.getSession();
 		
 		if(session.getAttribute("login") == null) {//세션에 로그인이라고된 정보가 널 일경우 
@@ -63,7 +62,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 			
-			response.sendRedirect("login");
+			response.sendRedirect("./login");
 			return false;
 		}
 		return true;

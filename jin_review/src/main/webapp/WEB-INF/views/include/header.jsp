@@ -38,7 +38,7 @@
 				class="btn btn-link d-md-none rounded-circle mr-3">
 				<i class="fa fa-bars"></i>
 			</button>
-			<form id="sform" action="productSearch" method="get"
+			<form autocomplete="off" id="sform" action="productSearch" method="get"
 				class="d-none d-sm-inline-block form-inline navbar-search">
 				<div class="input-group">
 					<input type="hidden" name="pageNum" value="1">
@@ -77,7 +77,7 @@
 				<c:choose>
 					<c:when test="${login ne null }">
 						<label class="uinfo">${login.uname } 님 환영합니다!</label>
-						<a href="mypage?writer=${login.uname }">마이페이지</a>
+						<a href="mypage?uid=${login.uid }&uname=${login.uname}">마이페이지</a> 
 						<li class="nav-item active"><a class="nav-link"
 							href="logout">로그아웃</a></li>
 					</c:when>

@@ -117,6 +117,7 @@ public class BoardController {
 	public String detailGet(HttpServletRequest req,@RequestParam int pno,Model model) throws Exception {
 		logger.info("detail"+pno);
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		logger.info("User="+req.getHeader("User-Agent"));
 		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
 		model.addAttribute("detail",boardService.boardDetail(pno));
 		//model.addAttribute("cnt",rs.repCount(pno));

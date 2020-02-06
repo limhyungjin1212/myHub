@@ -33,7 +33,24 @@
 	
 	<!--유저의 정보  -->
 	<select id="userDetail" resultType="com.lhj.model.UserVO">
-		select uid,uname from tbl_user where uname=#{uname}
+		select uid,uname,uf.*,r.* from tbl_user 
+		u left 	join  user_follow uf on(u.uid=uf.id)
+		 join (select id as follower from user_follow where follow=${uname}) as r
+		  where uname=${uname};
 	</select>
 	
+	
+	<!--follow 신청  -->
+	<insert id="follow">
+		insert into user_follow(id,follow) values(#{myname},#{uname})
+	</insert>	
+	
+	<!--팔로우 목록  -->
+	<select id="followList" resultType="com.lhj.model.UserVO">
+		select follow,u.* from user_follow uf,tbl_user u where uf.id=u.uid and id =#{uid};
+	</select>
+		<!--팔로우 목록  -->
+	<select id="followerList" resultType="com.lhj.model.UserVO">
+		select id,u.* from user_follow uf,tbl_user u where uf.id=u.uid and follow =#{uid};
+	</select>
 </mapper>

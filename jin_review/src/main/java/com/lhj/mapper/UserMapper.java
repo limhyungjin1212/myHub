@@ -1,6 +1,7 @@
 package com.lhj.mapper;
 
 import java.util.Date;
+import java.util.List;
 
 import com.lhj.model.LoginVO;
 import com.lhj.model.UserVO;
@@ -27,4 +28,12 @@ public interface UserMapper {
 	//유저의 프로필
 	public UserVO userDetail(String uname) throws Exception;
 	
+	//팔로우신청
+	public void follow(String uname, String myname) throws Exception;
+	
+	//팔로우 목록
+	public List<UserVO> followList(String uid)throws Exception;
+	
+	//팔로워 목록
+	public List<UserVO> followerList(String uid)throws Exception;
 }

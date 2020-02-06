@@ -150,7 +150,7 @@ public class ReplyController {
 		return entity;
 	}
 	
-	/* 도움이 된 수 증가 */
+	/* 도움이 된 수 감소 */
 	@RequestMapping(value = "Helpfuldis/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> updateHelpfuldis(@PathVariable("rno") int rno) {
 

@@ -24,6 +24,7 @@
 		<div class="text-center">
 			<h1>
 				<a href="main">JinsReview</a>
+				<%session.setAttribute("ref", request.getHeader("referer"));%>
 			</h1>
 		</div>
 

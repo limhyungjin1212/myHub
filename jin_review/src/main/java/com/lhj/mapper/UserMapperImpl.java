@@ -2,6 +2,7 @@ package com.lhj.mapper;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -60,6 +61,27 @@ public class UserMapperImpl implements UserMapper{
 	@Override
 	public UserVO userDetail(String uname) throws Exception {
 		return session.selectOne(namespace+".userDetail",uname);
+	}
+
+	@Override
+	public void follow(String uname, String myname) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("uname", uname);
+		paramMap.put("myname", myname);
+		session.insert(namespace+".follow",paramMap);
+		
+	}
+
+	@Override
+	public List<UserVO> followList(String uid) throws Exception {
+		List list = session.selectList(namespace+".followList",uid);
+		return list;
+	}
+
+	@Override
+	public List<UserVO> followerList(String uid) throws Exception {
+		List list = session.selectList(namespace+".followerList",uid);
+		return list;
 	}
 	
 }

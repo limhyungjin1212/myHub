@@ -1,7 +1,24 @@
 package com.lhj.model;
 
 public class UserVO {
-	private String uid,upw,uname,umail,gender;
+	private String uid,upw,uname,umail,gender,follow,follower;
+	
+	
+	public String getFollower() {
+		return follower;
+	}
+
+	public void setFollower(String follower) {
+		this.follower = follower;
+	}
+
+	public String getFollow() {
+		return follow;
+	}
+
+	public void setFollow(String follow) {
+		this.follow = follow;
+	}
 
 	public String getUid() {
 		return uid;
@@ -48,7 +65,7 @@ public class UserVO {
 	@Override
 	public String toString() {
 		return "UserVO [uid=" + uid + ", upw=" + upw + ", uname=" + uname + ", umail=" + umail + ", gender=" + gender
-				+ "]";
+				+ ", follow=" + follow + ", follower=" + follower + "]";
 	}
 	
 }

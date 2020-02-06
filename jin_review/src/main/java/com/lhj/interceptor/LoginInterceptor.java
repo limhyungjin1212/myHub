@@ -32,12 +32,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		ModelMap modelMap = modelAndView.getModelMap();
 		//Object userVO = modelAndView.getModel().get("userVO");
 		Object userVO = modelMap.get("userVO");
-		
-		
+		String reqRef = request.getParameter("ref");
 		System.out.println("userVO="+userVO);
 		
-		String uri = (String) request.getAttribute("uri");
-		System.out.println("로그인한후"+uri);
 		if(userVO !=null) { //사용자의 정보가 있다면 HttpSession에 로그인 처리
 			logger.info("new login success");
 			session.setAttribute(LOGIN, userVO); //세션에 회원 정보 저장
@@ -51,7 +48,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				System.out.println("cookie...."+loginCookie.getValue());
 				System.out.println("cookie 경로...."+loginCookie.getPath());
 			}
-			Object dest = session.getAttribute("dest");
+			Object dest = session.getAttribute("ref");
+			System.out.println("reqRef"+reqRef);
+			if(reqRef !=null && !reqRef.equals("")) {
+				System.out.println("aa??");
+				dest = reqRef;
+			}
+			System.out.println("dest="+dest);
 			response.sendRedirect(dest != null ? (String) dest : "main");	
 			
 			/*
@@ -67,11 +70,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
 		
-		String uri = request.getParameter("uri");
-		System.out.println("uri="+uri);
-		request.setAttribute("uri", uri);
+		
 		
 		HttpSession session = request.getSession();
+		
+		
 		if(session.getAttribute(LOGIN) !=null) { //기존에 로그인 했엇다면 로그인 정보 삭제
 			logger.info("clear login data before");
 			session.removeAttribute(LOGIN);
