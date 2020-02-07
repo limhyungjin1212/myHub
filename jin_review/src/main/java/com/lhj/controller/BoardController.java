@@ -201,7 +201,10 @@ public class BoardController {
 	}
 	
 	
-	
+	@RequestMapping(value="reviewUpdate", method = RequestMethod.GET)
+	public String reviewUpdate() {
+		return "board/reviewUpdate";
+	}
 	
 	
 	

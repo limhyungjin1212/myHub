@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.lhj.model.Criteria;
 import com.lhj.model.PageVO;
@@ -134,13 +135,12 @@ public class ReplyController {
 	
 	/* 도움이 된 수 증가 */
 	@RequestMapping(value = "Helpful/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
-	public ResponseEntity<String> updateHelpful(@PathVariable("rno") int rno) {
-
-		logger.info("helpful?? :" + rno);
+	public ResponseEntity<String> updateHelpful(@PathVariable int rno ,@RequestBody String uname ) {
+		logger.info("도움이된수증가로 오는건가?" + rno+uname);
 		ResponseEntity<String> entity = null;
 
 		try {
-			rs.HelpfulAdd(rno);
+			rs.HelpfulAdd(rno,uname);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

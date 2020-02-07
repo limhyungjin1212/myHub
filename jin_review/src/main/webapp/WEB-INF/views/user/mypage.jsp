@@ -76,7 +76,7 @@ $(function() {
 				<table class="table">
 					<c:forEach items="${myRevList }" var="reviewVO">
 						<tr>
-							<td width="30%"><a href="../detail?pno=${reviewVO.pno }">${reviewVO.pname }</a></td>
+							<td width="30%"><a href="detail?pno=${reviewVO.pno }">${reviewVO.pname }</a></td>
 							
 							<td width="70%">
 							<c:forEach begin="1" end="${reviewVO.rate }" var="rateAvg">

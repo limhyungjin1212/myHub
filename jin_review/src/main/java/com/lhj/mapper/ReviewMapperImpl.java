@@ -75,8 +75,11 @@ public class ReviewMapperImpl implements ReviewMapper {
 	}
 
 	@Override
-	public void HelpfulAdd(int rno) throws Exception {
-		session.update(namespace+".HelpfulAdd",rno);
+	public void HelpfulAdd(int rno,String uname) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("rno", rno);
+		paramMap.put("uname", uname);
+		session.insert(namespace+".HelpfulAdd",paramMap);
 	}
 
 	@Override

@@ -209,11 +209,13 @@ public class UserController {
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info("userdetail req=" + req.getRequestURI().substring(req.getContextPath().length()));
 
+		
 		PageVO pv = new PageVO(cri, rs.myRevCount(uname));
 		logger.info("pv" + pv);
 		List myRevList = new ArrayList();
 		myRevList = rs.revMyListPage(uname, cri);
 
+		
 		model.addAttribute("user", us.userDetail(uname));
 		logger.info("user="+us.userDetail(uname));
 		model.addAttribute("myRevList", myRevList);

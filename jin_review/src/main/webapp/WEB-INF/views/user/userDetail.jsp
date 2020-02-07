@@ -5,12 +5,13 @@
 
 <h1>${uri }</h1>
 <h1>유저 디테일</h1>
-<h1>팔로워 :${user.follower }</h1>
+<h1>유저의 id :${user.uid }</h1>
+<h1>
+</h1>
 <h1>로그인아이디 :${login.uid }</h1>
 <h1>
-<c:if test="${user.follower }">
+
 	<button type="button" id="followBtn" class="btn btn-primary">팔로우 신청</button>
-	</c:if>
 </h1>
 
 <script>
@@ -40,7 +41,8 @@
 				success: function(data){
 					console.log(data);
 					if(data =="success"){
-						alert("팔로우 성공");	
+						alert("팔로우 성공");
+						$("#followBtn").attr("disabled",true);
 					}
 				},error : function(err) {
 					alert("팔로우 실패");
@@ -105,6 +107,13 @@
 					<tr>
 						<td width="70%">${reviewVO.content }</td>
 						<td width="30%"></td>
+					</tr>
+					<tr>
+						<td>
+							<c:if test="${(reviewVO.fn) ne null}">
+								<img class ='img-thumbnail' src='displayFile?fileName=${reviewVO.fn }'/>
+								</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td>멋져요</td>

@@ -34,7 +34,7 @@ public interface ReviewService {
 	public List<Integer> revCntHelpful(String writer) throws Exception;
 	
 	//도움이 된 수 증가
-	public void HelpfulAdd(int rno) throws Exception;
+	public void HelpfulAdd(int rno,String uname) throws Exception;
 	//도움이 된 수 감소
 	public void Helpfuldis(int rno) throws Exception;
 	

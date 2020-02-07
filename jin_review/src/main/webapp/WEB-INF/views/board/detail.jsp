@@ -141,10 +141,12 @@
 					<td><strong>${detail.pname }</strong></td>
 				</tr>
 				<tr>
-					<td>${detail.rate }<c:forEach begin="1" end="${detail.rate }"
+					<td>${detail.rate }
+					<c:forEach begin="1" end="${detail.rate }"
 							var="rateAvg">
 							<i class='fas fa-star' style='color: #99ccff;'></i>
-						</c:forEach> <c:choose>
+						</c:forEach> 
+					<c:choose>
 							<c:when test="${(detail.rate *2) % 2 eq 1}">
 								<i class="fas fa-star-half-alt" style='color: #99ccff;'></i>
 								<c:forEach begin="${detail.rate+1 }" end="4">
@@ -209,15 +211,18 @@
 		<c:when test="${not empty login }">
 			<div>
 				<form id="rvWrite" name="rvWrite" enctype="multipart/form-data">
-					<input type="hidden" name="writer" id="newWriter"
-						value="${login.uname}"> <input type="hidden" name="pno"
-						id="newPno" value="${detail.pno }"> 리뷰 <span class="rate">
-						<i class='fas fa-star'></i> <i class='fas fa-star'></i> <i
-						class='fas fa-star'></i> <i class='fas fa-star'></i> <i
-						class='fas fa-star'></i>
-					</span> <br> <input type="hidden" id="rate" name="rate" value="1">
+					<input type="hidden" name="writer" id="newWriter" value="${login.uname}">
+					 <input type="hidden" name="pno" id="newPno" value="${detail.pno }"> 리뷰 
+					 <span class="rate">
+					 	<i class='fas fa-star'></i> 
+					 	<i class='fas fa-star'></i> 
+					 	<i class='fas fa-star'></i> 
+					 	<i class='fas fa-star'></i> 
+					 	<i class='fas fa-star'></i>
+					</span> <br> 
+					<input type="hidden" id="rate" name="rate" value="1">
 					<input type="text" class="form-control" id="rev_subject"
-						name="rev_subject" placeholder="한줄 요약을 해주세요"><br>
+						name="rev_subject" autocomplete="off" placeholder="한줄 요약을 해주세요"><br>
 					<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5"
 						name="content" id="newReplyText"></textarea>
 
@@ -293,17 +298,14 @@
 		var pno = ${detail.pno};
 		var loginfo = document.getElementById("loginfo").value;
 
-		function getPageList(page) {
-			$
-					.getJSON(
-							"replies/" + pno + "/" + page,
-							function(data) { //getJSON으로 데이터를 불러온다.
+		var btnHelp = true;
+		
+		function getPageList(page,btnHelp) {
+			$.getJSON("replies/" + pno + "/" + page,function(data) { //getJSON으로 데이터를 불러온다.
 								console.log(data.length);
 								var str2 = "";
-								$(data.list)
-										.each(
-												function() {
-													str2 += "<div class='row p-3 my-3 border'><div class='col-md-2'><div class='card'>";
+								$(data.list).each(function() {
+													str2 += "<div class='row p-2 my-3 border'><div class='col-md-2'><div class='card'>";
 													str2 += "<img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'>";
 													str2 += "<div class='card-body'><h4 class='card-title'>"
 															+ this.writer
@@ -311,41 +313,46 @@
 													str2 += "<p class='card-text'>"
 															+ this.urCnt
 															+ " 리뷰 갯수</p>";
-													str2 += "<a href='userDetail?uname="
-															+ this.writer
-															+ "' class='btn btn-primary'>follow</a></div></div></div>";
-													str2 += "<div class='col-md-9'><li data-rno='"+this.rno+"' class='replyLi'><br>";
+													str2 += "<a href='userDetail?uname="+this.writer+"' class='btn btn-primary' >follow</a></div></div></div>";
+													str2 += "<div class='col-md-10 border'><li data-rno='"+this.rno+"' class='replyLi'><br><span>"+this.rate+"</span>";
 
 													for (var i = 0; i < this.rate; i++) { //댓글의 별점에따른 별 갯수
-														str2 += "<i class='fas fa-star' style='color :#99ccff;'></i> ";
+														str2 += "<i class='fas fa-star' style='color :#99ccff;'></i>";
 													}
 													if (this.rate != 5) { //5점이아니면 
 														for (var j = this.rate; j < 5; j++) {
-															str2 += "<i class='far fa-star'  style='color :#99ccff;'></i> ";
+															str2 += "<i class='far fa-star'  style='color :#99ccff;'></i>	 ";
 														}
 													}
 
 													str2 += "" + this.regdate
-															+ "<br>도움이 된 수 :"
-															+ this.helpful
 															+ "<br>"
+															+ this.helpful
+															+ "명 에게 도움됨<br>"
 
 													if (this.fn != null) { //첨부파일이 있으면
-														str2 += "<img class ='img-thumbnail' src='displayFile?fileName="
+														str2 += "<img class ='img-thumbnail' id='revImg' style='width:150px; height:150px;' src='displayFile?fileName="
 																+ this.fn
 																+ "'/>"
 													}
-													str2 += "<br><span><strong>"
+													str2 += "<br><p><strong>"
 															+ this.rev_subject
-															+ "</strong></span><br><br><span>"
-															+ this.content
-															+ "</span>"
-													str2 += "<br><span>도움이 되셧나요? <button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm'>도움이 돼요</button>"
-															+ "<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'>도움 안 돼요</button> </span>";
+															+ "</strong></p><br><br>"
+															+ "<span>"+this.content+"</span>";
+															
+													
 													if (loginfo == this.writer) {
-														str2 += "<button id='btnUpdate'>수정</button></li></div></div>";
+														str2 += "<button type='button' class='btn btn-outline-info' data-toggle='modal' data-target='#modDiv' id='btnUpdate'>수정</button></p></li></div></div>";
 													} else {
-														str2 += "</li></div></div>";
+														str2 += "<p>리뷰가 도움이 되셧나요?";
+														if(btnHelp){
+															str2 += "<button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm' disabled ><small>도움이 돼요</small></button>"	
+															+ "<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'><small>도움 안 돼요</small></button>";
+														} else{
+															str2 += "<button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm' ><small>도움이 돼요</small></button>"	
+																+ "<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm' disabled><small>도움 안 돼요</small></button>";
+														}
+														str2 += "</p></li></div></div>";
 													}
 												});
 								$("#replies").html(str2);
@@ -397,23 +404,65 @@
 			$("#rate").val(j + 1);
 
 		});
+		
+		
+		
+	
+		
+		
 	</script>
 
 
 	<button onclick="location.href='main'">목록aa</button>
 
-	<div id="modDiv">
-		<div class="modal-title"></div>
-		<div>
-			<input type="text" id="replytext">
-		</div>
-		<div>
-			<button id="replyModBtn">수정</button>
-			<button id="replyDelBtn">삭제</button>
-			<button id="closeBtn">닫기</button>
-		</div>
-	</div>
+	
 </div>
+
+
+
+
+<!-- The Modal -->
+			<div class="modal" id="modDiv">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">수정</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<h1>모달수정?</h1>
+							<div id="updateDiv">
+							<span id="up_rate">
+					 	
+							</span> 
+					<br> 
+						
+					<input type="text" class="form-control" id="up_rev_subject" name="rev_subject" autocomplete="off" placeholder="한줄 요약을 해주세요"><br>
+					<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5"
+						name="content" id="up_replytext"></textarea>
+					
+						</div>
+						<div align="right">
+							<button id="replyModBtn" class="btn btn-outline-primary">수정</button>
+							<button id="replyDelBtn" class="btn btn-outline-danger">삭제</button>
+							<button id="closeBtn" class="btn btn-outline-dark">닫기</button>
+						</div>
+						</div>
+
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
 <script>
 	function checkImageType(fileName) {
 		var pattern = /jpg|gif|png|jpeg/i;
@@ -446,19 +495,11 @@
 
 	var str = "";
 	var strr = "";
-	var pno = $
-	{
-		detail.pno
-	};
+	var pno = ${detail.pno};
 
-	$
-			.getJSON(
-					"detailJSON?pno=" + pno,
-					function(data) {
+	$.getJSON("detailJSON?pno=" + pno,function(data) {
 						console.log(data.length);
-						$(data)
-								.each(
-										function(index, data) {
+						$(data).each(function(index, data) {
 											//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
 											// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.	
 
@@ -477,8 +518,11 @@
 						$(".attach").append(str);
 						$(".attachh").append(strr);
 					});
+	
+	
+	
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=70"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=77"></script>
 

@@ -30,8 +30,8 @@
 	<select id="repListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,(select count(*) from review where writer= r.writer) as urCnt
-				from review r left join review_attach ra on (r.rno = ra.rno) join (select @rownum:=0) as rn 
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,(select count(*) from review where writer= r.writer) as urCnt
+				from review r left join review_attach ra on (r.rno = ra.rno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
 						where content like '%%' and r.pno = #{pno} group by r.rno ) 
                         as R order by R.rno desc)  as C 
               <![CDATA[
@@ -53,8 +53,8 @@
 	<select id="revListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,p.pname
-				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join (select @rownum:=0) as rn 
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful ,p.pname
+				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno) join (select @rownum:=0) as rn 
 						<include refid="keyword"></include>
 						group by r.pno
 						) 
@@ -68,8 +68,8 @@
 	<select id="revMyListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , r.helpful,p.pname
-				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join (select @rownum:=0) as rn 
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,p.pname
+				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
 					where r.writer = #{writer}
 						<include refid="revkeyword"></include>
 						) 
@@ -102,10 +102,22 @@
 	</select>
 
 	<!-- 도움이 된 수 증가 -->
-	<update id="HelpfulAdd">
-		update review set helpful = helpful+1 where rno = #{rno}
-	</update>
+	<insert id="HelpfulAdd">
+		INSERT INTO helpful(rno,helpfulUserId)
 
+SELECT #{rno},#{uname}
+
+FROM dual
+
+WHERE NOT EXISTS (
+
+ SELECT *  FROM helpful
+
+ WHERE  rno =#{rno} and helpfulUserId = #{uname} 
+
+ )
+		
+	</insert>
 	<!-- 도움이 된 수 감소 -->
 	<update id="Helpfuldis">
 		update review set helpful = helpful-1 where rno = #{rno}

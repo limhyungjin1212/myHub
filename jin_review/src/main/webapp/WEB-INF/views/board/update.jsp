@@ -7,7 +7,7 @@
 	background-color: grey;
 }
 </style>
-<div>
+<div class="container">
 	<script>
 		var str = "";
 		var pno = ${update.pno};
@@ -18,7 +18,7 @@
 			});
 
 			$(".attach").append(str);
-			$(".uploadedList").append(str);
+			$("#uploadedList").append(str);
 		});
 		
 	
@@ -137,48 +137,54 @@
 	<div>
 		<form id="updateForm" action="update" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="pno" value="${update.pno }">
-			<table border="1">
+			<table class="table table-hover" border="1">
 				<tr>
-					<td><select name="pcate">
-							<option>분류</option>
-							<option value="병원">병원</option>
-							<option value="음식점">음식점</option>
-							<option value="제품">제품</option>
-					</select></td>
-					<td>이름 2: <input type="text" name="pname"
+					<td>
+						<select class="form-control col-lg-2" name="pcate">
+								<option value="병원">병원</option>
+								<option value="음식">음식</option>
+								<option value="제품">제품</option>
+								<option value="헬스장">헬스장</option>
+								<option value="세탁소">세탁소</option>
+								<option value="호텔">호텔</option>
+								<option value="pc방">pc방</option>
+						</select>
+					</td>
+					<td>이름 2: <input type="text" name="pname" class="col-sm-4 form-control"
 						value=" ${update.pname }"></td>
 				</tr>
 				<tr>
-					<td>연락처 : <input type="text" name="ptel"
+					<td>연락처 : <input type="text" name="ptel" class="form-control" 
 						value=" ${update.ptel }">
 					</td>
 					<td>등록일 : ${update.regdate }</td>
 				</tr>
 			</table>
 			<div>
-				<textarea name="pinfo">${update.pinfo }</textarea>
+				<textarea name="pinfo" class="form-control" >${update.pinfo }</textarea>
 
 				<div id="pac-container">
-					<input id="pac-input" name="place" type="text"
+					<input id="pac-input" class="form-control col-lg-4"  name="place" type="text"
 						placeholder="Enter a location" value="${update.place }">
 				</div>
 
 				<div id="map"></div>
 				<div id="infowindow-content">
-					<img src="" width="16" height="16" id="place-icon"> <span
-						id="place-name" class="title"></span><br> <span
-						id="place-address"></span>
+					<img src="" width="16" height="16" id="place-icon"> 
+					<span id="place-name" class="title"></span><br> 
+					<span id="place-address"></span>
 				</div>
 				
 				
 				<div class="attach"></div>
 				<div class="fileDrop">파일을 드래그앤 드랍aaa</div>
-				<div class="uploadedList">
+				<div id="uploadedList" class="row">
 					<h3>이곳이 업로드 되는 위치입니다.</h3>
 				</div>
-
-				<input type="submit" class="btn-primary" value="수정">
-				<a href="detail?pno=${update.pno }">취소</a>
+				<div align="center">
+					<input type="submit" class="btn-primary" value="수정">
+					<a href="detail?pno=${update.pno }">취소</a>
+				</div>
 			</div>
 
 		</form>
@@ -257,7 +263,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 						"<small data-src="+data+">[삭제]</small></div>";
 				}
 				
-				$(".uploadedList").append(str);
+				$("#uploadedList").append(str);
 			}
 		});
 		});	//drop end
@@ -265,7 +271,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 //small 태그를 클릭
 
 	//small 태그를 클릭
-	$(".uploadedList").on("click","small",function(event){
+	$("#uploadedList").on("click","small",function(event){
 		var that = $(this);
 		$.ajax({
 			url:"deleteFile",
@@ -314,7 +320,7 @@ $("#updateForm").submit(function(event){
 	
 	var str = "";
 	
-	$(".uploadedList small").each(function(index){
+	$("#uploadedList small").each(function(index){
 		str +="<input type='hidden' name='files["+index+"]' value='"+$(this).attr("data-src")+"' >";
 	});
 	that.append(str);

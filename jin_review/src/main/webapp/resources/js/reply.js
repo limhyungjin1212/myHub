@@ -11,6 +11,14 @@
 
 //	
 
+
+
+
+
+
+
+
+
 $("#replyAddBtn").on(
 		"click",
 		function(event) {
@@ -63,8 +71,7 @@ $("#replyAddBtn").on(
 
 		}); // 댓글쓰기 버튼 end
 
-$(document)
-		.ready(
+$(document).ready(
 				function() {
 
 					var pct = $(".pcate").text();
@@ -73,11 +80,8 @@ $(document)
 						$("#map").hide();
 					}
 
-					$("#files")
-							.change(
-									function(event) {
-
-										// var files =
+					$("#files").change(function(event) {
+									// var files =
 										// event.originalEvent.dataTransfer.files;
 										// //?
 										var file = $("#files")[0].files[0]; // ?
@@ -91,8 +95,7 @@ $(document)
 																		// 파일을
 																		// 담는다.
 
-										$
-												.ajax({
+										$.ajax({
 													url : "uploadAjax",
 													data : formData,
 													dataType : 'text',
@@ -139,22 +142,90 @@ $(document)
 					// 댓글 수정 버튼 클릭
 					$("#replies").on("click", ".replyLi button:last",
 							function() {
-								var reply = $(this).parent().children("span");
+						 window.open("reviewUpdate", "새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+/*						 toolbar = 상단 도구창 출력 여부 
 
-								var rno = reply.parent().attr("data-rno");
+						 menubar = 상단 메뉴 출력 여부
+
+						 location = 메뉴아이콘 출력 여부
+
+						 directories = 제목 표시줄 출력 여부
+
+						 status = 하단의 상태바 출력 여부
+
+						 scrollbars = 스크롤바 사용 여부
+
+						 resizable = 팝업창의 사이즈 변경 가능 여부
+
+						 fullscreen = 전체화면으로 할지 선택 여부
+
+						 channelmode = F11키 기능이랑 같음
+
+
+
+						 출처: https://kcmschool.com/63 [web sprit]
+*/								var rev_subject = $(this).parent().parent().children("p:first"); //리뷰의 제목
+								var rate = $(this).parent().parent().children("span:first"); //리뷰의 별점
+								
+								var reply = $(this).parent().parent().children("span:last"); //리뷰의 내용
+								console.log(reply);
+								var rno = reply.parent().attr("data-rno"); //리뷰의 글번호
 								console.log(rno);
+								
+								var fn = $(this).parent().parent().children("img"); // 업로드된 파일
+								var up_fn = fn.attr("src");
+								console.log(up_fn);
+								
+								
+								var up_rate = rate.text();
+								console.log("rate="+up_rate);
+								var up_rev_subject = rev_subject.text(); //리뷰의 제목의 text를 담는다
+								console.log(up_rev_subject);
 								var replytext = reply.text();
 
+								
+								
+								var rateStr = "";
+								for (var i = 0; i < up_rate; i++) { //댓글의 별점에따른 별 갯수
+									rateStr += "<i class='fas fa-star' style='color :#99ccff;'></i> ";
+								}
+								if (up_rate != 5) { //5점이아니면 
+									for (var j = up_rate; j < 5; j++) {
+										rateStr += "<i class='far fa-star'  style='color :#99ccff;'></i> ";
+									}
+								}
+								var up_img_src = "";
+								
+								if(up_fn !=null){
+									up_img_src="<img src='"+up_fn+"' style='width:150px; height:150px;'></img>";
+									$("#updateDiv").append(up_img_src);
+								}
+								
+								
+								
 								$(".modal-title").html(rno);
-								$("#replytext").val(replytext);
-								$("#modDiv").show("slow");
+								$("#up_rate").html(rateStr);
+								$("#up_rev_subject").val(up_rev_subject);
+								$("#up_replytext").val(replytext);
+								
+								
+								$("#up_rate i").on("click", function() {
+									var thisrate = $(this);
+									$("#up_rate i").css("color", "");
+
+									$(this).css("color", "#99ccff").prevAll().css("color", "#99ccff");
+									var j = $(this).index();
+									alert(j + 1);
+									$("#up_rate").val(j + 1);
+
+								});
+								
 							});
 
-					$("#modDiv").hide();
-
+					
 					$("#replyModBtn").on("click", function() {
 						var rno = $(".modal-title").html();
-						var content = $("#replytext").val();
+						var content = $("#up_replytext").val();
 
 						$.ajax({
 							type : 'put',
@@ -168,7 +239,7 @@ $(document)
 								if (data == 'success') {
 									alert("수정 정상처리 됨");
 									getPageList(replyPage);
-									$("#modDiv").hide("slow");
+									$("#modDiv").hide	("slow");
 								}
 							},
 							error : function(err) {
@@ -198,6 +269,17 @@ $(document)
 							}
 						});
 					});
+					$(document).on("click","#revImg",function(){
+						alert("aa");
+						$(this).toggle(
+								function(){
+									$("#revImg").css({"width":"300","height":"300"});
+								},function(){
+									$("#revImg").css({"width":"150","height":"150"});
+								}
+						);
+						
+					});
 
 					$(document).on("click", "#btnHelpful", function() {
 
@@ -205,16 +287,20 @@ $(document)
 
 						console.log(loginInfo);
 						if (loginInfo == null || loginInfo == "") {
-							location.href = 'user/login';
+							location.href = 'login';
 						} else {
 							var rno = $(this).parents("li").attr("data-rno");
+							var uname = loginInfo;
+							alert(uname);
 							$.ajax({
 								type : 'put',
-								url : 'replies/Helpful/' + rno,
+								url : 'replies/Helpful/'+rno,
+								data : uname,
 								contentType : "application/json;charset=utf-8",
 								success : function(data) {
 									if (data == 'success') {
-										getPageList(replyPage);
+										getPageList(replyPage,true);
+										
 									}
 								},
 								error : function(err) {
@@ -239,7 +325,7 @@ $(document)
 								success : function(data) {
 									if (data == 'success') {
 										alert("도움 된 수 감소 ");
-										getPageList(replyPage);
+										getPageList(replyPage,false);
 									}
 								},
 								error : function(err) {

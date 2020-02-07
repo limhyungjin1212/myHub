@@ -68,8 +68,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void HelpfulAdd(int rno) throws Exception {
-		rm.HelpfulAdd(rno);
+	public void HelpfulAdd(int rno,String uname) throws Exception {
+		rm.HelpfulAdd(rno,uname);
 	}
 
 	@Override
