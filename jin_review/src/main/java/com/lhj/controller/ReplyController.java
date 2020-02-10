@@ -66,7 +66,8 @@ public class ReplyController {
 	@RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> update(@PathVariable("rno") int rno, @RequestBody ReviewVO rv) {
 
-		logger.info("ReviewVO :" + rno);
+		logger.info("댓글수정으로 왓는가? :" + rno);
+		logger.info("댓글수정으로 왓는가? :" + rv);
 		ResponseEntity<String> entity = null;
 
 		try {
@@ -85,7 +86,7 @@ public class ReplyController {
 	@RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> remove(@PathVariable("rno") int rno) {
 
-		logger.info("ReviewVO :" + rno);
+		logger.info("댓글삭제 :" + rno);
 		ResponseEntity<String> entity = null;
 
 		try {
@@ -118,9 +119,11 @@ public class ReplyController {
 
 			
 			logger.info("pagelist=" + pagelist);
-
+			List<ReviewVO> repFileDetail = rs.repFileList(pno);
+			logger.info("repFileDetail=" + repFileDetail);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", pagelist);
+			map.put("rfd",repFileDetail);
 			map.put("page", pv);
 			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

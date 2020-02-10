@@ -304,7 +304,10 @@
 			$.getJSON("replies/" + pno + "/" + page,function(data) { //getJSON으로 데이터를 불러온다.
 								console.log(data.length);
 								var str2 = "";
+								console.log(""+data.list.length);
+								
 								$(data.list).each(function() {
+									var reno = this.rno;
 													str2 += "<div class='row p-2 my-3 border'><div class='col-md-2'><div class='card'>";
 													str2 += "<img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'>";
 													str2 += "<div class='card-body'><h4 class='card-title'>"
@@ -314,7 +317,7 @@
 															+ this.urCnt
 															+ " 리뷰 갯수</p>";
 													str2 += "<a href='userDetail?uname="+this.writer+"' class='btn btn-primary' >follow</a></div></div></div>";
-													str2 += "<div class='col-md-10 border'><li data-rno='"+this.rno+"' class='replyLi'><br><span>"+this.rate+"</span>";
+													str2 += "<div class='col-md-10 border' id='repl'><li data-rno='"+this.rno+"' class='replyLi'><br><span>"+this.rate+"</span>";
 
 													for (var i = 0; i < this.rate; i++) { //댓글의 별점에따른 별 갯수
 														str2 += "<i class='fas fa-star' style='color :#99ccff;'></i>";
@@ -328,13 +331,18 @@
 													str2 += "" + this.regdate
 															+ "<br>"
 															+ this.helpful
-															+ "명 에게 도움됨<br>"
+															+ "명 에게 도움됨<br>";
 
-													if (this.fn != null) { //첨부파일이 있으면
-														str2 += "<img class ='img-thumbnail' id='revImg' style='width:150px; height:150px;' src='displayFile?fileName="
-																+ this.fn
-																+ "'/>"
-													}
+													$(data.rfd).each(function() {
+																if(this.rno == reno ) { //첨부파일이 있으면
+																
+																str2 += "<img class ='img-thumbnail' id='revImg' style='width:150px; height:150px;' src='displayFile?fileName="
+																		+ this.fn
+																		+ "'/>";
+																} 
+															});
+													
+															
 													str2 += "<br><p><strong>"
 															+ this.rev_subject
 															+ "</strong></p><br><br>"
@@ -342,7 +350,7 @@
 															
 													
 													if (loginfo == this.writer) {
-														str2 += "<button type='button' class='btn btn-outline-info' data-toggle='modal' data-target='#modDiv' id='btnUpdate'>수정</button></p></li></div></div>";
+														str2 += "<input type='button' id='rev_up_btn' class='btn btn-outline-info' id='btnUpdate' value='수정'></p></li></div></div>";
 													} else {
 														str2 += "<p>리뷰가 도움이 되셧나요?";
 														if(btnHelp){
@@ -355,7 +363,11 @@
 														str2 += "</p></li></div></div>";
 													}
 												});
+								
+								
+								
 								$("#replies").html(str2);
+								
 
 								printPaging(data.page);
 
@@ -524,5 +536,5 @@
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=77"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=81"></script>
 

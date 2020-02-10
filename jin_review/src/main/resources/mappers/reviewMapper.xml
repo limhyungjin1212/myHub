@@ -26,12 +26,25 @@
 		delete from review where rno=#{rno}
 	</delete>
 
+	<!--댓글 상세보기  -->
+	<select id="revDetail" resultType="com.lhj.model.ReviewVO">
+		select rev.*,pb.* from review as rev join product_board pb on rev.pno = pb.pno where rev.rno=#{rno};
+	</select>
+
+	<!--댓글 수정에서   이미지 불러오기 -->
+	<select id="revFileDetail" resultType="com.lhj.model.ReviewVO">
+		select filename as fn from review_attach where rno=#{rno};
+	</select>
+	<!-- 게시판에 각 댓글의 첨부파일 불러오기  -->
+	<select id="repFileList" resultType="com.lhj.model.ReviewVO">
+		select ra.rno,filename as fn from review_attach ra join review r on ra.rno=r.rno where r.pno=#{pno};  
+	</select>
 	<!-- 댓글 페이징처리  -->
 	<select id="repListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,(select count(*) from review where writer= r.writer) as urCnt
-				from review r left join review_attach ra on (r.rno = ra.rno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,(select count(*) from review where writer= r.writer) as urCnt
+				from review r left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
 						where content like '%%' and r.pno = #{pno} group by r.rno ) 
                         as R order by R.rno desc)  as C 
               <![CDATA[
@@ -68,8 +81,8 @@
 	<select id="revMyListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,p.pname
-				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,p.pname
+				from review as r left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
 					where r.writer = #{writer}
 						<include refid="revkeyword"></include>
 						) 
@@ -77,6 +90,11 @@
                          <![CDATA[
 			where rownum >(#{cri.pageNum}-1) * #{cri.amount} and rownum<= #{cri.amount} * #{cri.pageNum} 
 		]]>
+	</select>
+	
+	<!-- 마이페이지 나의 댓글 첨부파일  -->
+	<select id="revMyFile" resultType="com.lhj.model.ReviewVO">
+		select ra.rno,ra.filename as fn from review r left join review_attach ra on r.rno=ra.rno where writer=#{uname};
 	</select>
 	
 	<!--댓글 총 갯수  -->

@@ -109,6 +109,30 @@ public class ReviewMapperImpl implements ReviewMapper {
 		List<ReviewVO> revlist = session.selectList(namespace+".revListPage",criteria);
 		return revlist;
 	}
+
+	@Override
+	public ReviewVO revDetail(int rno) throws Exception {
+		ReviewVO revDetail= session.selectOne(namespace+".revDetail",rno);
+		return revDetail;
+	}
+
+	@Override
+	public List<ReviewVO> revFileDetail(int rno) throws Exception {
+		List<ReviewVO> revFileList = session.selectList(namespace+".revFileDetail",rno); 
+		return revFileList;
+	}
+
+	@Override
+	public List<ReviewVO> repFileList(int pno) throws Exception {
+		List<ReviewVO> repFileList = session.selectList(namespace+".repFileList",pno);
+		return repFileList;
+	}
+
+	@Override
+	public List<ReviewVO> revMyFile(String uname) throws Exception {
+		List<ReviewVO> revMyFile = session.selectList(namespace+".revMyFile",uname);
+		return revMyFile;
+	}
 	
 	
 	

@@ -13,11 +13,11 @@
 		var pno = ${update.pno};
 		$.getJSON("detailJSON?pno=" + pno, function(data) {
 			$(data).each(function(index,data) {
-			str += "<a href='#'>"+data+"</a><img class ='thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/>"
+			str += "<div><a href='#'>"+data+"</a><img class ='thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/>"
 				+ "<small class='imgdelBtn' data-src="+data+">[삭제]</small></div>";
 			});
 
-			$(".attach").append(str);
+		
 			$("#uploadedList").append(str);
 		});
 		
@@ -254,9 +254,9 @@ $(".fileDrop").on("dragenter dragover",function(event){
 				var str = "";
 				console.log(checkImageType(data));
 				if(checkImageType(data)){
-					str="<div>"
-						+"<a href='#'>"+data+"</a><img src='displayFile?fileName="+getImageLink(data)+"'/>"
-						+ "</a><small data-src="+data+">[삭제]</small>" +"</div>";
+					str +="<div>";
+					str +="<a href='#'>"+data+"</a><img src='displayFile?fileName="+getImageLink(data)+"'/>";
+					str += "</a><small data-src="+data+">[삭제]</small></div>";
 				} else {
 					str = "<div><a href='displayFile?fileName="+data+"'>"
 						+getOriginalName(data) +"</a>" +
@@ -273,18 +273,24 @@ $(".fileDrop").on("dragenter dragover",function(event){
 	//small 태그를 클릭
 	$("#uploadedList").on("click","small",function(event){
 		var that = $(this);
-		$.ajax({
-			url:"deleteFile",
-			type:"post",
-			data: {fileName:$(this).attr("data-src")},
-			dataType:"text",
-			success:function(result){
-				if(result == 'deleted'){
-					alert("deleted");
-					that.parent("div").remove();
+		var filedel = confirm("파일을 삭제하면 완전히 사라집니다.");
+		if(filedel){
+			$.ajax({
+				url:"deleteFile",
+				type:"post",
+				data: {fileName:$(this).attr("data-src")},
+				dataType:"text",
+				success:function(result){
+					if(result == 'deleted'){
+						alert("deleted");
+						that.parent("div").remove();
+					}
 				}
-			}
-		})
+			});
+		}else{
+		    alert("파일삭제취소");
+		}
+		
 		
 		
 	}); //small click end

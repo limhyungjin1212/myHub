@@ -140,9 +140,14 @@ $(document).ready(
 									});
 
 					// 댓글 수정 버튼 클릭
-					$("#replies").on("click", ".replyLi button:last",
+					$("#replies").on("click", ".replyLi input:button",
 							function() {
-						 window.open("reviewUpdate", "새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+						var rno = $(this).parent().attr("data-rno"); //리뷰의 글번호
+						
+						console.log(rno);
+						
+						 window.open("reviewUpdate?rno="+rno+"", "새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+						 
 /*						 toolbar = 상단 도구창 출력 여부 
 
 						 menubar = 상단 메뉴 출력 여부
@@ -161,64 +166,10 @@ $(document).ready(
 
 						 channelmode = F11키 기능이랑 같음
 
-
-
 						 출처: https://kcmschool.com/63 [web sprit]
-*/								var rev_subject = $(this).parent().parent().children("p:first"); //리뷰의 제목
-								var rate = $(this).parent().parent().children("span:first"); //리뷰의 별점
-								
-								var reply = $(this).parent().parent().children("span:last"); //리뷰의 내용
-								console.log(reply);
-								var rno = reply.parent().attr("data-rno"); //리뷰의 글번호
-								console.log(rno);
-								
-								var fn = $(this).parent().parent().children("img"); // 업로드된 파일
-								var up_fn = fn.attr("src");
-								console.log(up_fn);
-								
-								
-								var up_rate = rate.text();
-								console.log("rate="+up_rate);
-								var up_rev_subject = rev_subject.text(); //리뷰의 제목의 text를 담는다
-								console.log(up_rev_subject);
-								var replytext = reply.text();
+*/								
 
 								
-								
-								var rateStr = "";
-								for (var i = 0; i < up_rate; i++) { //댓글의 별점에따른 별 갯수
-									rateStr += "<i class='fas fa-star' style='color :#99ccff;'></i> ";
-								}
-								if (up_rate != 5) { //5점이아니면 
-									for (var j = up_rate; j < 5; j++) {
-										rateStr += "<i class='far fa-star'  style='color :#99ccff;'></i> ";
-									}
-								}
-								var up_img_src = "";
-								
-								if(up_fn !=null){
-									up_img_src="<img src='"+up_fn+"' style='width:150px; height:150px;'></img>";
-									$("#updateDiv").append(up_img_src);
-								}
-								
-								
-								
-								$(".modal-title").html(rno);
-								$("#up_rate").html(rateStr);
-								$("#up_rev_subject").val(up_rev_subject);
-								$("#up_replytext").val(replytext);
-								
-								
-								$("#up_rate i").on("click", function() {
-									var thisrate = $(this);
-									$("#up_rate i").css("color", "");
-
-									$(this).css("color", "#99ccff").prevAll().css("color", "#99ccff");
-									var j = $(this).index();
-									alert(j + 1);
-									$("#up_rate").val(j + 1);
-
-								});
 								
 							});
 

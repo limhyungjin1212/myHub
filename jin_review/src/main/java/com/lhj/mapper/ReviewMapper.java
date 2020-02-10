@@ -21,6 +21,9 @@ public interface ReviewMapper {
 		//댓글 조회 페이징
 		public List<ReviewVO> repListPage(int pno,Criteria cri) throws Exception;
 		
+		//게시판에서 각 댓글의 첨부파일 불러오기
+		public List<ReviewVO> repFileList(int pno) throws Exception;
+		
 		//댓글 총 갯수
 		public int repCount(int pno) throws Exception;
 		
@@ -30,7 +33,7 @@ public interface ReviewMapper {
 		//댓글 조회 페이징
 		public List<ReviewVO> revListPage(Criteria criteria) throws Exception;
 		
-		//댓글 조회 페이징
+		//내가 작성한 댓글 조회 페이징
 		public List<ReviewVO> revMyListPage(String writer,Criteria criteria) throws Exception;
 		
 		//리뷰 쓸때 파일 업로드
@@ -47,5 +50,15 @@ public interface ReviewMapper {
 		
 		//마이페이지 나의 댓글 갯수
 		public int myRevCount(String writer) throws Exception;
+		
+		//마이페이지 첨부파일 불러오기
+		public List<ReviewVO> revMyFile(String uname) throws Exception;
+		
+		//댓글 상세보기
+		public ReviewVO revDetail(int rno) throws Exception;
+		
+		//댓글 상세보기 파일 불러오기
+		public List<ReviewVO> revFileDetail(int rno) throws Exception;
+		
 		
 }

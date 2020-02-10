@@ -89,5 +89,25 @@ public class ReviewServiceImpl implements ReviewService {
 	public int myRevCount(String writer) throws Exception {
 		return rm.myRevCount(writer);
 	}
+
+	@Override
+	public ReviewVO revDetail(int rno) throws Exception {
+		return rm.revDetail(rno);
+	}
+
+	@Override
+	public List<ReviewVO> revFileDetail(int rno) throws Exception {
+		return rm.revFileDetail(rno);
+	}
+
+	@Override
+	public List<ReviewVO> repFileList(int pno) throws Exception {
+		return rm.repFileList(pno);
+	}
+
+	@Override
+	public List<ReviewVO> revMyFile(String uname) throws Exception {
+		return rm.revMyFile(uname);
+	}
 	
 }

@@ -88,12 +88,10 @@ public class ReviewVO {
 	
 	
 	public String getFn() {
-		if(fn !=null) {
-			String front = fn.substring(0,12);
-			String end = fn.substring(14);
-			System.out.println("리뷰VO"+front+end);
-			return front+end;
-		}
+		/*
+		 * if(fn !=null) { String front = fn.substring(0,12); String end =
+		 * fn.substring(14); System.out.println("리뷰VO"+front+end); return front+end; }
+		 */
 		return fn;
 	}
 	public void setFn(String fn) {

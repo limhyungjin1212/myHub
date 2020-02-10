@@ -202,7 +202,16 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="reviewUpdate", method = RequestMethod.GET)
-	public String reviewUpdate() {
+	public String reviewUpdate(@RequestParam int rno,Model model) throws Exception {
+		
+		logger.info("리뷰 수정으로 옴?"+rno);
+		
+		List revFileDetail = reviewService.revFileDetail(rno);
+		logger.info("리뷰디테일 리스트="+revFileDetail);
+		model.addAttribute("rv",reviewService.revDetail(rno));
+		model.addAttribute("rfd",revFileDetail);
+		
+		
 		return "board/reviewUpdate";
 	}
 	

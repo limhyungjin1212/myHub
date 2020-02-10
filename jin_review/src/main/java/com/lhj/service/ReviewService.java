@@ -21,8 +21,14 @@ public interface ReviewService {
 	// 댓글 조회 페이징
 	public List<ReviewVO> repListPage(int pno, Criteria cri) throws Exception;
 	
+	//게시판에서 각 댓글의 첨부파일 불러오기
+	public List<ReviewVO> repFileList(int pno) throws Exception;
+			
 	//댓글 my 조회 페이징
 	public List<ReviewVO> revMyListPage(String writer,Criteria criteria) throws Exception;
+	
+	//마이페이지 첨부파일 불러오기
+	public List<ReviewVO> revMyFile(String uname) throws Exception;
 	
 	//댓글 조회 페이징
 	public List<ReviewVO> revListPage(Criteria criteria) throws Exception;
@@ -44,4 +50,9 @@ public interface ReviewService {
 	//마이페이지 나의 댓글 갯수
 	public int myRevCount(String writer) throws Exception;
 	
+	//댓글 상세보기
+	public ReviewVO revDetail(int rno) throws Exception;
+	
+	//댓글 상세보기 파일 불러오기
+	public List<ReviewVO> revFileDetail(int rno) throws Exception;
 }

@@ -180,10 +180,17 @@ public class UserController {
 		PageVO pv = new PageVO(cri, rs.myRevCount(uname));
 		logger.info("pv" + pv);
 		
+		//내가 작성한 리뷰
 		List myRevList = new ArrayList();
 		myRevList = rs.revMyListPage(uname, cri);
 		logger.info("myRevList=" + myRevList);
 		
+		//작성한 리뷰의 첨부파일 불러오기
+		List revMyFile = new ArrayList();
+		revMyFile = rs.revMyFile(uname);
+		logger.info("revMyFile=" + revMyFile);
+		
+		//팔로우 리스트
 		List<UserVO> followList = new ArrayList();
 		followList = us.followList(uid);
 		logger.info("followList=" + followList);
@@ -193,6 +200,8 @@ public class UserController {
 		logger.info("followerList=" + followerList);
 		
 		model.addAttribute("myRevList", myRevList);
+		model.addAttribute("revMyFile", revMyFile);
+		
 		model.addAttribute("page", pv);
 		model.addAttribute("followList", followList);
 		model.addAttribute("followerList", followerList);

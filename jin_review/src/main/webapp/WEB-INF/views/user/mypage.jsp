@@ -67,14 +67,15 @@ $(function() {
 
 	<div class="container" id="myContent">
 		<div class="row">
-			<div class="col">
+			<div class="col" id="myrevList">
 				<h4>내가 등록한 리뷰</h4>
 				<c:if test="${myRevList.size() == 0 }">
 						<h3>등록한 리뷰가 없습니다.</h3>
 				</c:if>
 				<input type="text" id="datepicker1">
 				<table class="table">
-					<c:forEach items="${myRevList }" var="reviewVO">
+					<c:forEach items="${myRevList }" var="reviewVO" varStatus="" >
+					
 						<tr>
 							<td width="30%"><a href="detail?pno=${reviewVO.pno }">${reviewVO.pname }</a></td>
 							
@@ -99,17 +100,23 @@ $(function() {
 						</tr>
 						<tr>
 							<td>
+								<c:forEach items="${revMyFile }" var="rmf">
 								
-								<c:if test="${(reviewVO.fn) ne null}">
-								<img class ='img-thumbnail' src='displayFile?fileName=${reviewVO.fn }'/>
-								</c:if>
-													
+									<c:if test="${rmf.rno eq reviewVO.rno}">
+									<img class ='img-thumbnail' src='displayFile?fileName=${rmf.fn }'/>
+										</c:if>
+								</c:forEach>
+							
 							</td>
 						</tr>
 						<tr>
 							<td width="70%"><strong>${reviewVO.rev_subject }</strong>${reviewVO.content }</td>
-							<td width="30%"></td>
+							<td width="30%">
+							<input type="hidden" id="myRno" value="${reviewVO.rno }">
+							<button type="button" id="my_up_btn">수정2</button>
+							</td>
 						</tr>
+						
 					</c:forEach>
 				<tr>
 					<td colspan="4">
@@ -175,7 +182,14 @@ $(function() {
 		</div>
 
 	</div>
-
+<script>
+	$("#myrevList").on("click",".table button",function(){
+		var rno = $(this).parent().children("input:hidden").val(); //리뷰의 글번호
+		
+		console.log(rno);
+		window.open("reviewUpdate?rno="+rno+"", "새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+	});
+</script>
 
 </body>
 </html>
