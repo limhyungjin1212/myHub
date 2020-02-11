@@ -90,15 +90,56 @@ $(document).ready(function(){
 			});
 		}); //uname blur end
 		
+		
+		
+
+		$("#uid").on("blur",function(){
+			var uid = $(this).val();
+			if(uid == ""){
+				return false;
+			}
+			$.ajax({
+				url : "idCheck",
+				data : "uid="+uid,
+				dataType : "text",
+				type : "get",
+				success : function(data) {
+					console.log(data.length);
+					if(data == 0){
+						$("#idcheck").text("사용 가능한 아이디 입니다.!").css("color","green");
+						if(uid.length < 8 || uid.length >20 ){
+							$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
+							$("#uid").focus();
+						} else{
+							$("#idcheck").text("멋진 아이디네요!").css("color","green");
+						}
+					} else{
+						$("#idcheck").text("아이디가 이미 사용중입니다.").css("color","red");
+						$("#uid").val("");
+						$("#uid").focus();
+					}
+				}
+			});
+		}); //uname blur end
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 			$("#joinForm").submit(function(){ //회원가입 유효성 검사.
 			
 			var uid = $("#uid").val();
 			var nameCheckBox = $("#nameCheckBox").text(); 
 			var pwcheck = $("#pwcheck").text();
+			var idCheck = $("#idCheck").text();
 			
-			
-			if(uid.length < 8 || uid.length > 12){
-				alert("id양식에 맞게 작성")
+			if(idCheck !="멋진 아이디네요!"){
+				alert("id양식에 맞게 작성");
 				return false;
 			}
 			if(nameCheckBox != "아주 멋진 닉네임 입니다.!" ){
@@ -165,7 +206,6 @@ $(document).ready(function(){
 					
 					alert(umail);
 					$.ajax({
-						
 						url : "mailSending",
 						data : "umail="+umail,
 						type : 'post',
@@ -193,21 +233,6 @@ $(document).ready(function(){
 						}
 						
 					});
-				
-
-				$("#uid").on("keydown",function(){
-					var uid = $("#uid").val();
-					
-					if(uid.length < 8 || uid.length >20 ){
-						$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
-						$("#uid").focus();
-					} else{
-						$("#idcheck").text("멋진 아이디네요!").css("color","green");
-					}
-					
-				});
-				
-				
 				
 				
 		});

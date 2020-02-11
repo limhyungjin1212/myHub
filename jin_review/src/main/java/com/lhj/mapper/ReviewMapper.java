@@ -60,5 +60,10 @@ public interface ReviewMapper {
 		//댓글 상세보기 파일 불러오기
 		public List<ReviewVO> revFileDetail(int rno) throws Exception;
 		
+		//댓글 수정시 파일 삭제.
+		public void deleteRevAttach(int rno) throws Exception;
+		
+		//댓글 수정시 파일삭제후 다시 insert
+		public void replaceRevAttach(String filename , int rno) throws Exception;
 		
 }

@@ -9,7 +9,7 @@
 	</select>
 
 	<insert id="join" >
-		insert into tbl_user values(#{uid},#{upw},#{uname},#{umail},#{gender})
+		insert into tbl_user(uid,upw,uname,umail,gender) values(#{uid},#{upw},#{uname},#{umail},#{gender})
 	</insert>
 
 	<!-- 닉네임 중복 검사 -->

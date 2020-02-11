@@ -18,7 +18,9 @@
 	<!-- 댓글 수정  -->
 	<update id="repModify">
 		update review set
-		content=#{content} 
+		rev_subject = #{rev_subject},
+		content=#{content} ,
+		rate = #{rate}
 		where rno =#{rno}
 	</update>
 	<!-- 댓글 삭제  -->
@@ -85,6 +87,7 @@
 				from review as r left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
 					where r.writer = #{writer}
 						<include refid="revkeyword"></include>
+						group by r.rno
 						) 
                         as R order by R.rno desc) as C 
                          <![CDATA[
@@ -114,6 +117,12 @@
 		insert into review_attach(filename,rno) values (#{filename},LAST_INSERT_ID())
 	</insert>
 
+	<!--파일 수정시 삭제후 인서트. -->
+	<insert id="replaceAttach">
+		insert into attach(filename,pno) values(#{filename},#{pno})
+	</insert>
+
+
 	<!-- 리뷰 총갯수와 도움이 된수  -->
 	<select id="revCntHelpful">
 	select count(*) as reviewCnt , sum(helpful) as helpful from review where writer = #{writer};
@@ -141,4 +150,15 @@ WHERE NOT EXISTS (
 		update review set helpful = helpful-1 where rno = #{rno}
 	</update>
 
+	<!-- 리뷰 수정시 파일 삭제  -->
+	<delete id="deleteRevAttach">
+		delete from review_attach where rno = #{rno}
+	</delete>
+
+
+	<!-- 리뷰 수정시 파일 등록  -->
+	<insert id="replaceRevAttach">
+		insert into review_attach(filename,rno) values (#{filename},#{rno})
+	</insert>
+	
 </mapper>

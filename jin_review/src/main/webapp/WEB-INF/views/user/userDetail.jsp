@@ -82,15 +82,17 @@
 			<c:if test="${myRevList.size() == 0 }">
 				<h3>등록한 리뷰가 없습니다.</h3>
 			</c:if>
+			
 			<table class="w3-table w3-striped w3-border" id="revTable">
-				<c:forEach items="${myRevList }" var="reviewVO">
+			<c:forEach items="${myRevList }" var="reviewVO">
 					<tr>
 						<td width="30%"><a href="detail?pno=${reviewVO.pno }">${reviewVO.pname }</a></td>
 							
-						<td width="70%"><c:forEach begin="1" end="${reviewVO.rate }"
-								var="rateAvg">
+						<td width="70%">
+						<c:forEach begin="1" end="${reviewVO.rate }" var="rateAvg">
 								<i class='fas fa-star' style='color: #99ccff;'></i>
-							</c:forEach> <c:choose>
+						</c:forEach> 
+						<c:choose>
 								<c:when test="${(reviewVO.rate *2) % 2 eq 1}">
 									<i class="fas fa-star-half-alt" style='color: #99ccff;'></i>
 									<c:forEach begin="${reviewVO.rate+1 }" end="4">
@@ -102,7 +104,8 @@
 										<i class='far fa-star' style='color: #99ccff;'></i>
 									</c:forEach>
 								</c:otherwise>
-							</c:choose></td>
+							</c:choose>
+						</td>
 					</tr>
 					<tr>
 						<td width="70%">${reviewVO.content }</td>
@@ -112,13 +115,13 @@
 						<td>
 							<c:if test="${(reviewVO.fn) ne null}">
 								<img class ='img-thumbnail' src='displayFile?fileName=${reviewVO.fn }'/>
-								</c:if>
+							</c:if>
 						</td>
 					</tr>
 					<tr>
 						<td>멋져요</td>
 					</tr>
-				</c:forEach>
+					</c:forEach>
 				<tr>
 					<td colspan="4"><c:if test="${page.prev }">
 							<a
@@ -144,6 +147,7 @@
 						</c:if></td>
 				</tr>
 			</table>
+				
 		</div>
 		
 		<div class="col">

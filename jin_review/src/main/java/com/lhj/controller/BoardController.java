@@ -161,8 +161,7 @@ public class BoardController {
 	
 	@RequestMapping(value="update", method = RequestMethod.POST)
 	public String updatePost(BoardVO board , RedirectAttributes rttr) throws Exception{
-		logger.info("updatePost..");
-		
+		logger.info("updatePost.."+board);
 		boardService.boardUpdate(board);
 		rttr.addFlashAttribute("msg","usuccess");
 		

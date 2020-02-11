@@ -170,7 +170,17 @@ public class UserController {
 
 		return result;
 	}
+	@ResponseBody
+	@RequestMapping(value = "idCheck", method = RequestMethod.GET)
+	public int idCheck(String uid) throws Exception {
 
+		logger.info("uname" + uid);
+
+		int result = us.idCheck(uid);
+		logger.info("result" + result);
+
+		return result;
+	}
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
 	public String mypageGET(@RequestParam String uid,@RequestParam String uname,Criteria cri, Model model) throws Exception {
 		

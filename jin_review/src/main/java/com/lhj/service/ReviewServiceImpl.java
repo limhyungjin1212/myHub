@@ -36,9 +36,25 @@ public class ReviewServiceImpl implements ReviewService {
 		}
 	}
 
+	@Transactional
 	@Override
 	public void repModify(ReviewVO rv) throws Exception {
 		rm.repModify(rv);
+		
+		int rno = rv.getRno();
+		
+		rm.deleteRevAttach(rno);
+		System.out.println("삭제?"+rno);
+		String[] files = rv.getFiles();
+		if(files == null) {
+			System.out.println("파일이 없습니당.");
+			return;
+		}
+		for(String filename : files) {
+			System.out.println("리뷰 수정시 재등록 파일네임="+filename);
+			System.out.println("리뷰 수정시 재등록 rno="+rno);
+			rm.replaceRevAttach(filename, rno);
+		}
 	}
 
 	@Override

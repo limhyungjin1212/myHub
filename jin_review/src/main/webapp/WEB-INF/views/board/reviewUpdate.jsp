@@ -15,8 +15,7 @@
 <h1>모달수정?</h1>
 
 
-	<form id="rev_up_form">
-<input type="hidden" name="rno" id="rno" value="${rv.rno }">
+
 
 					<div id="updateDiv">
 					
@@ -39,7 +38,7 @@
 							</c:otherwise>
 						</c:choose>
 					</span> 
-					<input type="hidden" id="rate" name="rate" value="1">
+					<input type="hidden" id="rate" name="rate" value="${rv.rate }">
 					<br> 
 					<input type="text" class="form-control" id="up_rev_subject" name="rev_subject" autocomplete="off" placeholder="한줄 요약을 해주세요" value="${rv.rev_subject }"><br>
 					<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5" name="content" id="up_replytext">${rv.content }</textarea>
@@ -54,20 +53,20 @@
 							</c:forEach>
 					
 					<div>
-						<input type="file" name="file" id="files" multiple="multiple">
+						<input type="file" id="files" multiple>
 						<div id="rv_update_upload">
 						
 						</div>
 					</div>
 					</div>
 						</div>
-					</form>
+						<input type="submit" >
 						<div align="right">
 							<button type="button" id="replyModBtn" class="btn btn-outline-primary">수정</button>
 							<button type="button" id="replyDelBtn" class="btn btn-outline-danger">삭제</button>
-							<button type="button" id="closeBtn" class="btn btn-outline-dark">닫기</button>
+							<button type="button" id="closeBtn" onclick="self.close()" class="btn btn-outline-dark">닫기</button>
 						</div>
-				
+					
 				<script>
 				
 				
@@ -137,18 +136,12 @@
 										// alert(data);
 										// alert(checkImageType(data));
 										var str = "";
-										str = "<div>"+
-													+ "<a href=displayFile?fileName="
-													+ data
-													+ "><img src='displayFile?fileName="
-													+ data
-													+ "'/>"
-													+ "</a><small data-src="
-													+ data
-													+ ">X</small>"
-													+ "</div>";
+										str += "<div><a href=displayFile?fileName="+data+">";
+										str += "<img src='displayFile?fileName="+data+"'/>";
+										str += "</a><small data-src="+data+">X</small></div>";
 
 										$("#rv_update_upload").append(str);
+										
 									}
 								});
 
@@ -157,45 +150,57 @@
 				
 				
 				
-				
 				$("#replyModBtn").on("click", function() {
-					var rno = $("#rno").val();
-					var content = $("#up_replytext").val();
-					var rev_subject = $("#up_rev_subject").val();
+					var rno = ${rv.rno };
+						
+					var repMod = confirm("수정하시겟씁니까?");
 					
-					alert("rno"+rno);
-					alert("content"+content);
-					alert("rev_subject"+rev_subject);
-					
-					var str ="";
-					$("#rev_up_file small").each(function(index){
-						str +="<input type='hidden' id='files' name='files["+index+"]' value='"+$(this).attr("data-src")+"' >";
-					});
-					$("#rev_updateForm").append(str);
-					
-					var formData = $("#rev_up_form").serialize();
-					alert(formData);
-					
-					
-					$.ajax({
-						type : 'put',
-						url : 'replies/' + rno,
-						contentType : "application/json;charset=utf-8",
-						data : JSON.stringify(formData),
-						dataType : "text",
-						success : function(data) {
-							if (data == 'success') {
-								alert("수정 정상처리 됨");
-								getPageList(replyPage);
-								$("#modDiv").hide("slow");
+					if(repMod){
+						
+						var content = $("#up_replytext").val();
+						var rev_subject = $("#up_rev_subject").val();
+						var rate = $("#rate").val();
+						
+						var arr = [];
+						$("#rev_up_file small").each(function(index){
+							arr.push($(this).attr("data-src"));
+							console.log(arr);
+						});
+						var files = arr;
+						
+						
+						console.log(arr);
+						
+						
+						$.ajax({
+							type : 'put',
+							url : 'replies/'+rno,
+							contentType : "application/json;charset=utf-8",
+							data : JSON.stringify({
+								rno : rno,
+								content : content,
+								rev_subject : rev_subject,
+								rate : rate,
+								files : files
+							}),
+							dataType : "text",
+							success : function(data) {
+								if (data == 'success') {
+									alert("수정 정상처리 됨");
+									self.close();
+								}
+							},
+							error : function(err) {
+								alert("수정 실패!!")
 							}
-						},
-						error : function(err) {
-							alert("수정 실패!!")
-						}
-					});
+						});
+					} else{
+						alert("수정안함.");
+						
+					}
+					 
+					
 				});
-				
 				
 				
 				</script>

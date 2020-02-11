@@ -133,6 +133,20 @@ public class ReviewMapperImpl implements ReviewMapper {
 		List<ReviewVO> revMyFile = session.selectList(namespace+".revMyFile",uname);
 		return revMyFile;
 	}
+
+	@Override
+	public void deleteRevAttach(int rno) throws Exception {
+		session.delete(namespace+".deleteRevAttach",rno);
+	}
+
+	@Override
+	public void replaceRevAttach(String filename, int rno) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("filename", filename);
+		paramMap.put("rno", rno);
+		
+		session.insert(namespace+".replaceRevAttach",paramMap);
+	}
 	
 	
 	

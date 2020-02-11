@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="resources/js/join.js?ver=49"></script>
+<script src="resources/js/join.js?ver=50"></script>
 </head>
 <body>
 
@@ -32,7 +32,8 @@
 			</tr>
 			<tr>
 				<td>아이디(필수)</td>
-				<td><input type="text" id="uid" name="uid" class="form-control" required> <span id="idcheck">id는 8자이상 12자 이하로 입력하셔야
+				<td><input type="text" id="uid" name="uid" class="form-control" required> 
+				<span id="idcheck">id는 8자이상 12자 이하로 입력하셔야
 						합니다</span></td>
 			</tr>
 			<tr>

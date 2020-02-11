@@ -65,13 +65,13 @@ public class ReplyController {
 	/* 댓글 수정 */
 	@RequestMapping(value = "/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> update(@PathVariable("rno") int rno, @RequestBody ReviewVO rv) {
-
-		logger.info("댓글수정으로 왓는가? :" + rno);
-		logger.info("댓글수정으로 왓는가? :" + rv);
+		logger.info("댓글수정으로 왓는가1? :" + rv.getContent());
+		logger.info("댓글수정으로 왓는가? :" + rv.getFiles());
 		ResponseEntity<String> entity = null;
-
+		
 		try {
 			rv.setRno(rno);
+			logger.info("댓글수정으로 왓는가? :" + rv);
 			rs.repModify(rv);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
