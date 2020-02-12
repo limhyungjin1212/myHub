@@ -66,16 +66,19 @@
 	</c:forEach>
 	
 	<div class="col-md-8 ">
-		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
-		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
-		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
-		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
-		<h1>왼쪽 오늘의 리뷰 핫한것</h1>
+	<h1>주간 리뷰 도움이 많이 된것.</h1>
+		<div class="container p-3 my-3 bg-primary text-white">
+		<h1>${weekReview.rev_subject }</h1>
+		<h1>${weekReview.writer }</h1>
+		<div>
+			${weekReview.content }
+		</div>
+		</div>
 	</div>
 	
 	<div class="col-md-4 ">
 		<table>
-			
+			 
 		</table>
 		
 	</div>

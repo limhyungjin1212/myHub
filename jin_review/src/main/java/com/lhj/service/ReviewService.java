@@ -55,4 +55,10 @@ public interface ReviewService {
 	
 	//댓글 상세보기 파일 불러오기
 	public List<ReviewVO> revFileDetail(int rno) throws Exception;
+	
+	//주간 리뷰
+	public ReviewVO weekReview() throws Exception;
+	
+	//도움이 된 사람 리스트
+			public List<String> revHelpfulList(int rno) throws Exception;
 }

@@ -59,11 +59,14 @@ public class UserController {
 	public String joinPost(UserVO uvo, RedirectAttributes rttr) throws Exception {
 		logger.info("joinPost.." + uvo);
 		us.join(uvo);
-		rttr.addFlashAttribute("msg", "wsuccess");
-		return "redirect:/login";
+		rttr.addFlashAttribute("uvo", uvo);
+		return "redirect:/joinSuccess";
 
 	}
-
+	@RequestMapping(value = "joinSuccess", method = RequestMethod.GET)
+	public String joinSuccess() throws Exception {
+		return "user/joinSuccess";
+	}
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String loginGet() {
 		logger.info("loginGet..");
@@ -163,10 +166,7 @@ public class UserController {
 	@RequestMapping(value = "nameCheck", method = RequestMethod.GET)
 	public int nameCheck(String uname) throws Exception {
 
-		logger.info("uname" + uname);
-
 		int result = us.nameCheck(uname);
-		logger.info("result" + result);
 
 		return result;
 	}
@@ -174,10 +174,7 @@ public class UserController {
 	@RequestMapping(value = "idCheck", method = RequestMethod.GET)
 	public int idCheck(String uid) throws Exception {
 
-		logger.info("uname" + uid);
-
 		int result = us.idCheck(uid);
-		logger.info("result" + result);
 
 		return result;
 	}

@@ -121,9 +121,20 @@ public class ReplyController {
 			logger.info("pagelist=" + pagelist);
 			List<ReviewVO> repFileDetail = rs.repFileList(pno);
 			logger.info("repFileDetail=" + repFileDetail);
+			
+			Map<Integer,List<String>> revHelpfulList = new HashMap<Integer, List<String>>(); 
+			for(int i=0;i<pagelist.size();i++) {
+				revHelpfulList.put(pagelist.get(i).getRno(), rs.revHelpfulList(pagelist.get(i).getRno()));
+				System.out.println("revHelpfulList="+revHelpfulList);
+			}
+			
+			
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", pagelist);
 			map.put("rfd",repFileDetail);
+			map.put("revHelpfulList", revHelpfulList);
+			System.out.println("revHelpfulList2="+revHelpfulList);
 			map.put("page", pv);
 			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

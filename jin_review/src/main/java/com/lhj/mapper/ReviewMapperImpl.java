@@ -147,6 +147,17 @@ public class ReviewMapperImpl implements ReviewMapper {
 		
 		session.insert(namespace+".replaceRevAttach",paramMap);
 	}
+
+	@Override
+	public ReviewVO weekReview() throws Exception {
+		return session.selectOne(namespace+".weekReview");
+	}
+
+	@Override
+	public List<String> revHelpfulList(int rno) throws Exception {
+		List<String> revHelpfulList = session.selectList(namespace+".revHelpfulList",rno);
+		return revHelpfulList;
+	}
 	
 	
 	

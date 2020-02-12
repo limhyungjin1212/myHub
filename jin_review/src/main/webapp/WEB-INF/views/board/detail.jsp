@@ -296,15 +296,14 @@
 	<script>
 		var str2 = "";
 		var pno = ${detail.pno};
-		var loginfo = document.getElementById("loginfo").value;
+		var loginfo = $("#loginfo").val();
 
-		var btnHelp = true;
 		
 		function getPageList(page,btnHelp) {
 			$.getJSON("replies/" + pno + "/" + page,function(data) { //getJSON으로 데이터를 불러온다.
-								console.log(data.length);
+								
 								var str2 = "";
-								console.log(""+data.list.length);
+								var btnHelp = false;
 								
 								$(data.list).each(function() {
 									var reno = this.rno;
@@ -353,6 +352,23 @@
 														str2 += "<input type='button' id='rev_up_btn' class='btn btn-outline-info' id='btnUpdate' value='수정'></p></li></div></div>";
 													} else {
 														str2 += "<p>리뷰가 도움이 되셧나요?";
+														
+														$.each(data.revHelpfulList,function(key,value){ //도움이 된 사람의 리스트
+															if(key == reno){
+																console.log(key+':'+value);
+																console.log(reno);
+																$.each(value,function(){
+																	console.log(this)
+																	if(loginfo == this){
+																		console.log(loginfo);
+																		btnHelp = true;
+																	} else{
+																		btnHelp = false;
+																	}
+																});
+															}
+															
+														});
 														if(btnHelp){
 															str2 += "<button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm' disabled ><small>도움이 돼요</small></button>"	
 															+ "<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'><small>도움 안 돼요</small></button>";
@@ -364,10 +380,7 @@
 													}
 												});
 								
-								
-								
 								$("#replies").html(str2);
-								
 
 								printPaging(data.page);
 

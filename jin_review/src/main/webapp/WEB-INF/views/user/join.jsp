@@ -9,12 +9,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="resources/js/join.js?ver=50"></script>
+<script src="resources/js/join.js?ver=54"></script>
 </head>
 <body>
 
 <div class="container">
-	<h1 align="center">회 원 가 입</h1>
+	<h1 align="center">회 원 가 입2</h1>
 	<p align="center">
 		JinsReview는 고객님의 소중한 개인정보를 보호하기위해 주민번호를 수집하지 않습니다.<br>요청하시면 안내메일을
 		보내드립니다

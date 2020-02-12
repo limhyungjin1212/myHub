@@ -55,7 +55,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				dest = reqRef;
 			}
 			System.out.println("dest="+dest);
-			response.sendRedirect(dest != null ? (String) dest : "main");	
+			if(dest.equals("http://localhost:8080/lhj/login") || dest.equals("http://localhost:8080/lhj/join")) {
+				response.sendRedirect("main");
+			} else {
+				response.sendRedirect(dest != null ? (String) dest : "main");
+			}
+				
 			
 			/*
 			 * if(uri !=null ) { //받아온 uri 가 null이 아닐경우 response.sendRedirect("../"+uri); }

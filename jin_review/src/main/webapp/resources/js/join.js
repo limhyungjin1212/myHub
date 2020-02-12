@@ -67,7 +67,7 @@ $(document).ready(function(){
 	
 	
 
-		$("#uname").on("blur",function(){
+		$("#uname").keyup(function(){
 			var uname = $(this).val();
 			if(uname == ""){
 				return false;
@@ -80,10 +80,13 @@ $(document).ready(function(){
 				success : function(data) {
 					console.log(data.length);
 					if(data == 0){
-						$("#nameCheckBox").text("아주 멋진 닉네임 입니다.!").css("color","green");
+						if(uname.length < 2 || uname.length > 20){
+							$("#nameCheckBox").text("닉네임은 2글자 이상 20자 이하만 가능합니다.!").css("color","red");
+						} else{
+							$("#nameCheckBox").text("아주 멋진 닉네임 입니다.!").css("color","green");
+						}
 					} else{
 						$("#nameCheckBox").text("닉네임이  이미 사용중입니다.").css("color","red");
-						$("#uname").val("");
 						$("#uname").focus();
 					}
 				}
@@ -115,7 +118,6 @@ $(document).ready(function(){
 						}
 					} else{
 						$("#idcheck").text("아이디가 이미 사용중입니다.").css("color","red");
-						$("#uid").val("");
 						$("#uid").focus();
 					}
 				}
@@ -136,9 +138,11 @@ $(document).ready(function(){
 			var uid = $("#uid").val();
 			var nameCheckBox = $("#nameCheckBox").text(); 
 			var pwcheck = $("#pwcheck").text();
-			var idCheck = $("#idCheck").text();
+			var idCheck = $("#idcheck").text();
 			
 			if(idCheck !="멋진 아이디네요!"){
+				console.log(idCheck);
+				console.log(uid);
 				alert("id양식에 맞게 작성");
 				return false;
 			}
@@ -156,7 +160,8 @@ $(document).ready(function(){
 			var ect = $("#ectrue").val();
 			
 			if(ect == 1){
-				$("#joinForm").submit();
+				alert("회원 가입 완료! 로그인 된 상태로 메인페이지로 이동합니다.");
+				
 			} else {
 				alert("이메일 인증을 해주세요");
 				return false;
@@ -186,7 +191,7 @@ $(document).ready(function(){
 				$("#year").html(year);
 				
 				$("#submit").on("click",function(){
-						$("#umail").val;
+						$("#umail").val();
 				});
 				
 				
@@ -233,6 +238,5 @@ $(document).ready(function(){
 						}
 						
 					});
-				
 				
 		});

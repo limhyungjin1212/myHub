@@ -1,5 +1,7 @@
 package com.lhj.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<ReviewVO> repListPage(int pno, Criteria cri) throws Exception {
 		List list = rm.repListPage(pno, cri);
+		
 		return list;
 	}
 	
@@ -124,6 +127,16 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<ReviewVO> revMyFile(String uname) throws Exception {
 		return rm.revMyFile(uname);
+	}
+
+	@Override
+	public ReviewVO weekReview() throws Exception {
+		return rm.weekReview();
+	}
+
+	@Override
+	public List<String> revHelpfulList(int rno) throws Exception {
+		return rm.revHelpfulList(rno);
 	}
 	
 }

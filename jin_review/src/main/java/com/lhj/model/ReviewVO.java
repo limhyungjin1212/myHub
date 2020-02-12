@@ -11,12 +11,19 @@ public class ReviewVO {
 	private int rate;
 	private String fn;
 	private int helpful;
+	private String helpfulId;
 	private String[] files;
 	private int urCnt; //리뷰의 작성자가 작성한 리뷰 총 갯수
 	
 	
 	
 	
+	public String getHelpfulId() {
+		return helpfulId;
+	}
+	public void setHelpfulId(String helpfulId) {
+		this.helpfulId = helpfulId;
+	}
 	public int getUrCnt() {
 		return urCnt;
 	}
@@ -99,9 +106,10 @@ public class ReviewVO {
 	}
 	@Override
 	public String toString() {
-		return "ReviewVO [pno=" + pno + ", rno=" + rno + ", content=" + content + ", writer=" + writer
-				+ ", rev_subject=" + rev_subject + ", regdate=" + regdate + ", rate=" + rate + ", fn=" + fn
-				+ ", helpful=" + helpful + ", files=" + Arrays.toString(files) + "]";
+		return "ReviewVO [pno=" + pno + ", rno=" + rno + ", pname=" + pname + ", content=" + content + ", writer="
+				+ writer + ", rev_subject=" + rev_subject + ", regdate=" + regdate + ", rate=" + rate + ", fn=" + fn
+				+ ", helpful=" + helpful + ", helpfulId=" + helpfulId + ", files=" + Arrays.toString(files) + ", urCnt="
+				+ urCnt + "]";
 	}
 	
 	

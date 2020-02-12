@@ -161,4 +161,18 @@ WHERE NOT EXISTS (
 		insert into review_attach(filename,rno) values (#{filename},#{rno})
 	</insert>
 	
+	
+	<!--1주일간 도움이 가장 많은 리뷰  -->
+	<select id="weekReview" resultType="com.lhj.model.ReviewVO">
+		SELECT r.*,ra.*,max(h.helpCount) 
+		FROM review r left join (select rno,count(helpfulUserId) as helpCount from helpful group by rno) h on r.rno=h.rno
+		 left join review_attach ra on r.rno =ra.rno
+		WHERE r.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -1 week) AND NOW()
+	</select>
+	
+	<!-- 리뷰마다 도움이 된 helpID  -->
+	<select id="revHelpfulList" resultType="String">
+		select helpfulUserId as helpfulId from helpful where rno =#{rno};
+	</select>
+	
 </mapper>

@@ -68,6 +68,8 @@ public class BoardController {
 		model.addAttribute("plist", plist);
 		model.addAttribute("adminList", adminList);
 		
+		model.addAttribute("weekReview",reviewService.weekReview());
+		
 		model.addAttribute("rpage",rpv);
 		model.addAttribute("page",pv);
 		
@@ -119,7 +121,11 @@ public class BoardController {
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info("User="+req.getHeader("User-Agent"));
 		logger.info(req.getRequestURI().substring(req.getContextPath().length()));
+		
+		
 		model.addAttribute("detail",boardService.boardDetail(pno));
+		
+		
 		//model.addAttribute("cnt",rs.repCount(pno));
 		
 		
