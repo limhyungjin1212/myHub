@@ -92,8 +92,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void Helpfuldis(int rno) throws Exception {
-		rm.Helpfuldis(rno);
+	public void Helpfuldis(int rno,String uname) throws Exception {
+		rm.Helpfuldis(rno,uname);
 	}
 
 	@Override
@@ -137,6 +137,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<String> revHelpfulList(int rno) throws Exception {
 		return rm.revHelpfulList(rno);
+	}
+
+	@Override
+	public ReviewVO mainRevGetAttach() throws Exception {
+		return rm.mainRevGetAttach();
 	}
 	
 }

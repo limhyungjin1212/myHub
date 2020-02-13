@@ -28,6 +28,10 @@ $(function() {
   $( "#datepicker1" ).datepicker({
     dateFormat: 'yy-mm-dd'
   });
+  
+  $( "#datepicker2" ).datepicker({
+	    dateFormat: 'yy-mm-dd'
+	  });
 });
 </script>
 </head>
@@ -73,14 +77,13 @@ $(function() {
 						<h3>등록한 리뷰가 없습니다.</h3>
 				</c:if>
 				<input type="text" id="datepicker1">
+				<input type="text" id="datepicker2">
 				<table class="table">
 					<c:forEach items="${myRevList }" var="reviewVO" varStatus="" >
 					
 						<tr>
-							<td width="30%"><a href="detail?pno=${reviewVO.pno }">${reviewVO.pname }</a></td>
-							
-							<td width="70%">
-							<c:forEach begin="1" end="${reviewVO.rate }" var="rateAvg">
+							<td><a href="detail?pno=${reviewVO.pno }">${reviewVO.pname }</a>
+								<c:forEach begin="1" end="${reviewVO.rate }" var="rateAvg">
 									<i class='fas fa-star' style='color: #99ccff;'></i>
 							</c:forEach>
 							 <c:choose>
@@ -96,6 +99,18 @@ $(function() {
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
+								
+							
+							</td>
+							
+							<td>
+								${reviewVO.regdate }
+							</td>
+						</tr>
+						<tr><td width="70%"><strong>${reviewVO.rev_subject }</strong><br>${reviewVO.content }</td>
+							<td width="30%">
+							<input type="hidden" id="myRno" value="${reviewVO.rno }">
+							<button type="button" id="my_up_btn">수정2</button>
 							</td>
 						</tr>
 						<tr>
@@ -107,13 +122,6 @@ $(function() {
 										</c:if>
 								</c:forEach>
 							
-							</td>
-						</tr>
-						<tr>
-							<td width="70%"><strong>${reviewVO.rev_subject }</strong>${reviewVO.content }</td>
-							<td width="30%">
-							<input type="hidden" id="myRno" value="${reviewVO.rno }">
-							<button type="button" id="my_up_btn">수정2</button>
 							</td>
 						</tr>
 						
@@ -154,7 +162,7 @@ $(function() {
 					</tr>
 					<c:forEach items="${followList }" var="follow">
 					<tr>
-						<td><a href="userDetail?uname=${follow.follow }">${follow.follow }</a></td>
+						<td><a href="userDetail?uname=${follow.uname }">${follow.follow }</a></td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -168,7 +176,7 @@ $(function() {
 				</tr>
 				<c:forEach items="${followerList }" var="follower">
 					<tr>
-						<td><a href="userDetail?uname=${follower.uname}">${follower.uid }</a></td>
+						<td><a href="userDetail?uname=${follower.follower}">${follower.follower }</a></td>
 					</tr>
 					</c:forEach>
 			</table>

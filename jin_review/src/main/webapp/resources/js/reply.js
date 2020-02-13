@@ -238,6 +238,7 @@ $(document).ready(
 
 						console.log(loginInfo);
 						if (loginInfo == null || loginInfo == "") {
+							alert("로그인을 먼저 해주세요!");
 							location.href = 'login';
 						} else {
 							var rno = $(this).parents("li").attr("data-rno");
@@ -250,8 +251,7 @@ $(document).ready(
 								contentType : "application/json;charset=utf-8",
 								success : function(data) {
 									if (data == 'success') {
-										getPageList(replyPage,true);
-										
+										getPageList(replyPage);
 									}
 								},
 								error : function(err) {
@@ -266,17 +266,22 @@ $(document).ready(
 						alert(loginInfo);
 						console.log(loginInfo);
 						if (loginInfo == null || loginInfo == "") {
-							location.href = 'user/login';
+							alert("로그인을 먼저 해주세요!");
+							location.href = 'login';
 						} else{
 							var rno = $(this).parents("li").attr("data-rno");
+							console.log("helpfuldis.rno="+rno);
+							var uname = loginInfo;
+							console.log("helpfuldis.unmae="+uname);
 							$.ajax({
-								type : 'put',
+								type : 'delete',
 								url : 'replies/Helpfuldis/' + rno,
+								data : uname,
 								contentType : "application/json;charset=utf-8",
 								success : function(data) {
 									if (data == 'success') {
 										alert("도움 된 수 감소 ");
-										getPageList(replyPage,false);
+										getPageList(replyPage);
 									}
 								},
 								error : function(err) {

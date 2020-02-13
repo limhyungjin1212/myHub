@@ -187,7 +187,8 @@
 							success : function(data) {
 								if (data == 'success') {
 									alert("수정 정상처리 됨");
-									self.close();
+									opener.parent.location.reload(); //수정하고 닫으면서 팝업창의 부모창을 새로고침.
+									self.close(); //팝업창을 닫음
 								}
 							},
 							error : function(err) {

@@ -83,8 +83,28 @@ public class UploadFileUtils {
 
 		// 이미지를 경로와 파일 이름으로 읽어들인다 BufferedImage는 가상의 저장공간?
 		BufferedImage sourceImg = ImageIO.read(new File(uploadPath + path, fileName));
-		// 불러들인 이미지를 사이즈 조정 후 destImg에 저장
-		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
+		
+		// 썸네일의 너비와 높이 입니다. 
+		int dw = 250, dh = 150; 
+		// 원본 이미지의 너비와 높이 입니다. 
+		int ow = sourceImg.getWidth();
+		int oh = sourceImg.getHeight(); 
+		// 원본 너비를 기준으로 하여 썸네일의 비율로 높이를 계산합니다. 
+		int nw = ow;
+		int nh = (ow * dh) / dw;
+		// 계산된 높이가 원본보다 높다면 crop이 안되므로 
+		// 원본 높이를 기준으로 썸네일의 비율로 너비를 계산합니다. 
+		if(nh > oh) { 
+			nw = (oh * dw) / dh; 
+			nh = oh; 
+		}
+
+		//출처: https://offbyone.tistory.com/114 [쉬고 싶은 개발자]
+		// 계산된 크기로 원본이미지를 가운데에서 crop 합니다. 
+		BufferedImage cropImg = Scalr.crop(sourceImg, (ow-nw)/2, (oh-nh)/2, nw, nh);
+
+		// 불러들인 이미지를 사이즈 조정 후 destImg에 저장 Scalr.resize(cropImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100)
+		BufferedImage destImg = Scalr.resize(cropImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
 		// 썸네일 이름은 파일앞에 s_가 붙는다
 		String thumbnailName = uploadPath + path + File.separator + "s_" + fileName;
 		// 새로운 파일 생성 썸네일 이름으로.

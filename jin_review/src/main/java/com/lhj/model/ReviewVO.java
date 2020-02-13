@@ -1,6 +1,8 @@
 package com.lhj.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ReviewVO {
 	private int pno,rno;
@@ -78,13 +80,6 @@ public class ReviewVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public String getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
-	}
-	
 	public String[] getFiles() {
 		return files;
 	}
@@ -94,6 +89,12 @@ public class ReviewVO {
 	
 	
 	
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
 	public String getFn() {
 		/*
 		 * if(fn !=null) { String front = fn.substring(0,12); String end =

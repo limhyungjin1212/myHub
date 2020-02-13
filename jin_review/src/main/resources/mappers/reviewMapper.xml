@@ -146,9 +146,9 @@ WHERE NOT EXISTS (
 		
 	</insert>
 	<!-- 도움이 된 수 감소 -->
-	<update id="Helpfuldis">
-		update review set helpful = helpful-1 where rno = #{rno}
-	</update>
+	<delete id="Helpfuldis">
+		delete from helpful where helpfulUserId=#{uname} and rno = #{rno};
+	</delete>
 
 	<!-- 리뷰 수정시 파일 삭제  -->
 	<delete id="deleteRevAttach">
@@ -164,7 +164,7 @@ WHERE NOT EXISTS (
 	
 	<!--1주일간 도움이 가장 많은 리뷰  -->
 	<select id="weekReview" resultType="com.lhj.model.ReviewVO">
-		SELECT r.*,ra.*,max(h.helpCount) 
+		SELECT r.*,ra.filename as fn,max(h.helpCount) 
 		FROM review r left join (select rno,count(helpfulUserId) as helpCount from helpful group by rno) h on r.rno=h.rno
 		 left join review_attach ra on r.rno =ra.rno
 		WHERE r.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -1 week) AND NOW()
@@ -174,5 +174,12 @@ WHERE NOT EXISTS (
 	<select id="revHelpfulList" resultType="String">
 		select helpfulUserId as helpfulId from helpful where rno =#{rno};
 	</select>
+	
+	<!--메인페이지 리뷰 사진 가져오기  -->
+	<select id="mainRevGetAttach" resultType="com.lhj.model.ReviewVO">
+		select r.writer,ra.filename as fn,p.pname,p.pno from review r join review_attach ra on r.rno=ra.rno join product_board p on r.pno=p.pno order by rand() limit 1;
+	</select>
+	
+	
 	
 </mapper>

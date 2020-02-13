@@ -299,14 +299,14 @@
 		var loginfo = $("#loginfo").val();
 
 		
-		function getPageList(page,btnHelp) {
+		function getPageList(page) {
 			$.getJSON("replies/" + pno + "/" + page,function(data) { //getJSON으로 데이터를 불러온다.
 								
 								var str2 = "";
-								var btnHelp = false;
 								
 								$(data.list).each(function() {
 									var reno = this.rno;
+									var btnHelp = false;
 													str2 += "<div class='row p-2 my-3 border'><div class='col-md-2'><div class='card'>";
 													str2 += "<img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'>";
 													str2 += "<div class='card-body'><h4 class='card-title'>"
@@ -346,29 +346,34 @@
 															+ this.rev_subject
 															+ "</strong></p><br><br>"
 															+ "<span>"+this.content+"</span>";
-															
 													
 													if (loginfo == this.writer) {
 														str2 += "<input type='button' id='rev_up_btn' class='btn btn-outline-info' id='btnUpdate' value='수정'></p></li></div></div>";
 													} else {
 														str2 += "<p>리뷰가 도움이 되셧나요?";
 														
+														
 														$.each(data.revHelpfulList,function(key,value){ //도움이 된 사람의 리스트
-															if(key == reno){
-																console.log(key+':'+value);
-																console.log(reno);
-																$.each(value,function(){
-																	console.log(this)
-																	if(loginfo == this){
-																		console.log(loginfo);
-																		btnHelp = true;
-																	} else{
-																		btnHelp = false;
-																	}
-																});
-															}
+																
+																console.log("key="+key);
+																console.log("reno="+reno);
+																
+																if(key == reno){ //key값으로 받아온 댓글의 번호가 리뷰의 rno와 같으면
+																	console.log(this);
+																	$.each(value,function(){ //도움이 된 사람의 목록을 불러옴
+																		console.log(this);
+																		if(loginfo == this){ //로그인한 정보가 도움이 된 사람의 목록이랑 같으면
+																			console.log("true="+this);
+																			btnHelp = true;  //버튼help를 트루로
+																		} else{
+																			console.log("false="+this);
+																			btnHelp = false; //그렇지 않으면 false
+																		}
+																	});
+																}
 															
 														});
+														console.log("rno="+this.rno+"btnHelp="+btnHelp);
 														if(btnHelp){
 															str2 += "<button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm' disabled ><small>도움이 돼요</small></button>"	
 															+ "<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'><small>도움 안 돼요</small></button>";
@@ -549,5 +554,5 @@
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=81"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=82"></script>
 

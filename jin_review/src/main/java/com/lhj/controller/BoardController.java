@@ -49,7 +49,7 @@ public class BoardController {
 		
 		
 		List revlist = new ArrayList();
-		cri.setAmount(2);
+		
 		revlist = reviewService.revListPage(cri);
 		logger.info("리스트.."+revlist);
 		
@@ -73,7 +73,8 @@ public class BoardController {
 		model.addAttribute("rpage",rpv);
 		model.addAttribute("page",pv);
 		
-		
+		model.addAttribute("mrga",reviewService.mainRevGetAttach());
+		logger.info("mrga="+reviewService.mainRevGetAttach());
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		
 		return "index";
@@ -150,7 +151,6 @@ public class BoardController {
 		logger.info("더보기버튼 왓나요?"+pageNum);
 		Criteria criteria = new Criteria();
 		criteria.setPageNum(pageNum+1);
-		criteria.setAmount(2);
 		logger.info("이거는요?"+criteria);
 		return reviewService.revListPage(criteria);
 	}

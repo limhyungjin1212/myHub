@@ -83,8 +83,11 @@ public class ReviewMapperImpl implements ReviewMapper {
 	}
 
 	@Override
-	public void Helpfuldis(int rno) throws Exception {
-		session.update(namespace+".Helpfuldis",rno);
+	public void Helpfuldis(int rno,String uname) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("rno", rno);
+		paramMap.put("uname", uname);
+		session.delete(namespace+".Helpfuldis",paramMap);
 	}
 
 	@Override
@@ -157,6 +160,11 @@ public class ReviewMapperImpl implements ReviewMapper {
 	public List<String> revHelpfulList(int rno) throws Exception {
 		List<String> revHelpfulList = session.selectList(namespace+".revHelpfulList",rno);
 		return revHelpfulList;
+	}
+
+	@Override
+	public ReviewVO mainRevGetAttach() throws Exception {
+		return session.selectOne(namespace+".mainRevGetAttach");
 	}
 	
 	

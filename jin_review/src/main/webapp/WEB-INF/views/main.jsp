@@ -49,14 +49,54 @@
 	#cb{
 		margin-top:200px;
 	}
+	
+	#mrgaInfo a{
+		text-decoration: none; 
+	}
 </style>
 </head>
 <body>
-<div class="wrap">
-	<div>
-		<jsp:include page="include/header.jsp"></jsp:include>
-	</div>
 
+
+	<div class="container-fluid" id="headerbar">
+	<c:choose>
+	<c:when test="${uri == '/main' }">
+	
+	<script>
+	var ranFn = "${mrga.fn}";
+	var front = ranFn.substring(0,12);
+	var end = ranFn.substring(14);
+	var mrgaWriter = "${mrga.writer}";
+	var mrgaPname = "${mrga.pname}";
+		$("#headerbar").css(
+				{
+				"background":"url(displayFile?fileName="+front+end+")",
+				"background-repeat" : "no-repeat",
+				"background-size" :"cover",
+				"background-position":"center",
+				 "height": "60vh"
+				});
+		
+	</script>
+	
+		<jsp:include page="include/header.jsp"></jsp:include>
+		
+		<div id="mrgaInfo" class="text-center">
+			<span id="mrgaPname" >
+				<a href="detail?pno=${mrga.pno }"> ${mrga.pname }</a>
+			</span><br>
+			<span id="mrgaWriter">Photo by <a href="userDetail?uname=${mrga.writer }">${mrga.writer }</a></span>
+			
+		</div>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="include/header.jsp"></jsp:include>
+		</c:otherwise>
+		</c:choose>
+		
+	</div>
+	
+<div class="wrap">
 	<!-- Page Content -->
 	<div class="container-fluid" id="cb">
 		<c:choose>

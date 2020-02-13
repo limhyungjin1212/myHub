@@ -63,6 +63,7 @@ function selectEmail() {
 
 $(document).ready(function(){
 	var EcheckNum = 0;	
+	
 	$("#emailCheck").hide();
 	
 	

@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<style>
+	div{
+		padding-top : 10px;
+	}
+</style>
 <!-- Jumbotron Header -->
 <div class="container">
 <header class="jumbotron my-4">
@@ -12,8 +16,9 @@
 		
 		<!-- Topbar Search -->
 </header>
-
-  
+<div class="text-center">
+<h1>주변 지역을 찾아보세요!</h1>  
+</div>
 <div class="row">
 	<div class="col-md-4">
 		<img alt="" src="resources/image/health.jpg" class="img-thumbnail" >
@@ -37,7 +42,7 @@
 	<c:forEach items="${plist }" var="pVO">
 		<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card h-100" id="attach">
-			<img class="card-img-top" src='displayFile?fileName=${pVO.fn }' height="" alt="not image">
+			<img class="img-thumbnail" src='displayFile?fileName=${pVO.fn }' height="" alt="not image">
 			<div class="card-body">
 				<h4 class="card-title"><a href="detail?pno=${pVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${pVO.pname }</a></h4>
 				<c:forEach  begin="1" end="${pVO.rate }" var="rateAvg">
@@ -66,12 +71,15 @@
 	</c:forEach>
 	
 	<div class="col-md-8 ">
-	<h1>주간 리뷰 도움이 많이 된것.</h1>
+	<p class="display-4 text-center">주간 리뷰 도움이 많이 된것.</p>
 		<div class="container p-3 my-3 bg-primary text-white">
 		<h1>${weekReview.rev_subject }</h1>
 		<h1>${weekReview.writer }</h1>
 		<div>
 			${weekReview.content }
+		</div>
+		<div>
+			<img src="displayFile?fileName=${weekReview.fn }">
 		</div>
 		</div>
 	</div>
@@ -84,6 +92,10 @@
 	</div>
 </div>
 <!-- Page Features -->
+
+
+	<p class="display-2 text-center">최근 리뷰</p>
+
 <div id="revBox" class="row text-center">
 	<div class="card-columns">
 	<c:forEach items="${revlist }" var="reviewVO">
@@ -97,12 +109,12 @@
 						사진만나온것입니다
 					</c:when>
 					<c:otherwise>
-						리뷰적은것
+						리뷰
 					</c:otherwise>
 				</c:choose>	
 			</div>
 			<c:if test="${reviewVO.fn != null }">
-				<img class="card-img-top" style="width:100%" src='displayFile?fileName=${reviewVO.fn }' alt="not image">
+				<img class="img-thumbnail" src='displayFile?fileName=${reviewVO.fn }' alt="not image">
 			</c:if>
 			<div class="card-body">
 				<h4 class="card-title">${reviewVO.pname }</h4>
@@ -145,10 +157,8 @@ var pageNum = ${page.cri.pageNum};
 
 	
 	$("#addRevList").on("click",function(){
-		console.log(pageNum);
 		
 		$.getJSON("addRevList?pageNum="+pageNum, function(data) {
-			console.log(data.length);
 			var str = "";
 			$(data).each(function(index,data) {
 				//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
@@ -164,7 +174,7 @@ var pageNum = ${page.cri.pageNum};
 					str += "리뷰적은것</div>";
 				} 
 				if(data.fn != null){
-					str += "<img class='card-img-top' style='width:100%'  src='displayFile?fileName="+data.fn+"' alt='not image'>";
+					str += "<img class='img-thumbnail'  src='displayFile?fileName="+data.fn+"' alt='not image'>";
 				}		
 				str += "<div class='card-body'><h4 class='card-title'>"+data.pname+"</h4>";
 				for(var i =1; i<=data.rate;i++){
@@ -186,7 +196,6 @@ var pageNum = ${page.cri.pageNum};
 				str += "</div>";
 				
 			});
-			console.log(str);
 			if(data.length == 0){
 				$("#addRevList").hide();
 			}

@@ -183,7 +183,7 @@ public class UserController {
 		
 		logger.info("uid="+uid);
 		logger.info("uname="+uname);
-		cri.setAmount(5);
+		cri.setAmount(3);
 		PageVO pv = new PageVO(cri, rs.myRevCount(uname));
 		logger.info("pv" + pv);
 		

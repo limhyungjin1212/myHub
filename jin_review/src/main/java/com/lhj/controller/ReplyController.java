@@ -165,14 +165,15 @@ public class ReplyController {
 	}
 	
 	/* 도움이 된 수 감소 */
-	@RequestMapping(value = "Helpfuldis/{rno}", method = { RequestMethod.PUT, RequestMethod.PATCH })
-	public ResponseEntity<String> updateHelpfuldis(@PathVariable("rno") int rno) {
+	@RequestMapping(value = "Helpfuldis/{rno}", method = RequestMethod.DELETE )
+	public ResponseEntity<String> updateHelpfuldis(@PathVariable("rno") int rno,@RequestBody String uname) {
 
-		logger.info("helpful?? :" + rno);
+		logger.info("helpful?? :" + rno+uname);
+		
 		ResponseEntity<String> entity = null;
 
 		try {
-			rs.Helpfuldis(rno);
+			rs.Helpfuldis(rno,uname);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

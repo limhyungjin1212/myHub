@@ -3,28 +3,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
 #navbar a {
-	color: #99ccff;
+	color: black;
 	margin-top: 30px;
-}
-#navbar {
-	background-image: url("resources/image/coffee1.jpg");
-	background-size: cover;
-	
 }
 .uinfo {
 	color: white;
 }
 
-#searchform{
+
+/* #searchform{
 	margin-top : 100px;
 	margin-left : 300px;
 	margin-right : 300px;
-}
+} */
 </style>
+
 <!-- Navigation -->
 	<nav id="navbar"
-		class="navbar navbar-expand-lg navbar-dark bg-light fixed-top">
-		<div class="container-fluid">
+		class="navbar navbar-expand-lg navbar-dark ">
+		<div class="container">
 		<a class="navbar-brand" href="main">SemoRE</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -40,12 +37,12 @@
 			</button>
 			<form autocomplete="off" id="sform" action="productSearch" method="get"
 				class="d-none d-sm-inline-block form-inline navbar-search">
-				<div class="input-group">
+				<div class="input-group input-group-lg">
 					<input type="hidden" name="pageNum" value="1">
 						
-					<input type="text" size="70px" height="70px" id="category" name="keyword" class="form-control col-md-6"
+					<input type="text" size="70px" height="100px" id="category" name="keyword" class="form-control col-md-6"
 						list="cate" placeholder="Search for..." aria-label="Search"
-						aria-describedby="basic-addon2" value="">
+						aria-describedby="inputGroup-sizing-lg" value="">
 					<datalist id="cate">
 						<option value="병원">병원</option>
 						<option value="음식">음식</option>
@@ -58,14 +55,11 @@
 					</datalist>
 					<input type="text" name="place" id="placekeyword" class="form-control"
 						placeholder="Search for..." aria-label="Search"
-						aria-describedby="basic-addon2" value="울산광역시">
-					<div class="input-group-append">
+						aria-describedby="inputGroup-sizing-lg" value="울산광역시">
 						<input class="btn btn-primary" type="submit" value="검색">
-					</div>
 				</div>
 			</form>
 		</div>
-		
 		
 		
 		<div class="collapse navbar-collapse" id="navbarResponsive">
@@ -93,4 +87,10 @@
 	</div>
 	
 	</nav>
+	
+	<c:if test="${uri == '/main' }">
+		<script>
+			$("#sform").css("marginTop","300px");
+		</script>
+	</c:if>
 	

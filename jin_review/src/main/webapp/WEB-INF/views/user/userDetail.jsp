@@ -10,8 +10,9 @@
 </h1>
 <h1>로그인아이디 :${login.uid }</h1>
 <h1>
-
-	<button type="button" id="followBtn" class="btn btn-primary">팔로우 신청</button>
+	<c:if test="">
+		<button type="button" id="followBtn" class="btn btn-primary">팔로우 신청</button>
+	</c:if>
 </h1>
 
 <script>

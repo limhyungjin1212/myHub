@@ -46,7 +46,7 @@ public interface ReviewMapper {
 		public void HelpfulAdd(int rno,String uname) throws Exception;
 		
 		//도움이 된 수 감소
-		public void Helpfuldis(int rno) throws Exception;
+		public void Helpfuldis(int rno,String uname) throws Exception;
 		
 		//마이페이지 나의 댓글 갯수
 		public int myRevCount(String writer) throws Exception;
@@ -71,5 +71,9 @@ public interface ReviewMapper {
 		
 		//도움이 된 사람 리스트
 		public List<String> revHelpfulList(int rno) throws Exception;
+		
+		//메인페이지 랜덤 리뷰 가져오기
+		public ReviewVO mainRevGetAttach() throws Exception;
+		
 		
 }
