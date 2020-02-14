@@ -1,7 +1,7 @@
 package com.lhj.model;
 
 public class UserVO {
-	private String uid,upw,uname,umail,gender,follow,follower;
+	private String uid,upw,uname,umail,gender,follow,follower,regdate;
 	
 	
 	public String getFollower() {
@@ -60,6 +60,14 @@ public class UserVO {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.lhj.mapper;
 import java.util.Date;
 import java.util.List;
 
+import com.lhj.model.Criteria;
 import com.lhj.model.LoginVO;
 import com.lhj.model.UserVO;
 
@@ -36,4 +37,11 @@ public interface UserMapper {
 	
 	//팔로워 목록
 	public List<UserVO> followerList(String uid)throws Exception;
+	
+	//관리자 페이지 유저 리스트
+	public List<UserVO> userList(Criteria cri) throws Exception;
+	
+	//회원의 총 카운트
+	public int userCnt() throws Exception;
+	
 }

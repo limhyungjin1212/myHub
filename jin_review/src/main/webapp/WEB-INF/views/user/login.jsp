@@ -19,7 +19,19 @@
 </style>
 </head>
 <body>
+<script>
+var result = "${msg}";
 
+if (result == 'wsuccess') {
+	alert('글 등록 완료');
+} else if (result == 'dsuccess') {
+	alert('글 삭제 완료');
+} else if (result == 'fail') {
+	alert('아이디와 비밀번호가 일치하지 않습니다.');
+} else if (result == 'usuccess') {
+	alert('수정 완료');
+}
+</script>
 	<div class="container">
 		<div class="text-center">
 			<h1>

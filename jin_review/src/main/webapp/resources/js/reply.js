@@ -199,27 +199,7 @@ $(document).ready(
 						});
 					});
 
-					$("#replyDelBtn").on("click", function() {
-						var rno = $(".modal-title").html();
-
-						$.ajax({
-							type : 'delete',
-							url : 'replies/' + rno,
-							contentType : "application/json;charset=utf-8",
-							dataType : "text",
-							success : function(data) {
-
-								if (data == 'success') {
-									alert("삭제 정상처리 됨");
-									getPageList(replyPage);
-									$("#modDiv").hide("slow");
-								}
-							},
-							error : function(err) {
-								alert("실패!!")
-							}
-						});
-					});
+					
 					$(document).on("click","#revImg",function(){
 						alert("aa");
 						$(this).toggle(

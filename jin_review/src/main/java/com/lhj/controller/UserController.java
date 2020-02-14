@@ -230,11 +230,16 @@ public class UserController {
 		logger.info("pv" + pv);
 		List myRevList = new ArrayList();
 		myRevList = rs.revMyListPage(uname, cri);
-
+		
+		//작성한 리뷰의 첨부파일 불러오기
+		List revMyFile = new ArrayList();
+		revMyFile = rs.revMyFile(uname);
+		logger.info("revMyFile=" + revMyFile);
 		
 		model.addAttribute("user", us.userDetail(uname));
 		logger.info("user="+us.userDetail(uname));
 		model.addAttribute("myRevList", myRevList);
+		model.addAttribute("revMyFile", revMyFile);
 		model.addAttribute("page", pv);
 
 		return "main";
@@ -259,4 +264,19 @@ public class UserController {
 		return entity;
 	}
 
+	@RequestMapping(value ="userList" , method = RequestMethod.GET)
+	public String userList(HttpServletRequest req, Criteria cri,Model model) throws Exception{
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		
+		PageVO pv = new PageVO(cri, us.userCnt());
+		
+		List<UserVO> userList = new ArrayList<>();
+		userList = us.userList(cri);
+		
+		model.addAttribute("userList", userList);
+		model.addAttribute("page", pv);
+		
+		return "main";
+	}
+	
 }

@@ -51,4 +51,21 @@
 	<select id="followerList" resultType="com.lhj.model.UserVO">
 		select id as follower from user_follow where follow=#{uid}
 	</select>
+	
+	
+	<!--관리자 페이지 회원 목록  -->
+	<select id="userList" resultType="com.lhj.model.UserVO">
+		select * from 
+		(select *,@rownum:=@rownum+1 as rownum 
+	from tbl_user as tu join (select @rownum:=0) as rn order by regdate desc) as T 
+     <![CDATA[
+   		where rownum >(#{pageNum}-1) * #{amount} and rownum<= #{amount} * #{pageNum} 
+		]]>
+	</select>
+	
+	<!-- 유저의 총 cnt  -->
+	<select id="userCnt" resultType="int">
+		select count(*) from tbl_user
+	</select>
+	
 </mapper>

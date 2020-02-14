@@ -4,18 +4,13 @@
 <style>
 #navbar a {
 	color: black;
-	margin-top: 30px;
 }
 .uinfo {
-	color: white;
+	color: DodgerBlue;
 }
 
 
-/* #searchform{
-	margin-top : 100px;
-	margin-left : 300px;
-	margin-right : 300px;
-} */
+
 </style>
 
 <!-- Navigation -->
@@ -28,7 +23,7 @@
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="row text-center"  id="searchform" >
+		<div class="row"  id="searchform" >
 			<!-- Topbar -->
 			<!-- Sidebar Toggle (Topbar) -->
 			<button id="sidebarToggleTop"

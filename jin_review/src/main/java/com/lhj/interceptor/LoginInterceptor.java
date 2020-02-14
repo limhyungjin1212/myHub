@@ -55,10 +55,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				dest = reqRef;
 			}
 			System.out.println("dest="+dest);
-			if(dest.equals("http://localhost:8080/lhj/login") || dest.equals("http://localhost:8080/lhj/join")) {
-				response.sendRedirect("main");
+			if(dest != null) {
+				if(dest.equals("http://localhost:8080/lhj/login") || dest.equals("http://localhost:8080/lhj/join")) {
+					response.sendRedirect("main");
+				} else {
+					response.sendRedirect((String) dest);
+				}
 			} else {
-				response.sendRedirect(dest != null ? (String) dest : "main");
+			   response.sendRedirect("main");
 			}
 				
 			

@@ -20,23 +20,16 @@
 					<div id="updateDiv">
 					
 					<span id="up_rate">
-					 	<c:forEach begin="1" end="${rv.rate }"
-							var="rateAvg">
-							<i class='fas fa-star' style='color: #99ccff;'></i>
+					${rv.rate }
+					 	<c:forEach begin="1" end="${rv.rate }" >
+							<i class='fas fa-star' style='color :#99ccff;'></i>
 						</c:forEach> 
-					<c:choose>
-							<c:when test="${(rv.rate *2) % 2 eq 1}">
-								<i class="fas fa-star-half-alt" style='color: #99ccff;'></i>
-								<c:forEach begin="${rv.rate+1 }" end="4">
-									<i class='far fa-star' style='color: #99ccff;'></i>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:forEach begin="${rv.rate }" end="4">
-									<i class='far fa-star' style='color: #99ccff;'></i>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
+						
+						<c:if test="${rv.rate ne 5 }">
+							<c:forEach begin="${rv.rate }" end="4">
+								<i class='far fa-star'  style='color :#99ccff;'></i>
+							</c:forEach>
+						</c:if>
 					</span> 
 					<input type="hidden" id="rate" name="rate" value="${rv.rate }">
 					<br> 
@@ -74,9 +67,10 @@
 					var thisrate = $(this);
 					$("#up_rate i").css("color", "");
 
-					$(this).css("color", "#99ccff").prevAll().css("color", "#99ccff");
+					$(this).attr("class","fas fa-star").css("color", "#99ccff").prevAll().attr("class","fas fa-star").css("color", "#99ccff");
 					var j = $(this).index();
 					alert(j + 1);
+					console.log(this);
 					$("#rate").val(j + 1);
 
 				});		
@@ -203,6 +197,40 @@
 					
 				});
 				
+				$("#replyDelBtn").on("click", function() {
+					var rno = ${rv.rno };
+						
+					var repDel = confirm("정말로 리뷰를 삭제할까요?");
+					
+					if(repDel){
+							$.ajax({
+								type : 'delete',
+								url : 'replies/' + rno,
+								contentType : "application/json;charset=utf-8",
+								dataType : "text",
+								success : function(data) {
+									
+									if (data == 'success') {
+										alert("삭제 정상처리 됨");
+										opener.parent.location.reload(); //수정하고 닫으면서 팝업창의 부모창을 새로고침.
+										self.close(); //팝업창을 닫음
+									}
+								},
+								error : function(err) {
+									alert("삭제 실패!!")
+								},
+								complete : function(){
+									
+								}
+							});
+						}else{
+							alert("삭제 취소.");
+							
+						}
+						 
+					 
+					
+				});
 				
 				</script>
 				

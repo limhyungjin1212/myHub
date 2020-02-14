@@ -12,7 +12,7 @@
 <title>JinsReview</title>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
-<link href="resources/css/heroic-features.css?ver=34" rel="stylesheet">
+<link href="resources/css/heroic-features.css?ver=35" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link href="resources/css/all.min.css?ver=35" rel="stylesheet"
 	type="text/css">
@@ -53,14 +53,19 @@
 	#mrgaInfo a{
 		text-decoration: none; 
 	}
+	
+	a {
+		text-decoration: none;
+	}
 </style>
 </head>
 <body>
-
+	
+<div class="wrap">
 
 	<div class="container-fluid" id="headerbar">
 	<c:choose>
-	<c:when test="${uri == '/main' }">
+		<c:when test="${uri == '/main' && login.uid ne 'admin' }">
 	
 	<script>
 	var ranFn = "${mrga.fn}";
@@ -90,17 +95,43 @@
 		</div>
 		</c:when>
 		<c:otherwise>
-			<jsp:include page="include/header.jsp"></jsp:include>
+			<c:choose>
+			<c:when test="${login.uid eq 'admin'}">
+				<jsp:include page="admin/adminHeader.jsp"></jsp:include>
+			</c:when>
+			<c:otherwise>
+				<jsp:include page="include/header.jsp"></jsp:include>
+			</c:otherwise>
+			</c:choose>
+			
 		</c:otherwise>
 		</c:choose>
 		
 	</div>
-	
-<div class="wrap">
+
 	<!-- Page Content -->
 	<div class="container-fluid" id="cb">
-		<c:choose>
+	<c:choose>
 			<c:when test="${login.uid eq 'admin'}">
+			<div class="row">
+			<div class="col">
+				<h1>left</h1>
+		
+		<div class="btn-group-vertical btn-group-lg" >
+		 <button type="button" role="group"  onclick="location.href='main'" class="list-group-item list-group-item-action">
+    메인
+			  </button>
+			  <button type="button" role="group"  onclick="location.href='register'" class="list-group-item list-group-item-action">이벤트</button>
+			  <button type="button" role="group"  onclick="location.href='userList'" class="list-group-item list-group-item-action">회원 정보</button>
+			  <button type="button" role="group"  onclick="location.href='detail'" class="list-group-item list-group-item-action">건의사항</button>
+			  <button type="button" role="group"  onclick="location.href='detail'" class="list-group-item list-group-item-action" >신고함</button>
+		
+		</div>
+		
+		
+		
+			</div>
+			<div class="col-9">
 				<c:choose>
 					<c:when test="${uri == '/register' }">
 						<%@ include file="board/register.jsp"%>
@@ -111,10 +142,18 @@
 					<c:when test="${uri == '/update' }">
 						<%@ include file="board/update.jsp"%>
 					</c:when>
+					<c:when test="${uri == '/userList' }">
+						<%@ include file="user/userList.jsp"%>
+					</c:when>
 					<c:otherwise>
 						<%@ include file="board/list.jsp"%>
 					</c:otherwise>
-				</c:choose>
+					</c:choose>
+				</div>
+			<div class="col">
+				<h1>right</h1>
+			</div>
+			</div>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
@@ -136,9 +175,8 @@
 				
 			</c:otherwise>
 		</c:choose>
-		<c:if test="">
-		</c:if>
-	</div>
+</div>	
+
 	<!-- /.container -->
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">

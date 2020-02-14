@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lhj.mapper.UserMapper;
+import com.lhj.model.Criteria;
 import com.lhj.model.LoginVO;
 import com.lhj.model.UserVO;
 
@@ -65,6 +66,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> followerList(String uid) throws Exception {
 		return um.followerList(uid);
+	}
+
+	@Override
+	public List<UserVO> userList(Criteria cri) throws Exception {
+		return um.userList(cri);
+	}
+
+	@Override
+	public int userCnt() throws Exception {
+		return um.userCnt();
 	}
 	
 }

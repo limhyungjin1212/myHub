@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.lhj.model.Criteria;
 import com.lhj.model.LoginVO;
 import com.lhj.model.UserVO;
 
@@ -82,6 +83,17 @@ public class UserMapperImpl implements UserMapper{
 	public List<UserVO> followerList(String uid) throws Exception {
 		List list = session.selectList(namespace+".followerList",uid);
 		return list;
+	}
+
+	@Override
+	public List<UserVO> userList(Criteria cri) throws Exception {
+		List list = session.selectList(namespace+".userList",cri);
+		return list;
+	}
+
+	@Override
+	public int userCnt() throws Exception {
+		return session.selectOne(namespace+".userCnt");
 	}
 	
 }

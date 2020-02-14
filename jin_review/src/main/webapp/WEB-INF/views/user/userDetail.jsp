@@ -114,9 +114,12 @@
 					</tr>
 					<tr>
 						<td>
-							<c:if test="${(reviewVO.fn) ne null}">
-								<img class ='img-thumbnail' src='displayFile?fileName=${reviewVO.fn }'/>
-							</c:if>
+							<c:forEach items="${revMyFile }" var="rmf">
+								
+									<c:if test="${rmf.rno eq reviewVO.rno}">
+									<img class ='img-thumbnail' src='displayFile?fileName=${rmf.fn }'/>
+										</c:if>
+								</c:forEach>
 						</td>
 					</tr>
 					<tr>
