@@ -35,8 +35,8 @@
 	</div>
 	
   <div id="pac-container">
-        <input id="pac-input" name="place" type="text"
-            placeholder="Enter a location">
+        <input id="pac-input" class="form-control" name="place" type="text"
+            placeholder="주소를 입력하세요">
       </div>
     
     <div id="map"></div>

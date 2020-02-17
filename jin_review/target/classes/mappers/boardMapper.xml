@@ -82,11 +82,20 @@
 	<!-- 게시글과 파일 가져오기  -->
 	<select id="boardListAttach" resultType="com.lhj.model.BoardVO" >
 		select * from (select B.* , @rownum:=@rownum+1 as rownum from (
-		select 	p.pno, p.pname, p.pcate , p.pinfo, p.ptel , p.regdate , p.place,a.filename as fn , ifnull(round(avg(re.rate),1),0) as rate , (select count(rno) from review where pno = p.pno) as rcnt 
+		select p.*,a.filename as fn , ifnull(round(avg(re.rate),1),0) as rate , (select count(rno) from review where pno = p.pno) as rcnt 
 				from product_board p left join attach a on (p.pno = a.pno) left join review as re on (re.pno = p.pno) join (select @rownum:=0) as R 
 						<include refid="keyword"></include>
 						<include refid="place"></include>
-						group by p.pno order by rand() ) 
+						group by p.pno 
+						<choose>
+							<when test="place != null || keyword != null">
+									
+							</when>
+							<otherwise>
+							order by rand()
+							</otherwise>
+						</choose>
+						 ) 
                         as B
                 ) as C 
 			<![CDATA[

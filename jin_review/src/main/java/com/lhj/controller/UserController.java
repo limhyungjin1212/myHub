@@ -225,7 +225,7 @@ public class UserController {
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		logger.info("userdetail req=" + req.getRequestURI().substring(req.getContextPath().length()));
 
-		
+		cri.setAmount(5);
 		PageVO pv = new PageVO(cri, rs.myRevCount(uname));
 		logger.info("pv" + pv);
 		List myRevList = new ArrayList();

@@ -191,7 +191,7 @@ public class BoardController {
 		logger.info("search?cri="+cri);
 		
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
-		
+		cri.setAmount(5);
 		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
 		logger.info("pv="+pv);
 		List searchList = new ArrayList();
