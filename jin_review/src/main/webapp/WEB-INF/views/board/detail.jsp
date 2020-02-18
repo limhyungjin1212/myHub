@@ -297,13 +297,10 @@
 		var str2 = "";
 		var pno = ${detail.pno};
 		var loginfo = $("#loginfo").val();
-
 		
 		function getPageList(page) {
 			$.getJSON("replies/" + pno + "/" + page,function(data) { //getJSON으로 데이터를 불러온다.
-								
 								var str2 = "";
-								
 								$(data.list).each(function() {
 									var reno = this.rno;
 									var btnHelp = false;
@@ -355,25 +352,25 @@
 														
 														$.each(data.revHelpfulList,function(key,value){ //도움이 된 사람의 리스트
 																
-																console.log("key="+key);
-																console.log("reno="+reno);
+																//console.log("key="+key);
+																//console.log("reno="+reno);
 																
 																if(key == reno){ //key값으로 받아온 댓글의 번호가 리뷰의 rno와 같으면
-																	console.log(this);
+																	//console.log(this);
 																	$.each(value,function(){ //도움이 된 사람의 목록을 불러옴
-																		console.log(this);
+																		//console.log(this);
 																		if(loginfo == this){ //로그인한 정보가 도움이 된 사람의 목록이랑 같으면
-																			console.log("true="+this);
+																			//console.log("true="+this);
 																			btnHelp = true;  //버튼help를 트루로
 																		} else{
-																			console.log("false="+this);
+																			//console.log("false="+this);
 																			btnHelp = false; //그렇지 않으면 false
 																		}
 																	});
 																}
 															
 														});
-														console.log("rno="+this.rno+"btnHelp="+btnHelp);
+														//console.log("rno="+this.rno+"btnHelp="+btnHelp);
 														if(btnHelp){
 															str2 += "<button type='button' id='btnHelpful' class='btn btn-outline-primary btn-sm' disabled ><small>도움이 돼요</small></button>"	
 															+ "<button type='button' id='btnHelpfuldis' class='btn btn-outline-primary btn-sm'><small>도움 안 돼요</small></button>";
@@ -391,7 +388,6 @@
 
 							});
 		}
-
 		function printPaging(page) {
 
 			var str3 = "";
@@ -412,7 +408,6 @@
 			}
 			$('.pagination').html(str3);
 		}
-
 		var replyPage = 1;
 		$(".pagination").on("click", "li a", function(event) {
 			event.preventDefault(); //<a href=""> 태그의 기본동작인 페이지 전환을 막는 역할을 한다. 

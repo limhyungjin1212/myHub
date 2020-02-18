@@ -41,4 +41,8 @@ public interface UserService {
 
 	//회원의 총 카운트
 	public int userCnt() throws Exception;
+	
+	
+	//유저 프로필 사진 및 정보 업데이트
+	public void user_profile(UserVO uv) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.lhj.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.lhj.model.Criteria;
 import com.lhj.model.PageVO;
 import com.lhj.model.ReviewVO;
 import com.lhj.service.ReviewService;
+import com.lhj.service.UserService;
 
 @RestController
 @RequestMapping("replies")
@@ -26,7 +28,10 @@ public class ReplyController {
 
 	@Autowired
 	private ReviewService rs;
-
+	@Autowired
+	private UserService us;
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(ReplyController.class);
 
 	/* 댓글 등록 */
@@ -116,7 +121,8 @@ public class ReplyController {
 
 			PageVO pv = new PageVO(cri, cnt);
 			List<ReviewVO> pagelist = rs.repListPage(pno, cri);
-
+			
+			List userlist = new ArrayList();
 			
 			logger.info("pagelist=" + pagelist);
 			List<ReviewVO> repFileDetail = rs.repFileList(pno);
@@ -125,7 +131,11 @@ public class ReplyController {
 			Map<Integer,List<String>> revHelpfulList = new HashMap<Integer, List<String>>(); 
 			for(int i=0;i<pagelist.size();i++) {
 				revHelpfulList.put(pagelist.get(i).getRno(), rs.revHelpfulList(pagelist.get(i).getRno()));
-				System.out.println("revHelpfulList="+revHelpfulList);
+				
+				//pagelist.add(us.userDetail(pagelist.get(i).getWriter()));
+				System.out.println("us.userDetail(pagelist.get(i).getWriter());="+us.userDetail(pagelist.get(i).getWriter()));
+				userlist.add(pagelist.get(i).getWriter());
+				System.out.println("userlist="+userlist);
 			}
 			
 			

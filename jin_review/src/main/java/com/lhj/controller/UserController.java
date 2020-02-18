@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -208,7 +209,8 @@ public class UserController {
 		
 		model.addAttribute("myRevList", myRevList);
 		model.addAttribute("revMyFile", revMyFile);
-		
+		model.addAttribute("user", us.userDetail(uname));
+		logger.info("user"+us.userDetail(uname));
 		model.addAttribute("page", pv);
 		model.addAttribute("followList", followList);
 		model.addAttribute("followerList", followerList);
@@ -279,4 +281,15 @@ public class UserController {
 		return "main";
 	}
 	
+	
+	@RequestMapping(value ="updateUserInfo" , method=RequestMethod.POST)
+	public String updateUserInfo(MultipartFile file , Model model , UserVO uv) throws Exception{
+		
+		logger.info("유저인포 업데이트로 왓는가요?");
+		logger.info("file="+file);
+		logger.info("uvo="+uv);
+		us.user_profile(uv);
+		
+		return "redirect:mypage?uid="+uv.getUid()+"&uname="+uv.getUname()+"";
+	}
 }

@@ -1,9 +1,20 @@
 package com.lhj.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserVO {
 	private String uid,upw,uname,umail,gender,follow,follower,regdate;
+	private String user_info;
+	private String file;
 	
-	
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
 	public String getFollower() {
 		return follower;
 	}
@@ -70,10 +81,21 @@ public class UserVO {
 		this.regdate = regdate;
 	}
 
+
+
+	public String getUser_info() {
+		return user_info;
+	}
+
+	public void setUser_info(String user_info) {
+		this.user_info = user_info;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVO [uid=" + uid + ", upw=" + upw + ", uname=" + uname + ", umail=" + umail + ", gender=" + gender
-				+ ", follow=" + follow + ", follower=" + follower + "]";
+				+ ", follow=" + follow + ", follower=" + follower + ", regdate=" + regdate + ", user_info=" + user_info
+				+ ", file=" + file + "]";
 	}
 	
 }

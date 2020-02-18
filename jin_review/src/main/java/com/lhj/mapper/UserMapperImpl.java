@@ -95,5 +95,10 @@ public class UserMapperImpl implements UserMapper{
 	public int userCnt() throws Exception {
 		return session.selectOne(namespace+".userCnt");
 	}
+
+	@Override
+	public void user_profile(UserVO uv) throws Exception {
+		session.update(namespace+".user_update",uv);
+	}
 	
 }

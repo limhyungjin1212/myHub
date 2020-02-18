@@ -169,9 +169,6 @@
 						<%@ include file="include/container.jsp"%>
 					</c:otherwise>
 				</c:choose>
-				
-				
-				
 			</c:otherwise>
 		</c:choose>
 </div>	

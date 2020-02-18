@@ -37,7 +37,7 @@
 	<c:forEach items="${plist }" var="pVO">
 		<div class="col-lg-3 col-md-6 mb-4">
 		<div class="card h-100" id="attach">
-			<img class="img-thumbnail" src='displayFile?fileName=${pVO.fn }' height="" alt="not image">
+			<a href="detail?pno=${pVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}"><img class="img-thumbnail" src='displayFile?fileName=${pVO.fn }' height="" alt="not image"></a>
 			<div class="card-body">
 				<h4 class="card-title"><a href="detail?pno=${pVO.pno }&pageNum=${page.cri.pageNum}&keyword=${page.cri.keyword}">${pVO.pname }</a></h4>
 				<c:forEach  begin="1" end="${pVO.rate }" var="rateAvg">
@@ -59,7 +59,7 @@
 			<p class="card-text">${pVO.rcnt } reviews</p>
 			</div>
 			<div class="card-footer">
-				언제 오픈을 했는감?
+				등록한 날짜 : ${pVO.regdate }
 			</div>
 		</div>
 	</div>

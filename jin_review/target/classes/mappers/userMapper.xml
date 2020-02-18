@@ -33,7 +33,7 @@
 	
 	<!--유저의 정보  -->
 	<select id="userDetail" resultType="com.lhj.model.UserVO">
-	select uid,uname,umail,gender from tbl_user where uname = #{uname};
+	select uid,uname,umail,gender,regdate,user_profile as file,user_info from tbl_user where uname = #{uname};
 	</select>
 	
 	
@@ -67,5 +67,13 @@
 	<select id="userCnt" resultType="int">
 		select count(*) from tbl_user
 	</select>
+	
+	<!--유저 프로필 사진 update  -->
+	<update id="user_update">
+		update tbl_user set user_profile = #{file} where uid=#{uid}
+	</update>
+	
+	
+	
 	
 </mapper>

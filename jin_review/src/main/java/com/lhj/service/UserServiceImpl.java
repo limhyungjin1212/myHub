@@ -77,5 +77,10 @@ public class UserServiceImpl implements UserService {
 	public int userCnt() throws Exception {
 		return um.userCnt();
 	}
+
+	@Override
+	public void user_profile(UserVO uv) throws Exception {
+		um.user_profile(uv);
+	}
 	
 }

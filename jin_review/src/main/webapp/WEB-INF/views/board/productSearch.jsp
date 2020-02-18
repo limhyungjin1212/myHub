@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <div class="row">
-<div class="col-md-6">
+<div class="col-md-6" id="slDiv">
 	<c:forEach items="${searchList }" var="pVO"	>
 	<div class="row p-3 my-3 border">	
 	<div class="col-md-4">
@@ -74,7 +74,7 @@
 
 </div>
 <div class="col-md-6" id="mapDiv" >
-	<div id="map" style="width: 800px; height: 1000px;"></div>
+	<div id="map" style="width: 800px; "></div>
 </div>		
 </div>
   <script async defer
@@ -112,12 +112,12 @@
     var arrAddress= new Array(); //검색된 주소를 넣을 배열
     <c:forEach items="${searchList}" var="sl">
     	<c:if test='${sl.place ne ""}'>
-    		arrAddress.push("${sl}");		
+    		arrAddress.push({place: "${sl.place}",fn:"${sl.fn}",rate:"${sl.rate}",pname:"${sl.pname}",pno:"${sl.pno}",ptel:"${sl.ptel}"});		
     	</c:if>
     </c:forEach>
-    
+	console.log(arrAddress);    
       for(var i=0; i<arrAddress.length; i++){
-    	  geocoder.geocode({'address': arrAddress[i]}, (function (i) {
+    	  geocoder.geocode({'address': arrAddress[i].place}, (function (i) {
     		  return function(results, status) {
 
     	        if (status === 'OK') {
@@ -126,31 +126,36 @@
     	            map: resultsMap,
     	            position: results[0].geometry.location
     	          });
-    	          console.log(arrAddress[i]);
-    	          var content = arrAddress[i];
-   	        	  $(content).each(function(){
-   	        		  console.log(this.fn);
-   	        	  });
-    	          var infowindow = new google.maps.InfoWindow({content : content});
+    	          console.log(arrAddress[i].fn);
+    	          console.log(typeof(arrAddress[i]));
+    	        		  
+    	          var infowindow = new google.maps.InfoWindow();
     	          google.maps.event.addListener(marker, "click", function() {
-    	        	  var contentString =
-
-    	  				'<div id="content">'+
-
-    	  					'<br><div id=="adress">'+
-
-    	  					'<b>html 코드 삽입 가능</b><img src=displayFile?fileName='+fn+'>'+
-
-    	  					'<br></div>'+
-
-    	  					'<p>' +
-
-    	         '<b>주소 :</b> ' +arrAddress[i].place+
-
-    	  					'</p>'+
-
-    	  				'</div>';
-
+    	          var contentString = "";
+    	          contentString += '<div id="content">'+
+    	  					'<br><div id="adress"><br>'+
+    	  					'<a href=detail?pno='+arrAddress[i].pno+'>'+arrAddress[i].pname+'</a><br><p>';
+    	  					
+    	  		for(var j=1;j<=arrAddress[i].rate;j++){
+    	  			contentString += "<i class='fas fa-star' style='color :#99ccff;'></i>";
+    	  		}
+    	  		if((arrAddress[i].rate*2) % 2 == 1){
+    	  			contentString += "<i class='fas fa-star-half-alt' style='color: #99ccff;'></i>";
+    	  			for(var j=arrAddress[i].rate+1;j<4;j++){
+    	  				contentString += "<i class='far fa-star' style='color: #99ccff;'></i>";
+    	  			}
+    	  		} else{
+    	  			for(var j=arrAddress[i].rate;j<=4;j++){
+    	  				contentString += "<i class='far fa-star' style='color: #99ccff;'></i>";
+    	  			}
+    	  		}
+    	  					
+    	  		contentString +='</p><a href=detail?pno='+arrAddress[i].pno+'><img style="width:300px; height:200px;" class=img-thumbnail src=displayFile?fileName='+arrAddress[i].fn+'></a>'+
+    	  					'<br></div><p><b>주소 :</b> ' +arrAddress[i].place+
+    	         '<br><b>연락처 :</b> ' +arrAddress[i].ptel+'</p></div>';
+    	         
+    	         
+    	         
     	        	  infowindow.setContent(contentString);
     	        	  infowindow.open(map,marker);
     	        	});
@@ -185,7 +190,15 @@ return fucntion (results, status) {
 
 위와 같이 사용하시면 일단 문제는 해결될 것으로 보입니다. 혹 이해가 안되신다면 javascript의 closure와 scpoe에 대해 공부하시면 도움이 될 겁니다.
     */
-    $("#mapDiv").css("height","500px");
+    
+    var slH = $("#slDiv").css("height");
+    var wh = $(window).height();
+    console.log(wh);
+    $("#mapDiv").css("height",wh);
+    $("#map").css({"width":"100%","height":wh,"position":"fixed"});
+	$("#mapDiv").css("position","sticky");
+	$("#mapDiv").css("display","inline-block");
+	$("#mapDiv a").css("textDecoration","none");
   </script>
  
    <!-- Replace following script src -->
