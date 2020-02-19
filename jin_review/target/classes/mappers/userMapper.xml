@@ -70,7 +70,10 @@
 	
 	<!--유저 프로필 사진 update  -->
 	<update id="user_update">
-		update tbl_user set user_profile = #{file} where uid=#{uid}
+		update tbl_user set 
+		user_profile = #{file} ,
+		 user_info = #{user_info} 
+		 where uid=#{uid}
 	</update>
 	
 	

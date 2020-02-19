@@ -200,15 +200,43 @@ $(document).ready(
 					});
 
 					
-					$(document).on("click","#revImg",function(){
-						alert("aa");
-						$(this).toggle(
-								function(){
-									$("#revImg").css({"width":"300","height":"300"});
-								},function(){
-									$("#revImg").css({"width":"150","height":"150"});
-								}
-						);
+					$(document).on("click","#oriImg",function(){
+						var rno = $(this).parent().attr("data-rno");
+						alert(rno);
+						$.getJSON("replies/revAttach/" + rno,function(data) {
+							console.log(data.length);
+							var revAttachStr="";
+							var revStr ="";
+							var revStr2 ="";
+								$(data).each(function(index) {
+									var start = this.fn.substring(0,12);
+									var end = this.fn.substring(14);
+									revAttachStr +="<img src='displayFile?fileName="+start+end+"'>";
+									if(index == 0){
+										console.log(index);
+										revStr +="<li class='nav-item'><a class='nav-link active'id='h"+index+"-tab'  data-toggle='tab' href='#h"+index+"' role='tab' aria-controls='h"+index+"' aria-selected='true'>" +
+										"<img src='displayFile?fileName="+this.fn+"'></a></li>";
+										revStr2 +="<div class='tab-pane fade show active' id='h"+index+"' role='tabpanel' aria-labelledby='h"+index+"-tab'>" +
+								         "<img style='width:100%; height:100%;' src='displayFile?fileName="+start+end+"'>" +
+										"</div>" ;
+									} else{
+									revStr +="<li class='nav-item'><a class='nav-item nav-link' id='h"+index+"-tab' data-toggle='tab' href='#h"+index+"' role='tab' aria-controls='h"+index+"' aria-selected='true'>" +
+									"<img src='displayFile?fileName="+this.fn+"'></a></li>";
+									
+									revStr2 +="<div class='tab-pane fade'  id='h"+index+"' role='tabpanel' aria-labelledby='h"+index+"-tab'>" +
+									         "<img style='width:100%' src='displayFile?fileName="+start+end+"'>" +
+											"</div>" ;
+									}
+									console.log("revStr="+revStr);
+									console.log("revStr2="+revStr2);
+								});
+						
+							//$("#oriImgList").html(revStr);
+							//$("#oriImgBox").html(revAttachStr);
+							
+							$("#myTab").html(revStr);
+							$("#myTabContent").html(revStr2);
+						});
 						
 					});
 

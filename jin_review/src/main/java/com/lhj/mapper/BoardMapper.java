@@ -35,6 +35,7 @@ public interface BoardMapper {
 	//파일 등록(수정시)
 	public void replaceAttach(String filename , int pno) throws Exception;
 	
+	//검색 리스트
 	
 	
 }

@@ -287,7 +287,7 @@ public class UserController {
 		
 		logger.info("유저인포 업데이트로 왓는가요?");
 		logger.info("file="+file);
-		logger.info("uvo="+uv);
+		logger.info("uvo="+uv.getUname());
 		us.user_profile(uv);
 		
 		return "redirect:mypage?uid="+uv.getUid()+"&uname="+uv.getUname()+"";

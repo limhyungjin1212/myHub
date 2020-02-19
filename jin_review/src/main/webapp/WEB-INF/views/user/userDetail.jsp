@@ -7,13 +7,22 @@
 		<div class='row p-2 my-3 border'>
 			<div class='col-md-2'>
 				<div class='card'>
+				
 					<img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'>
 						<div class='card-body'>
 							<h4 class='card-title'>${user.uname }</h4>
 						</div>
 				</div>
 			</div>
+			<div class="col">
+				<h5>이사람의 리뷰 갯수</h5>
+				<h5>친구가 몇명인가 or 팔로우 수?</h5>
+				<h5>자기소개글</h5>
+			</div>
 		</div>
+		
+		
+		
 	</div>
 </div>
 
@@ -88,7 +97,11 @@
 			<h3>등록한 리뷰가 없습니다.</h3>
 		</c:if>
 
-		<table class="w3-table w3-striped w3-border" id="revTable">
+		<table  class="table table-bordered" id="revTable">
+		<tr>
+			<th scope="col-3"></th>
+			<th scope="col"></th>
+		</tr>
 			<c:forEach items="${myRevList }" var="reviewVO">
 				<tr>
 					<td width="30%"><a href="detail?pno=${reviewVO.pno }">${reviewVO.pname }</a></td>
@@ -111,19 +124,17 @@
 						</c:choose></td>
 				</tr>
 				<tr>
-					<td width="70%">${reviewVO.content }</td>
-					<td width="30%"></td>
-				</tr>
-				<tr>
 					<td><c:forEach items="${revMyFile }" var="rmf">
 
 							<c:if test="${rmf.rno eq reviewVO.rno}">
 								<img class='img-thumbnail' src='displayFile?fileName=${rmf.fn }' />
 							</c:if>
 						</c:forEach></td>
+						<td>${reviewVO.content }</td>
 				</tr>
+				
 				<tr>
-					<td>멋져요</td>
+					<td colspan="2">${reviewVO.regdate }</td>
 				</tr>
 			</c:forEach>
 			<tr>

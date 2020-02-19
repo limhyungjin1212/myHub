@@ -185,7 +185,7 @@
 									alt='Card image' style='width: 100%'>
 									</c:when>
 									<c:otherwise>
-										<img class='rounded-circle'   src=''
+										<img class='rounded-circle'   src='resources/image/blankprofile.png'
 									alt='Card image' style='width: 100%'>
 									</c:otherwise>
 								</c:choose>
@@ -244,7 +244,6 @@
 				
 				$(document).ready(function(){
 					
-					alert("aa");
 					var originalProfile = "${user.file }";
 					
 					var start = originalProfile.substring(0,12);
@@ -302,7 +301,6 @@
 					var str="";
 					
 					var origin = $("#profileImgHidden").attr("data-src");
-					alert(origin);
 					
 					$.ajax({
 						url:"deleteFile",
@@ -320,7 +318,6 @@
 					
 					$("#profile input[type=hidden]").each(function() {
 						str += "<input type='hidden' name='file' value='"+$(this).attr("data-src")+"'>";
-						alert("hidden");
 					});
 					
 					$("#up_user_info_form").append(str);

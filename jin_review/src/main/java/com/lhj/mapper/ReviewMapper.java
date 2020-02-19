@@ -75,5 +75,7 @@ public interface ReviewMapper {
 		//메인페이지 랜덤 리뷰 가져오기
 		public ReviewVO mainRevGetAttach() throws Exception;
 		
+		//리뷰 사진 클릭시 원본이미지와 다불러오기
+		public List<ReviewVO> revAttach(int rno) throws Exception;
 		
 }

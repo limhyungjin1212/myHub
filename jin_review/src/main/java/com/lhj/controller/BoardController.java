@@ -41,17 +41,13 @@ public class BoardController {
 	}
 	@RequestMapping(value="/main", method = RequestMethod.GET)
 	public String index(BoardVO boardVO,ReviewVO reviewVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
-		logger.info("index.."+cri);
-		//List<BoardVO> list = boardService.boardList(); 
 		
 		PageVO rpv = new PageVO(cri, reviewService.revCount());
-		logger.info("rpv.."+rpv);	
 		
 		
 		List revlist = new ArrayList();
 		
 		revlist = reviewService.revListPage(cri);
-		logger.info("리스트.."+revlist);
 		
 		List plist = new ArrayList();
 		cri.setAmount(4);
@@ -60,7 +56,6 @@ public class BoardController {
 		
 		cri.setAmount(10);
 		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
-		logger.info("pv="+pv);
 		List adminList = new ArrayList();
 		adminList = boardService.boardListPage(cri);
 		
@@ -74,7 +69,6 @@ public class BoardController {
 		model.addAttribute("page",pv);
 		
 		model.addAttribute("mrga",reviewService.mainRevGetAttach());
-		logger.info("mrga="+reviewService.mainRevGetAttach());
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
 		
 		return "index";

@@ -143,5 +143,10 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewVO mainRevGetAttach() throws Exception {
 		return rm.mainRevGetAttach();
 	}
+
+	@Override
+	public List<ReviewVO> revAttach(int rno) throws Exception {
+		return rm.revAttach(rno);
+	}
 	
 }

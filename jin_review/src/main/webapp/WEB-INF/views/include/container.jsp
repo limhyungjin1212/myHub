@@ -69,7 +69,12 @@
 	<p class="display-4 text-center">주간 리뷰 도움이 많이 된것.</p>
 		<div class="container p-3 my-3 bg-primary text-white">
 		<h1>${weekReview.rev_subject }</h1>
+				<a href="userDetail?uname=${weekReview.writer }">
+					<img class="img-thumbnail" style="max-width:100%;" src='displayFile?fileName=${weekReview.us_pf }' alt="not image">
+				</a>
 		<h1>${weekReview.writer }</h1>
+		
+		
 		<div>
 			${weekReview.content }
 		</div>
@@ -80,10 +85,10 @@
 	</div>
 	
 	<div class="col-md-4 ">
+		<h3>이벤트~~</h3>
 		<table>
-			 
+			
 		</table>
-		
 	</div>
 </div>
 <!-- Page Features -->
@@ -91,28 +96,62 @@
 
 	<p class="display-2 text-center">최근 리뷰</p>
 
-<div id="revBox" class="row text-center">
+<div id="revBox" class="row">
 	<div class="card-columns">
 	<c:forEach items="${revlist }" var="reviewVO">
-	<!-- <div class="col-lg-3 col-md-6 mb-4"> -->
-	
+	<c:choose>
+		<c:when test="${reviewVO.content == '' }"> <!--내용이 없고 사진만 있을 경우  -->
+			<div class="card" id="attach">
+			<div class="card-header">
+			<div class="row">
+			<div class="thumbnail-wrapper" style="width: 25%;">	
+			<c:if test="${reviewVO.us_pf != null }">
+				<a href="userDetail?uname=${reviewVO.writer }">
+					<img class="img-thumbnail" style="max-width:100%;" src='displayFile?fileName=${reviewVO.us_pf }' alt="not image">
+				</a>
+				</c:if>
+			</div>
+			<h5 class="mt-0"><a href="userDetail?uname=${reviewVO.writer }">${reviewVO.writer }</a></h5>
+					</div>
+				</div>
+				<div class="card-body">
+			<h5 class="card-title">${reviewVO.pname }</h5>
+			<c:if test="${reviewVO.fn != null }">
+				<img class="img-thumbnail" style="width:100%;" src='displayFile?fileName=${reviewVO.fn }' alt="not image">
+			</c:if>
+				</div>
+				<div class="card-footer">
+					<a href="detail?pno=${reviewVO.pno }&pageNum=${rpage.cri.pageNum}&keyword=${rpage.cri.keyword}">리뷰</a>
+					<i class="far fa-heart"></i>
+					<i class="far fa-bell"></i>
+				</div>
+			</div>
+		</c:when>
+		
+		<c:otherwise>
 		<div class="card" id="attach">
 			<div class="card-header">
-				<a href="userDetail?uname=${reviewVO.writer }">${reviewVO.writer }</a>
+			<div class="row">
+			<div class="thumbnail-wrapper" style="width: 25%;">	
 				<c:choose>
-					<c:when test="${reviewVO.content eq null }">
-						사진만나온것입니다
-					</c:when>
-					<c:otherwise>
-						리뷰
-					</c:otherwise>
-				</c:choose>	
+				<c:when test="${reviewVO.us_pf != null }">
+				<a href="userDetail?uname=${reviewVO.writer }">
+					<img class="img-thumbnail" style="max-width:100%;" src='displayFile?fileName=${reviewVO.us_pf }' alt="not image">
+				</a>
+				</c:when>
+				<c:otherwise>
+					<img class="img-thumbnail" style="max-width:100%;" src='resources/image/blankprofile.png' alt="not image">
+				</c:otherwise>
+				</c:choose>
+			</div>
+			<h5 class="mt-0"><a href="userDetail?uname=${reviewVO.writer }">${reviewVO.writer }</a></h5>
+				</div>
 			</div>
 			<c:if test="${reviewVO.fn != null }">
-				<img class="img-thumbnail" src='displayFile?fileName=${reviewVO.fn }' alt="not image">
+				<img class="img-thumbnail" style="width:100%;" src='displayFile?fileName=${reviewVO.fn }' alt="not image">
 			</c:if>
 			<div class="card-body">
-				<h4 class="card-title">${reviewVO.pname }</h4>
+			<h5 class="card-title">${reviewVO.pname }</h5>
 				<c:forEach  begin="1" end="${reviewVO.rate }" var="rateAvg">
 				<i class='fas fa-star' style='color :#99ccff;' ></i>
 			</c:forEach>
@@ -137,8 +176,11 @@
 				<i class="far fa-bell"></i>
 			</div>
 		</div>
+		</c:otherwise>
+	</c:choose>	
 	<!-- </div> -->
 </c:forEach>
+
 	</div>
 </div>
 	<div>

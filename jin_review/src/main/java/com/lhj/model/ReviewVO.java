@@ -16,10 +16,16 @@ public class ReviewVO {
 	private String helpfulId;
 	private String[] files;
 	private int urCnt; //리뷰의 작성자가 작성한 리뷰 총 갯수
+	private String us_pf; //유저 프사
 	
 	
 	
-	
+	public String getUs_pf() {
+		return us_pf;
+	}
+	public void setUs_pf(String us_pf) {
+		this.us_pf = us_pf;
+	}
 	public String getHelpfulId() {
 		return helpfulId;
 	}

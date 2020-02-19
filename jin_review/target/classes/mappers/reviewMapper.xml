@@ -64,12 +64,12 @@
 				and r.rev_subject like concat('%',trim(#{cri.keyword}),'%')
 		</if>
 </sql>
-	<!-- 댓글   -->
+	<!--메인 페이지 댓글   -->
 	<select id="revListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
-		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful ,p.pname
-				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno) join (select @rownum:=0) as rn 
+		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful ,p.pname,tu.user_profile as us_pf
+				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join tbl_user tu on (r.writer = tu.uname) left join helpful h on (r.rno = h.rno) join (select @rownum:=0) as rn 
 						<include refid="keyword"></include>
 						group by r.pno
 						) 
@@ -164,9 +164,9 @@ WHERE NOT EXISTS (
 	
 	<!--1주일간 도움이 가장 많은 리뷰  -->
 	<select id="weekReview" resultType="com.lhj.model.ReviewVO">
-		SELECT r.*,ra.filename as fn,max(h.helpCount) 
+		SELECT r.*,ra.filename as fn,max(h.helpCount),tu.user_profile as us_pf 
 		FROM review r left join (select rno,count(helpfulUserId) as helpCount from helpful group by rno) h on r.rno=h.rno
-		 left join review_attach ra on r.rno =ra.rno
+		 left join review_attach ra on r.rno =ra.rno join tbl_user tu on r.writer = tu.uname
 		WHERE r.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -1 week) AND NOW()
 	</select>
 	
@@ -180,6 +180,9 @@ WHERE NOT EXISTS (
 		select r.writer,ra.filename as fn,p.pname,p.pno from review r join review_attach ra on r.rno=ra.rno join product_board p on r.pno=p.pno order by rand() limit 1;
 	</select>
 	
-	
+	<!-- 리뷰의 사진 클릭시 전부다 가져오기  -->
+	<select id="revAttach" resultType="com.lhj.model.ReviewVO">
+		select filename as fn from review_attach where rno = #{rno};	
+	</select>
 	
 </mapper>

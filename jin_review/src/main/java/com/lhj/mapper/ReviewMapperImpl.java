@@ -166,6 +166,12 @@ public class ReviewMapperImpl implements ReviewMapper {
 	public ReviewVO mainRevGetAttach() throws Exception {
 		return session.selectOne(namespace+".mainRevGetAttach");
 	}
+
+	@Override
+	public List<ReviewVO> revAttach(int rno) throws Exception {
+		List<ReviewVO> revAttachList = session.selectList(namespace+".revAttach",rno); 
+		return revAttachList;
+	}
 	
 	
 	

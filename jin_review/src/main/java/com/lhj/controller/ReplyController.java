@@ -1,6 +1,7 @@
 package com.lhj.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lhj.model.Criteria;
 import com.lhj.model.PageVO;
 import com.lhj.model.ReviewVO;
+import com.lhj.model.UserVO;
 import com.lhj.service.ReviewService;
 import com.lhj.service.UserService;
 
@@ -122,29 +124,31 @@ public class ReplyController {
 			PageVO pv = new PageVO(cri, cnt);
 			List<ReviewVO> pagelist = rs.repListPage(pno, cri);
 			
-			List userlist = new ArrayList();
+			List<String> userlist = new ArrayList();
 			
 			logger.info("pagelist=" + pagelist);
-			List<ReviewVO> repFileDetail = rs.repFileList(pno);
+			List repFileDetail = rs.repFileList(pno);
 			logger.info("repFileDetail=" + repFileDetail);
 			
 			Map<Integer,List<String>> revHelpfulList = new HashMap<Integer, List<String>>(); 
 			for(int i=0;i<pagelist.size();i++) {
 				revHelpfulList.put(pagelist.get(i).getRno(), rs.revHelpfulList(pagelist.get(i).getRno()));
-				
-				//pagelist.add(us.userDetail(pagelist.get(i).getWriter()));
-				System.out.println("us.userDetail(pagelist.get(i).getWriter());="+us.userDetail(pagelist.get(i).getWriter()));
 				userlist.add(pagelist.get(i).getWriter());
-				System.out.println("userlist="+userlist);
 			}
-			
-			
+			logger.info("userList="+userlist);
+			List<UserVO> userDetailList = new ArrayList();
+			for(int i=0;i<userlist.size();i++) {
+				userDetailList.add(us.userDetail(userlist.get(i)));
+			}
+
+			logger.info("userDetail="+userDetailList);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", pagelist);
 			map.put("rfd",repFileDetail);
 			map.put("revHelpfulList", revHelpfulList);
 			System.out.println("revHelpfulList2="+revHelpfulList);
+			map.put("userDetail", userDetailList);
 			map.put("page", pv);
 			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
@@ -190,6 +194,22 @@ public class ReplyController {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 
+		return entity;
+	}
+	
+	
+	//댓글 원본 사진.
+	@RequestMapping(value="revAttach/{rno}", method=RequestMethod.GET)
+	public ResponseEntity<List> revAttach(@PathVariable int rno) {
+		ResponseEntity<List> entity = null;
+		try {
+			List<ReviewVO> revAttachList = rs.revAttach(rno);
+			logger.info("revAttachList="+revAttachList);
+			entity = new ResponseEntity<List>(revAttachList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<List>(HttpStatus.BAD_REQUEST);
+		}
 		return entity;
 	}
 }

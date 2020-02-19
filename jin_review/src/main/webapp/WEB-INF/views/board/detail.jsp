@@ -26,40 +26,25 @@
 	display: inline;
 }
 
-.attachh {
-	list-style-type: none;
-}
-
-.attachh li {
-	display: inline;
-}
 </style>
 
 
-<div id="demo" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 	<!-- Indicators -->
-	<ul class="carousel-indicators">
-		<li data-target="#demo" data-slide-to="0" class="active"></li>
-		<li data-target="#demo" data-slide-to="1"></li>
-		<li data-target="#demo" data-slide-to="2"></li>
-	</ul>
-
 	<!-- The slideshow -->
-	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<ul class="attach"></ul>
-		</div>
-		<div class="carousel-item">
-			<ul class="attachh"></ul>
-		</div>
+	<div class="carousel-inner" id="carouselBox">
+		
 	</div>
 
 	<!-- Left and right controls -->
-	<a class="carousel-control-prev" href="#demo" data-slide="prev"> <span
-		class="carousel-control-prev-icon"></span>
-	</a> <a class="carousel-control-next" href="#demo" data-slide="next"> <span
-		class="carousel-control-next-icon"></span>
-	</a>
+	<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 
 </div>
 
@@ -289,10 +274,35 @@
 					</div>
 				</div>
 			</div>
-
-
 		</c:otherwise>
 	</c:choose>
+	<!-- The Modal -->
+			<div class="modal" id="myImgModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title"></h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body" id="imgModalBody">
+								<ul class="nav nav-tabs" id="myTab" role="tablist">
+  								</ul>
+								<div class="tab-content" id="myTabContent">
+									
+								</div>
+							</div>
+
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
 	<script>
 		var str2 = "";
 		var pno = ${detail.pno};
@@ -304,15 +314,31 @@
 								$(data.list).each(function() {
 									var reno = this.rno;
 									var btnHelp = false;
-													str2 += "<div class='row p-2 my-3 border'><div class='col-md-2'><div class='card'>";
-													str2 += "<img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'>";
-													str2 += "<div class='card-body'><h4 class='card-title'>"
-															+ this.writer
-															+ "</h4>";
+									var userName = this.writer;
+									
+									str2+="<div class='row p-2 my-3 border'>";
+									str2 += "<div class='col-md-2'><div class='card'><div class='card-body'>";
+												$(data.userDetail).each(function(){
+													if(this.uname == userName){
+														if(this.file != null){
+															str2 += "<a href='userDetail?uname="+this.uname+"'><img class='rounded-circle' src='displayFile?fileName="+this.file+"' alt='Card image' style='width:100%'></a>";	
+															return false;
+														}else{
+															str2 += "<a href='userDetail?uname="+this.uname+"'><img class='rounded-circle' src='resources/image/coffee1.jpg' alt='Card image' style='width:100%'></a>";
+															return false;
+														}
+													}
+												});
+													
+												str2 += "<h4 class='card-title'>"+this.writer+"</h4>";
 													str2 += "<p class='card-text'>"
 															+ this.urCnt
 															+ " 리뷰 갯수</p>";
-													str2 += "<a href='userDetail?uname="+this.writer+"' class='btn btn-primary' >follow</a></div></div></div>";
+													if(loginfo != userName){
+														str2 += "<a href='userDetail?uname="+this.writer+"' class='btn btn-primary' >follow</a>";	
+													}
+													
+													str2 += "</div></div></div>";
 													str2 += "<div class='col-md-10 border' id='repl'><li data-rno='"+this.rno+"' class='replyLi'><br><span>"+this.rate+"</span>";
 
 													for (var i = 0; i < this.rate; i++) { //댓글의 별점에따른 별 갯수
@@ -332,9 +358,9 @@
 													$(data.rfd).each(function() {
 																if(this.rno == reno ) { //첨부파일이 있으면
 																
-																str2 += "<img class ='img-thumbnail' id='revImg' style='width:150px; height:150px;' src='displayFile?fileName="
+																str2 += "<a href='#' id='oriImg' data-toggle='modal' data-target='#myImgModal'><img class ='img-thumbnail' id='revImg' style='width:150px; height:150px;' src='displayFile?fileName="
 																		+ this.fn
-																		+ "'/>";
+																		+ "'/></a>";
 																} 
 															});
 													
@@ -518,30 +544,41 @@
 		return fileName;*/
 	}
 
-	var str = "";
-	var strr = "";
+	
 	var pno = ${detail.pno};
 
 	$.getJSON("detailJSON?pno=" + pno,function(data) {
 						console.log(data.length);
+						
+						var str = "";
+						var strr = "";
+						
 						$(data).each(function(index, data) {
 											//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
 											// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.	
-
-											if (index < 4) {
+											if(index == 0){
+												str += "<div class='carousel-item active'><ul class='attach'>";
 												str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
+													+ getImageLink(data)
+													+ "'/></li>";
+											} else if(index != last){
+												if (index % 4 != 0) {
+													str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
 														+ getImageLink(data)
 														+ "'/></li>";
+												} else{
+													str += "<div class='carousel-item'>";
+													str += "<ul class='attach'><li><img class ='img-thumbnail'  src='displayFile?fileName="
+															+ getImageLink(data)
+															+ "'/></li>";
+												}											
+											}else{
+												str += "</ul></div>";
 											}
-											if (index > 4) {
-												strr += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
-														+ getImageLink(data)
-														+ "'/></li>";
-											}
+											
 										});
 
-						$(".attach").append(str);
-						$(".attachh").append(strr);
+						$("#carouselBox").append(str);
 					});
 	
 	
@@ -549,5 +586,5 @@
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=82"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=85"></script>
 
