@@ -82,5 +82,10 @@ public class UserServiceImpl implements UserService {
 	public void user_profile(UserVO uv) throws Exception {
 		um.user_profile(uv);
 	}
+
+	@Override
+	public void unfollow(String uname, String myname) throws Exception {
+		um.unfollow(uname, myname);
+	}
 	
 }

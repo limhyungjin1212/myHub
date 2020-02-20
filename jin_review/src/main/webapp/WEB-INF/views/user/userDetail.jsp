@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<!-- <script type="text/javascript" src="resources/js/userDetail.js"></script> -->
 <div class="container">
 	<div class="row">
 		<div class='row p-2 my-3 border'>
@@ -35,14 +35,42 @@
 		<h1></h1>
 		<h1>로그인아이디 :${login.uid }</h1>
 		<h1>
-			<c:if test="">
-				<button type="button" id="followBtn" class="btn btn-primary">팔로우
-					신청</button>
-			</c:if>
 		</h1>
+		
+		<c:choose>
+			<c:when test="${not empty followerList }">
+					<c:forEach items="${followerList }" var="fl">
+						<span class="flwl" id="${fl.follower }">${fl.follower }</span>			
+					</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<span class="flwl">팔로워가 없습니다.</span>
+			</c:otherwise>
+		</c:choose>
+	
+		<div id="fbtn"></div>
 	</div>
 	<script>
-		$("#followBtn").on("click", function() {
+	$(document).ready(function(){
+	
+	function flwlChk(){
+		$(".flwl").each(function(index){
+			var str = "";
+			var flwl = $(this).text();
+			console.log(flwl);
+			if(flwl == "${login.uid}"){
+				str += "<button type='button' id='followDisBtn' class='btn btn-primary'>팔로우해제</button>";
+				
+			} else{
+				str += "<button type='button' id='followBtn' class='btn btn-primary'>팔로우</button>";
+			}
+			$("#fbtn").html(str);
+			
+		});
+	}
+	flwlChk();
+	
+		$(document).on("click","#followBtn", function() {
 
 			//유저의 정보
 			var uid = "${user.uid}";
@@ -56,7 +84,6 @@
 				return false;
 			} else {
 				$.ajax({
-
 					url : "follow",
 					type : "post",
 					data : {
@@ -68,7 +95,8 @@
 						console.log(data);
 						if (data == "success") {
 							alert("팔로우 성공");
-							$("#followBtn").attr("disabled", true);
+							$("#fbtn").append("<span class='flwl' id='"+myid+"'>"+myid+"</span>");
+							flwlChk();
 						}
 					},
 					error : function(err) {
@@ -80,6 +108,47 @@
 			}
 
 		});
+		
+		
+		$(document).on("click","#followDisBtn", function() {
+			//유저의 정보
+			var uid = "${user.uid}";
+			//로그인한 유저의 정보
+			var myid = "${login.uid}";
+
+			//유저의 정보가 없으면 로그인.
+			if (myid == "") {
+				alert("로그인이 필요합니다");
+				location.href = "login";
+				return false;
+			} else {
+				$.ajax({
+					url : "unfollow",
+					type : "post",
+					data : {
+						uid : uid,
+						myid : myid
+					},
+					dataType : "text",
+					success : function(data) {
+						console.log(data);
+						if (data == "success") {
+							alert("팔로우 해제");
+							$("#"+myid+"").remove();
+							flwlChk();
+						}
+					},
+					error : function(err) {
+						alert("팔로우 실패");
+					}
+
+				});
+
+			}
+
+		});
+		
+	});
 	</script>
 
 

@@ -555,26 +555,57 @@
 						
 						$(data).each(function(index, data) {
 											//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
-											// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.	
-											if(index == 0){
-												str += "<div class='carousel-item active'><ul class='attach'>";
-												str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
-													+ getImageLink(data)
-													+ "'/></li>";
-											} else if(index != last){
-												if (index % 4 != 0) {
-													str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
+											// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.
+											console.log(data.length);
+											console.log(this.boardAttachList);
+											console.log(this.repFileDetail[0].fn);
+											var idx = this.boardAttachList.length;
+											console.log(idx);
+											$(this.boardAttachList).each(function(index,data){
+												if(index == 0){
+													str += "<div class='carousel-item active'><ul class='attach'>"+
+													 "<li><img class ='img-thumbnail'  src='displayFile?fileName="
 														+ getImageLink(data)
 														+ "'/></li>";
-												} else{
-													str += "<div class='carousel-item'>";
-													str += "<ul class='attach'><li><img class ='img-thumbnail'  src='displayFile?fileName="
+												} else if(index == idx){
+													str += "</ul></div>";
+												}else{
+													if (index % 4 != 0) {
+														str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
 															+ getImageLink(data)
 															+ "'/></li>";
-												}											
-											}else{
-												str += "</ul></div>";
-											}
+													} else{
+														str += "</ul></div><div class='carousel-item'>";
+														str += "<ul class='attach'><li><img class ='img-thumbnail'  src='displayFile?fileName="
+																+ getImageLink(data)
+																+ "'/></li>";
+													}
+												}
+											});
+											console.log("idx2번쨰:"+idx);
+											var idxResult = idx % 4;
+											console.log("idxResult"+idxResult);
+											var idxxlength = this.repFileDetail.length;
+											$(this.repFileDetail).each(function(idxx){
+												
+												if((idxx+idxResult) % 4 == 0){ //위에서 보드 사진의 길이와 리뷰의 사진 길이를더해서 4로나눈 몫이 0이면 캐러샐 div 생성 
+													str += "</ul></div><div class='carousel-item'>";
+													str += "<ul class='attach'><li><img class ='img-thumbnail'  src='displayFile?fileName="
+														+ getImageLink(this.fn)
+														+ "'/></li>";
+												} else if(idxx == idxxlength){ //리뷰의 사진의 길이가 마지막이면 닫는다.
+													str += "</ul></div>";
+												} else{
+													if ((idxx+idxResult) % 4 != 0) { //보드사진의 길이와 리뷰사진의 길이를 더해서 4로나눈 몫이 0이 아니면 li생성
+														str += "<li><img class ='img-thumbnail'  src='displayFile?fileName="
+															+ getImageLink(this.fn)
+															+ "'/></li>";
+													} 
+												}
+												
+												console.log(this.fn);
+												
+											});
 											
 										});
 

@@ -182,11 +182,8 @@ public class UserController {
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
 	public String mypageGET(@RequestParam String uid,@RequestParam String uname,Criteria cri, Model model) throws Exception {
 		
-		logger.info("uid="+uid);
-		logger.info("uname="+uname);
 		cri.setAmount(3);
 		PageVO pv = new PageVO(cri, rs.myRevCount(uname));
-		logger.info("pv" + pv);
 		
 		//내가 작성한 리뷰
 		List myRevList = new ArrayList();
@@ -194,6 +191,7 @@ public class UserController {
 		logger.info("myRevList=" + myRevList);
 		
 		//작성한 리뷰의 첨부파일 불러오기
+		logger.info("cri="+cri);
 		List revMyFile = new ArrayList();
 		revMyFile = rs.revMyFile(uname);
 		logger.info("revMyFile=" + revMyFile);
@@ -238,10 +236,20 @@ public class UserController {
 		revMyFile = rs.revMyFile(uname);
 		logger.info("revMyFile=" + revMyFile);
 		
-		model.addAttribute("user", us.userDetail(uname));
+		
+		UserVO uv = us.userDetail(uname);
+		//팔로워 목록
+		List<UserVO> followerList = new ArrayList();
+		followerList = us.followerList(uv.getUid());
+		logger.info("followerList=" + followerList);
+		
+		
+		
+		model.addAttribute("user", uv);
 		logger.info("user="+us.userDetail(uname));
 		model.addAttribute("myRevList", myRevList);
 		model.addAttribute("revMyFile", revMyFile);
+		model.addAttribute("followerList", followerList);
 		model.addAttribute("page", pv);
 
 		return "main";
@@ -266,6 +274,23 @@ public class UserController {
 		return entity;
 	}
 
+	@RequestMapping(value = "unfollow", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> unfollow(String uid,String myid) {
+		logger.info("unfollowmyname~~" + myid);
+		ResponseEntity<String> entity = null;
+			try {
+				// 서비스 호출하는곳
+				us.unfollow(uid,myid);
+				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+
+		return entity;
+	}
 	@RequestMapping(value ="userList" , method = RequestMethod.GET)
 	public String userList(HttpServletRequest req, Criteria cri,Model model) throws Exception{
 		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));

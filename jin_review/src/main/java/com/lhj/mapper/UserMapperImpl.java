@@ -100,5 +100,13 @@ public class UserMapperImpl implements UserMapper{
 	public void user_profile(UserVO uv) throws Exception {
 		session.update(namespace+".user_update",uv);
 	}
+
+	@Override
+	public void unfollow(String uname,String myname) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("uname", uname);
+		paramMap.put("myname", myname);
+		session.delete(namespace+".unfollow",paramMap);
+	}
 	
 }

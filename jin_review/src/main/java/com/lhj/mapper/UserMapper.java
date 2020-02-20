@@ -32,6 +32,9 @@ public interface UserMapper {
 	//팔로우신청
 	public void follow(String uname, String myname) throws Exception;
 	
+	//팔로우 해제
+	public void unfollow(String uname,String myname) throws Exception;
+	
 	//팔로우 목록
 	public List<UserVO> followList(String uid)throws Exception;
 	

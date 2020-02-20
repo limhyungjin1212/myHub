@@ -6,8 +6,24 @@ public class Criteria {
 
 	private String keyword;
 	private String place;
+	private String date1,date2;
 	
-	
+	public String getDate1() {
+		return date1;
+	}
+
+	public void setDate1(String date1) {
+		this.date1 = date1;
+	}
+
+	public String getDate2() {
+		return date2;
+	}
+
+	public void setDate2(String date2) {
+		this.date2 = date2;
+	}
+
 	public Criteria() {
 		this(1, 10);
 	}
@@ -53,7 +69,7 @@ public class Criteria {
 	@Override
 	public String toString() {
 		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", keyword=" + keyword + ", place=" + place
-				+ "]";
+				+ ", date1=" + date1 + ", date2=" + date2 + "]";
 	}
 	
 	

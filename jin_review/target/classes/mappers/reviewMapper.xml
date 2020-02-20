@@ -59,19 +59,13 @@
 				where r.rev_subject like concat('%',trim(#{keyword}),'%')
 		</if>
 </sql>
-<sql id="revkeyword">
-		<if test="keyword != null">
-				and r.rev_subject like concat('%',trim(#{cri.keyword}),'%')
-		</if>
-</sql>
 	<!--메인 페이지 댓글   -->
 	<select id="revListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
 	select R.* , @rownum:=@rownum+1 as rownum from (
 		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer  ,ra.filename as fn ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful ,p.pname,tu.user_profile as us_pf
 				from review as r left join review_attach as ra on (r.rno = ra.rno) left join product_board as p on (r.pno = p.pno) join tbl_user tu on (r.writer = tu.uname) left join helpful h on (r.rno = h.rno) join (select @rownum:=0) as rn 
-						<include refid="keyword"></include>
-						group by r.pno
+						group by r.rno
 						) 
                         as R order by R.rno desc) as C 
                          <![CDATA[
@@ -79,6 +73,16 @@
 		]]>
 	</select>
 	
+<sql id="revRegSearch">
+		<if test="cri.date1 != null || cri.date2 !=null" >
+				and r.regdate between #{cri.date1} and #{cri.date2}
+		</if>
+</sql>
+<sql id="revRegSearchkeyword">
+		<if test="cri.keyword != null" >
+				and r.rev_subject like concat('%',trim(#{cri.keyword}),'%')
+		</if>
+</sql>
 	<!-- 마이페이지 나의 댓글   -->
 	<select id="revMyListPage" resultType="com.lhj.model.ReviewVO">
 		select * from (
@@ -86,7 +90,8 @@
 		select 	r.pno,r.rno, r.content, r.rate , r.regdate , r.writer ,r.rev_subject , (select count(helpfulUserId) from helpful where rno = r.rno) as helpful,p.pname
 				from review as r left join product_board as p on (r.pno = p.pno) left join helpful h on (r.rno = h.rno)  join (select @rownum:=0) as rn 
 					where r.writer = #{writer}
-						<include refid="revkeyword"></include>
+						<include refid="revRegSearch"></include>
+						<include refid="revRegSearchkeyword"></include>
 						group by r.rno
 						) 
                         as R order by R.rno desc) as C 
@@ -165,7 +170,7 @@ WHERE NOT EXISTS (
 	<!--1주일간 도움이 가장 많은 리뷰  -->
 	<select id="weekReview" resultType="com.lhj.model.ReviewVO">
 		SELECT r.*,ra.filename as fn,max(h.helpCount),tu.user_profile as us_pf 
-		FROM review r left join (select rno,count(helpfulUserId) as helpCount from helpful group by rno) h on r.rno=h.rno
+		FROM review r join (select rno,count(helpfulUserId) as helpCount from helpful group by rno) h on r.rno=h.rno
 		 left join review_attach ra on r.rno =ra.rno join tbl_user tu on r.writer = tu.uname
 		WHERE r.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -1 week) AND NOW()
 	</select>

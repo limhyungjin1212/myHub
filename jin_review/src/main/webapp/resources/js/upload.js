@@ -67,22 +67,22 @@ $(".fileDrop").on("dragenter dragover",function(event){
 				console.log(checkImageType(data));
 				if(checkImageType(data)){
 					str="<div>"
-						+"<a href=displayFile?fileName="+getImageLink(data)+"><img src='displayFile?fileName="+getImageLink(data)+"'/>"
-						+ "</a><small data-src="+data+">X</small>" +"</div>";
+						+"<a href=displayFile?fileName="+getImageLink(data)+"><img style='max-width:400px;' src='displayFile?fileName="+getImageLink(data)+"'/>"
+						+ "</a><small data-src="+data+">삭제</small>" +"</div>";
 				} else {
 					str = "<div><a href='displayFile?fileName="+data+"'>"
 						+getOriginalName(data) +"</a>" +
-						"<small data-src="+data+">X</small></div>";
+						"<small data-src="+data+">삭제</small></div>";
 				}
 				
-				$(".uploadedList").append(str);
+				$("#uploadedList").append(str);
 			}
 		});
 		});	//drop end
 	
 	
 	//small 태그를 클릭
-	$(".uploadedList").on("click","small",function(event){
+	$("#uploadedList").on("click","small",function(event){
 		var that = $(this);
 		$.ajax({
 			url:"deleteFile",
@@ -105,13 +105,16 @@ $(".fileDrop").on("dragenter dragover",function(event){
 		
 		var str = "";
 		
-		$(".uploadedList small").each(function(index){
+		$("#uploadedList small").each(function(index){
 			str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("data-src")+"' > ";
 		});
 		
 		that.append(str);
 		that.get(0).submit();
 		
+		
+	});
+	$("#goList").on("click",function(){
 		
 	});
 	

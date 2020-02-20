@@ -17,7 +17,7 @@
 	<nav id="navbar"
 		class="navbar navbar-expand-lg navbar-dark ">
 		<div class="container">
-		<a class="navbar-brand" href="main">SemoRE</a>
+		<a class="navbar-brand" href="main">JinsReview</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
 			aria-expanded="false" aria-label="Toggle navigation">

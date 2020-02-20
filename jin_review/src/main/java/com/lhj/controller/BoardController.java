@@ -1,12 +1,16 @@
 package com.lhj.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,8 +66,9 @@ public class BoardController {
 		model.addAttribute("revlist", revlist);
 		model.addAttribute("plist", plist);
 		model.addAttribute("adminList", adminList);
-		
-		model.addAttribute("weekReview",reviewService.weekReview());
+		ReviewVO wrv = reviewService.weekReview();
+		wrv.setFn(wrv.getFn().substring(0,12)+wrv.getFn().substring(14)); //주간리뷰 원본파일로.
+		model.addAttribute("weekReview",wrv);
 		
 		model.addAttribute("rpage",rpv);
 		model.addAttribute("page",pv);
@@ -130,12 +135,21 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="/detailJSON" , method= RequestMethod.GET)
-	public List<String> getAttach(@RequestParam int pno ) throws Exception{
+	public ResponseEntity<Map<String, Object>> getAttach(@RequestParam int pno ) throws Exception{
 		
+		
+		ResponseEntity<Map<String, Object>> entity = null;
 		logger.info("pno="+pno);
 		logger.info("상세보기"+boardService.getAttach(pno));
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		return boardService.getAttach(pno);
+		List boardAttachList = boardService.getAttach(pno);
+		List repFileDetail = reviewService.repFileList(pno);
+		
+		map.put("boardAttachList", boardAttachList);
+		map.put("repFileDetail", repFileDetail);
+		
+		return entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
 	@ResponseBody

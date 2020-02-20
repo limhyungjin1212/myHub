@@ -41,7 +41,10 @@
 	<insert id="follow">
 		insert into user_follow(id,follow) values(#{myname},#{uname})
 	</insert>	
-	
+		<!--follow 해제-->
+	<delete id="unfollow">
+		delete from user_follow where id=#{myname} and follow =#{uname}
+	</delete>	
 	<!--팔로우 목록  -->
 	<select id="followList" resultType="com.lhj.model.UserVO">
 		select uf.follow,(select uname from tbl_user where uid = uf.follow) as uname  from tbl_user u left join  user_follow uf on(u.uid=uf.id) where  u.uid=#{uid};

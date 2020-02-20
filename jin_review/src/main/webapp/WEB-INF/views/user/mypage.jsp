@@ -31,13 +31,52 @@
 
 <script>
 	$(function() {
-		$("#datepicker1").datepicker({
-			dateFormat : 'yy-mm-dd'
-		});
-
-		$("#datepicker2").datepicker({
-			dateFormat : 'yy-mm-dd'
-		});
+		
+		$.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd' //Input Display Format 변경
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+            ,changeYear: true //콤보박스에서 년 선택 가능
+            ,changeMonth: true //콤보박스에서 월 선택 가능                
+            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+            ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+            ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+            ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+            ,minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            ,maxDate: "D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                    
+        });
+		  //input을 datepicker로 선언
+        $("#datepicker1").datepicker();                    
+        $("#datepicker2").datepicker();
+      //From의 초기값을 오늘 날짜로 설정
+       var date1Value = "${page.cri.date1}";
+        var date2Value = "${page.cri.date2}";
+      	if(date1Value == ""){
+      		$('#datepicker1').datepicker('setDate', "-1M"); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)	
+      	}else{
+      		$('#datepicker1').datepicker('setDate', date1Value); 
+      	}
+      	if(date2Value == ""){
+      		$('#datepicker2').datepicker('setDate', new Date); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)	
+      	}else{
+      		$('#datepicker2').datepicker('setDate', date2Value); 
+      	}
+       
+        $("#datepicker1").change(function(){
+        	console.log("1change");
+        });
+        
+        $("#datepicker2").change(function(){
+        	console.log("2change");
+        });
+    	
+      	console.log("${page.cri.date1}");
+      	console.log("${page.cri.date2}");
 	});
 </script>
 </head>
@@ -95,11 +134,20 @@
 
 				<div class="col" id="myrevList">
 					<h4>내가 등록한 리뷰</h4>
-					<c:if test="${myRevList.size() == 0 }">
-						<h3>등록한 리뷰가 없습니다.</h3>
-					</c:if>
-					<input type="text" id="datepicker1"> <input type="text"
-						id="datepicker2">
+					
+					<form  class="form-inline my-2 my-lg-0" action="mypage" method="get">
+					<input type="hidden" name="uid" value="${user.uid }">
+					<input type="hidden" name="uname" value="${user.uname }">
+					<input type="text" id="datepicker1" class="form-control mr-sm-2" name="date1"> ~
+					 <input type="text" id="datepicker2" class="form-control mr-sm-2" name="date2">
+						<input type="text" class="form-control mr-sm-2" id="keyword" name="keyword" placeholder="검색할 키워드를 입력하세요.">
+						<input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="검색">
+					</form>
+					<c:choose>
+						<c:when test="${myRevList.size() == 0 }">
+							<h3>등록한 리뷰가 없습니다.</h3>
+						</c:when>
+					<c:otherwise>
 					<table class="table">
 						<c:forEach items="${myRevList }" var="reviewVO" varStatus="">
 
@@ -127,7 +175,7 @@
 								<td width="70%"><strong>${reviewVO.rev_subject }</strong><br>${reviewVO.content }</td>
 								<td width="30%"><input type="hidden" id="myRno"
 									value="${reviewVO.rno }">
-									<button type="button" id="my_up_btn">수정2</button></td>
+									<button type="button" id="my_up_btn" class="btn btn-outline-info">수정</button></td>
 							</tr>
 							<tr>
 								<td><c:forEach items="${revMyFile }" var="rmf">
@@ -165,7 +213,8 @@
 								</c:if></td>
 						</tr>
 					</table>
-
+						</c:otherwise>
+					</c:choose>
 
 				</div>
 
@@ -213,7 +262,7 @@
 						  <div class="form-group row">
 							  <label for="uname" class="col-sm-2 col-form-label">닉네임</label>
 						    <div class="col-sm-10">
-						      <input type="text" class="form-control" id="uname" name="uname" value="${user.uname }">
+						      <input type="text" class="form-control" id="uname" name="uname" value="${user.uname }" disabled>
 						    </div>
 					</div>
 						<div class="form-group row">
@@ -227,7 +276,7 @@
 							<label for="user_info" class="col-sm-2 col-form-label">자기소개</label>
 							 <div class="col-sm-10">
 							<textarea class="form-control" id="user_info"
-								name="user_info" rows="3" placeholder="자기소개는 300자 이하로 해주세요."></textarea>
+								name="user_info" rows="3" placeholder="자기소개는 300자 이하로 해주세요.">${user.user_info }</textarea>
 								</div>
 						</div>
 					
