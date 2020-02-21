@@ -207,7 +207,7 @@
 					</span> <br> 
 					<input type="hidden" id="rate" name="rate" value="1">
 					<input type="text" class="form-control" id="rev_subject"
-						name="rev_subject" autocomplete="off" placeholder="한줄 요약을 해주세요"><br>
+						name="rev_subject" autocomplete="off" placeholder="한줄 요약을 해주세요" required="required"><br>
 					<textarea placeholder="리뷰는 도움이 됩니다." class="form-control" rows="5"
 						name="content" id="newReplyText"></textarea>
 
@@ -228,9 +228,7 @@
 		<c:otherwise>
 			<div>
 				<h5>
-					리뷰 등록을 원하시면 로그인을 해주세요<a href="login">로그인하러가기</a> URI : ${uri} sp:<%=request.getServletPath()%>
-					<input type="text" id="req">
-
+					리뷰 등록을 원하시면 로그인을 해주세요
 				</h5>
 			</div>
 
@@ -240,10 +238,6 @@
 			<div class="modal" id="myModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
-
-
-
-
 
 						<!-- Modal Header -->
 						<div class="modal-header">
@@ -451,7 +445,6 @@
 
 			$(this).css("color", "#99ccff").prevAll().css("color", "#99ccff");
 			var j = $(this).index();
-			alert(j + 1);
 			$("#rate").val(j + 1);
 
 		});
@@ -510,8 +503,14 @@
 
 					</div>
 				</div>
+				
+				<div>
+					<h1>근처 비슷한곳 추천</h1>
+					</div>
+					<div>
+					<h1>비슷한 이미지</h1>
+					</div>
 			</div>
-
 
 
 <script>

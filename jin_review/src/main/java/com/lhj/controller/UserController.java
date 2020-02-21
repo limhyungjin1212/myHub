@@ -74,7 +74,37 @@ public class UserController {
 
 		return "user/login";
 	}
+	@RequestMapping(value = "userIdFind", method = RequestMethod.GET)
+	public String userIdFind() {
+		logger.info("userIdFind..");
 
+		return "user/userIdFind";
+	}
+	@RequestMapping(value = "userIdFind", method = RequestMethod.POST)
+	public String userIdFindPost(UserVO uv,Model model) throws Exception {
+		logger.info("userIdFind.."+uv);
+		
+		model.addAttribute("userid",us.userIdFind(uv));
+		logger.info("uif="+us.userIdFind(uv));
+		
+		return "user/userIdFindSuccess";
+	}
+	@RequestMapping(value = "userPwFind", method = RequestMethod.GET)
+	public String userPwFind() {
+		logger.info("userPwFind..");
+
+		return "user/userPwFind";
+	}
+	
+	@RequestMapping(value = "userPwFind", method = RequestMethod.POST)
+	public String userPwFindPost(UserVO uv,Model model) throws Exception {
+		logger.info("userIdFind.."+uv);
+		
+		model.addAttribute("userpw",us.userPwFind(uv));
+		logger.info("uif="+us.userIdFind(uv));
+		
+		return "user/userPwFindSuccess";
+	}
 	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
 	public String loginPost(LoginVO lvo, HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
 		logger.info("loginPost..");
@@ -248,8 +278,10 @@ public class UserController {
 		model.addAttribute("user", uv);
 		logger.info("user="+us.userDetail(uname));
 		model.addAttribute("myRevList", myRevList);
+		model.addAttribute("mrlcnt", myRevList.size());
 		model.addAttribute("revMyFile", revMyFile);
 		model.addAttribute("followerList", followerList);
+		model.addAttribute("flcnt", followerList.size());
 		model.addAttribute("page", pv);
 
 		return "main";

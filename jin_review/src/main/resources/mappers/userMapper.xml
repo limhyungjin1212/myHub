@@ -52,7 +52,7 @@
 	
 		<!--팔로워 목록  -->
 	<select id="followerList" resultType="com.lhj.model.UserVO">
-		select id as follower from user_follow where follow=#{uid}
+		select uf.id as follower, tu.uname,tu.user_profile as file, (select count(id) from user_follow where follow = uf.id) as ffcnt, (select count(rno) from review where writer=tu.uname) as frcnt    from user_follow uf join tbl_user tu on (uf.id = tu.uid) where follow=#{uid};
 	</select>
 	
 	
@@ -80,6 +80,14 @@
 	</update>
 	
 	
+	<!-- 유저 아이디 찾기  -->
+	<select id="userIdFind" resultType="com.lhj.model.UserVO">
+		select uid from tbl_user where umail=#{umail} and uname=#{uname}
+	</select>
+	<!-- 유저 비밀번호 찾기  -->
+	<select id="userPwFind" resultType="com.lhj.model.UserVO">
+		select upw from tbl_user where umail=#{umail} and uid=#{uid} 
+	</select>
 	
 	
 </mapper>

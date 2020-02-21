@@ -6,7 +6,27 @@ public class UserVO {
 	private String uid,upw,uname,umail,gender,follow,follower,regdate;
 	private String user_info;
 	private String file;
+	private int ffcnt; //팔로워리스트의 팔로워카운트
+	private int frcnt; //팔로워리스트의 리뷰 카운트
 	
+	
+
+	public int getFrcnt() {
+		return frcnt;
+	}
+
+	public void setFrcnt(int frcnt) {
+		this.frcnt = frcnt;
+	}
+
+	public int getFfcnt() {
+		return ffcnt;
+	}
+
+	public void setFfcnt(int ffcnt) {
+		this.ffcnt = ffcnt;
+	}
+
 	public String getFile() {
 		return file;
 	}
@@ -95,7 +115,7 @@ public class UserVO {
 	public String toString() {
 		return "UserVO [uid=" + uid + ", upw=" + upw + ", uname=" + uname + ", umail=" + umail + ", gender=" + gender
 				+ ", follow=" + follow + ", follower=" + follower + ", regdate=" + regdate + ", user_info=" + user_info
-				+ ", file=" + file + "]";
+				+ ", file=" + file + ", ffcnt=" + ffcnt + "]";
 	}
 	
 }

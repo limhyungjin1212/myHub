@@ -8,6 +8,8 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
 	a{
 		text-decoration: none;
@@ -71,11 +73,15 @@ if (result == 'wsuccess') {
 			<br>
 			<label><a href="join">회원가입</a></label>
 			<label>
-			<span id="idSelect" class="p-3 my-3 border-right border-left"><a href="join">아이디 찾기</a></span>
+			<span id="idSelect" class="p-3 my-3 border-right border-left">
+			<a href="userIdFind">아이디 찾기</a>
+			</span>
 			</label>
-			<label><a href="join">비밀번호 찾기</a></label>
+			<label><a href="userPwFind">비밀번호 찾기</a></label>
 			</div>
 		
 	</div>
+	
+	
 </body>
 </html>

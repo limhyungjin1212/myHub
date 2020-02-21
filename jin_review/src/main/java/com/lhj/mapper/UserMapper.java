@@ -50,5 +50,9 @@ public interface UserMapper {
 	//유저 프로필 사진 및 정보 업데이트
 	public void user_profile(UserVO uv) throws Exception;
 	
+	//유저 Id 찾기
+	public UserVO userIdFind(UserVO uv) throws Exception;
 	
+	//유저 Pw 찾기
+	public UserVO userPwFind(UserVO uv) throws Exception;
 }

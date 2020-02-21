@@ -228,10 +228,30 @@ public class BoardController {
 		return "board/reviewUpdate";
 	}
 	
+
+	
+	@RequestMapping(value="eventList", method = RequestMethod.GET)
+	public String eventList(HttpServletRequest req,Model model) throws Exception {
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		logger.info("eventList");
+		return "main";
+	}
 	
 	
+
+	@RequestMapping(value="flagged", method = RequestMethod.GET)
+	public String flagged(HttpServletRequest req,Model model) throws Exception {
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		logger.info("Flagged");
+		return "main";
+	}
 	
-	
+	@RequestMapping(value="suggestions", method = RequestMethod.GET)
+	public String suggestions(HttpServletRequest req,Model model) throws Exception {
+		req.setAttribute("uri", req.getRequestURI().substring(req.getContextPath().length()));
+		logger.info("suggestions");
+		return "main";
+	}
 	
 	
 	

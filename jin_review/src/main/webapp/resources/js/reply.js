@@ -190,7 +190,6 @@ $(document).ready(
 								if (data == 'success') {
 									alert("수정 정상처리 됨");
 									getPageList(replyPage);
-									$("#modDiv").hide	("slow");
 								}
 							},
 							error : function(err) {
@@ -202,7 +201,6 @@ $(document).ready(
 					
 					$(document).on("click","#oriImg",function(){
 						var rno = $(this).parent().attr("data-rno");
-						alert(rno);
 						$.getJSON("replies/revAttach/" + rno,function(data) {
 							console.log(data.length);
 							var revAttachStr="";

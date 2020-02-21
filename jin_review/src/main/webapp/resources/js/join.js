@@ -27,7 +27,9 @@ function pwequalscheck() {
 	var pw = document.getElementById("upw").value;
 	var pwchk = document.getElementById("pwchk").value;
 
-	if (pw == pwchk) {
+	if(pw == ""){
+		document.getElementById("pwequals").innerHTML = "";
+	}else if (pw == pwchk) {
 		document.getElementById("pwequals").innerHTML = "비밀번호 일치";
 	} else if(pwchk == ""){
 		document.getElementById("pwequals").innerHTML = "비밀번호를 재입력 해주세요.";
@@ -65,9 +67,55 @@ $(document).ready(function(){
 	var EcheckNum = 0;	
 	
 	$("#emailCheck").hide();
+	$("#idchkBtn").hide();
 	
-	
+		$("#idchkBtn").on("click",function(){
+			var uid = $("#uid").val();
+			if(uid == ""){
+				alert("아이디를 입력해주세요.");
+				return false;
+			}
+			$.ajax({
+				url : "idCheck",
+				data : "uid="+uid,
+				dataType : "text",
+				type : "get",
+				success : function(data) {
+					console.log(data.length);
+					if(data == 0){
+						alert("사용가능한 아이디 입니다.");
+						if(uid.length < 8 || uid.length >20 ){
+							$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
+							$("#uid").focus();
+						} else{
+							$("#idcheck").text("멋진 아이디네요!").css("color","green");
+						}
+						
+					} else{
+						alert("아이디가 이미 사용중입니다.");
+						$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
+						$("#uid").focus();
+					}
+				}
+			});
+		});
 
+		$("#uid").on("blur",function(){
+			var uid = $(this).val();
+			if(uid == ""){
+				return false;
+			}
+			if(uid.length < 8 || uid.length >20 ){
+				$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
+				$("#uid").focus();
+			} else{
+				$("#idcheck").text("멋진 아이디네요!").css("color","green");
+				$("#idchkBtn").show();
+			}
+			
+		}); //uname blur end
+		
+		
 		$("#uname").keyup(function(){
 			var uname = $(this).val();
 			if(uname == ""){
@@ -93,44 +141,6 @@ $(document).ready(function(){
 				}
 			});
 		}); //uname blur end
-		
-		
-		
-
-		$("#uid").on("blur",function(){
-			var uid = $(this).val();
-			if(uid == ""){
-				return false;
-			}
-			$.ajax({
-				url : "idCheck",
-				data : "uid="+uid,
-				dataType : "text",
-				type : "get",
-				success : function(data) {
-					console.log(data.length);
-					if(data == 0){
-						$("#idcheck").text("사용 가능한 아이디 입니다.!").css("color","green");
-						if(uid.length < 8 || uid.length >20 ){
-							$("#idcheck").text("id는 8자이상 20자 이하로 입력하셔야 합니다.").css("color","red");
-							$("#uid").focus();
-						} else{
-							$("#idcheck").text("멋진 아이디네요!").css("color","green");
-						}
-					} else{
-						$("#idcheck").text("아이디가 이미 사용중입니다.").css("color","red");
-						$("#uid").focus();
-					}
-				}
-			});
-		}); //uname blur end
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -197,9 +207,13 @@ $(document).ready(function(){
 				
 				
 				$("#emailSendbtn").on("click",function(){
-					
+					var mail1 = $("#email").val();
+					var mail2 = $("#email2").val();
+					console.log(mail1);
+					console.log(mail2);
+					$("#umail").val(mail1+"@"+mail2);
 					var umail = $("#umail").val();
-					
+					console.log(umail);
 					
 					var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
 					

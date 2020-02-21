@@ -87,5 +87,15 @@ public class UserServiceImpl implements UserService {
 	public void unfollow(String uname, String myname) throws Exception {
 		um.unfollow(uname, myname);
 	}
+
+	@Override
+	public UserVO userIdFind(UserVO uv) throws Exception {
+		return um.userIdFind(uv);
+	}
+
+	@Override
+	public UserVO userPwFind(UserVO uv) throws Exception {
+		return um.userPwFind(uv);
+	}
 	
 }

@@ -4,23 +4,23 @@
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <link rel="stylesheet" type="text/css" href="resources/css/join.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="resources/js/join.js?ver=54"></script>
+<script src="resources/js/join.js?ver=57"></script>
 </head>
 <body>
 
 <div class="container">
-	<h1 align="center">회 원 가 입2</h1>
+	<h1 align="center">회 원 가 입1</h1>
 	<p align="center">
 		JinsReview는 고객님의 소중한 개인정보를 보호하기위해 주민번호를 수집하지 않습니다.<br>요청하시면 안내메일을
 		보내드립니다
 	</p>
 
-	<form class="form-inline" id="joinForm" method="post" action="join">
+	<form autocomplete="off" class="form-inline" id="joinForm" method="post" action="join">
 		<table class="table">
 			<tr>
 				<td>닉네임(필수)</td>
@@ -34,7 +34,9 @@
 				<td>아이디(필수)</td>
 				<td><input type="text" id="uid" name="uid" class="form-control" required> 
 				<span id="idcheck">id는 8자이상 12자 이하로 입력하셔야
-						합니다</span></td>
+						합니다</span>
+				<button type="button" id="idchkBtn" class="btn btn-info">아이디 중복 확인</button>
+				</td>
 			</tr>
 			<tr>
 				<td>비밀번호(필수)</td>
@@ -51,7 +53,7 @@
 			<tr>
 				<td>이메일(필수)</td>
 				<td>
-				<input type="text" id="email" name="receive_front" class="form-control"> @ 
+				<input type="text" id="email" name="receive_front" class="form-control" required="required"> @ 
 				<input type="text" id="email2" class="form-control"> 
 					<select id="emailselect" name="receive_back" onchange="selectEmail()">
 						<option value="1">직접입력</option>
@@ -59,8 +61,9 @@
 						<option value="daum.net">다음</option>
 						<option value="google.com">구글</option>
 				</select>
+				
 				<input type="button" id="emailSendbtn" value="이메일 인증 번호 발송" class="btn">
-				<input type="text" id="umail" name="umail" required="required">
+				<input type="hidden" id="umail" name="umail" >
 				<!-- <input type="hidden" id="umail" name="umail" value="dkatl12@naver.com"> -->
 				
 				</td>
@@ -68,8 +71,8 @@
 			<tr id="emailCheck">
 				<td>이메일 인증 번호 확인</td>
 				<td>
-					<input type="text" id="emailCheckNum"  >
-					<input type="button" id="emailCheckBtn" value="인증번호 확인">
+					<input type="text" id="emailCheckNum"  class="form-control" >
+					<input type="button" id="emailCheckBtn"  class="btn btn-outline-success" value="인증번호 확인">
 					<input type="hidden" id="ectrue" >
 				</td>
 			</tr>

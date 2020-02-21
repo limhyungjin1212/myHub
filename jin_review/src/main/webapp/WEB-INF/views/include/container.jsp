@@ -17,16 +17,16 @@
 </div>
 <div class="row">
 	<div class="col-md-4">
-		<img alt="" src="resources/image/health.jpg" class="img-thumbnail" >
-		<a href="productSearch?keyword=헬스&place=울산광역시">Gyms</a>
+		<a href="productSearch?keyword=헬스"><img alt="" src="resources/image/health.jpg" class="img-thumbnail" >
+		Gyms</a>
 	</div>
 	<div class="col-md-4">
-		<img alt="" src="resources/image/hotelthumbnail.jpg" class="img-thumbnail">
-		<a href="#">Hotels</a>
+		<a href="productSearch?keyword=호텔"><img alt="" src="resources/image/hotelthumbnail.jpg" class="img-thumbnail">
+		Hotels</a>
 	</div>
 	<div class="col-md-4">
-		<img alt="" src="resources/image/coffee1.jpg" class="img-thumbnail">
-		<a href="#">Coffee</a>
+		<a href="productSearch?keyword=카페"><img alt="" src="resources/image/coffee1.jpg" class="img-thumbnail">
+		Coffee</a>
 	</div>
 </div>  
 
@@ -67,28 +67,27 @@
 	</c:forEach>
 	
 	<div class="col-md-8 ">
-	<p class="display-4 text-center">주간 리뷰 도움이 많이 된것.</p>
+	<h1>주간 리뷰</h1>
 		<div class="container p-3 my-3 bg-primary text-white">
 		<h1>${weekReview.rev_subject }</h1>
 				<a href="userDetail?uname=${weekReview.writer }">
 					<img class="img-thumbnail" style="max-width:100px;" src='displayFile?fileName=${weekReview.us_pf }' alt="not image">
 				</a>
-		<h1>${weekReview.writer }</h1>
-		
+		<h3>${weekReview.writer }</h3>
 		
 		<div>
 			${weekReview.content }
 		</div>
 		<div data-rno="${weekReview.rno }">
 		<a href='#' id='oriImg' data-toggle='modal' data-target='#myImgModal'>
-			<img style="width:100%;" class="img-thumbnail" src="displayFile?fileName=${weekReview.fn }">
+			<img style="width:100%; height: 50%" class="img-thumbnail" src="displayFile?fileName=${weekReview.fn }">
 			</a>
 		</div>
 		</div>
 	</div>
 	
 	<div class="col-md-4 ">
-		<h3>이벤트~~</h3>
+		<h3>이벤트</h3>
 		<table>
 			
 		</table>
@@ -243,8 +242,8 @@ var pageNum = ${page.cri.pageNum};
 				// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.
 				console.log(index);
 				
-				str += "<div class='card' id='attach'>";
-				str += "<div class='card-header'><div class='row'><div class='thumbnail-wrapper' style='width: 25%;'>";
+				str += "<div class='card' id='attach'>"
+					+ "<div class='card-header'><div class='row'><div class='thumbnail-wrapper' style='width: 25%;'>";
 				if(data.us_pf != null){
 					str +="<a href='userDetail?uname="+data.writer+"'>";
 					str +="<img class='img-thumbnail' style='max-width:100%;' src='displayFile?fileName="+data.us_pf+"' alt='not image'></a>";
@@ -252,10 +251,8 @@ var pageNum = ${page.cri.pageNum};
 					str += "<img class='img-thumbnail' style='max-width:100%;' src='resources/image/blankprofile.png' alt='not image'>";
 				}
 				str += "</div><h5 class='mt-0'><a href='userDetail?uname="+data.writer+"'>"+data.writer+"</a></h5></div></div>";
-				  if(data.content == null){
+				if(data.content == null){
 					  str +="사진만 나온 것입니다";
-				} else{
-					str += "리뷰적은것";
 				} 
 				if(data.fn != null){
 					str += "<div data-rno='"+data.rno+"'><a href='#' id='oriImg' data-toggle='modal' data-target='#myImgModal'><img class='img-thumbnail' style='max-width:300px;'  src='displayFile?fileName="+data.fn+"' alt='not image'></a></div>";
@@ -290,7 +287,6 @@ var pageNum = ${page.cri.pageNum};
 	
 	$(document).on("click","#oriImg",function(){
 		var rno = $(this).parent().attr("data-rno");
-		alert(rno);
 		$.getJSON("replies/revAttach/" + rno,function(data) {
 			console.log(data.length);
 			var revAttachStr="";

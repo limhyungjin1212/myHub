@@ -108,5 +108,15 @@ public class UserMapperImpl implements UserMapper{
 		paramMap.put("myname", myname);
 		session.delete(namespace+".unfollow",paramMap);
 	}
+
+	@Override
+	public UserVO userIdFind(UserVO uv) throws Exception {
+		return session.selectOne(namespace+".userIdFind",uv);
+	}
+
+	@Override
+	public UserVO userPwFind(UserVO uv) throws Exception {
+		return session.selectOne(namespace+".userPwFind",uv);
+	}
 	
 }

@@ -16,14 +16,41 @@
 <!-- Navigation -->
 	<nav id="navbar"
 		class="navbar navbar-expand-lg navbar-dark ">
-		<div class="container">
-		<a class="navbar-brand" href="main">JinsReview</a>
+		<b><a class="navbar-brand lr-4" href="main">JinsReview</a></b>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="row"  id="searchform" >
+		
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><a class="nav-link" href="main">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+
+				<c:choose>
+					<c:when test="${login ne null }">
+						<label class="uinfo">${login.uname } 님 환영합니다!</label>
+						<b><a href="mypage?uid=${login.uid }&uname=${login.uname}">마이페이지</a></b> 
+						<li class="nav-item active"><b><a class="nav-link"
+							href="logout">로그아웃</a></b></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item active">
+						<b><a class="nav-link"
+							href="join">회원가입</a></b></li>
+						<li class="nav-item active">
+						<b><a class="nav-link"
+							href="login">로그인</a></b></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+		<br>
+	
+	</nav>
+	<div class="container mt-2" id="searchform" >
 			<!-- Topbar -->
 			<!-- Sidebar Toggle (Topbar) -->
 			<button id="sidebarToggleTop"
@@ -55,34 +82,6 @@
 				</div>
 			</form>
 		</div>
-		
-		
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="main">Home
-						<span class="sr-only">(current)</span>
-				</a></li>
-
-				<c:choose>
-					<c:when test="${login ne null }">
-						<label class="uinfo">${login.uname } 님 환영합니다!</label>
-						<a href="mypage?uid=${login.uid }&uname=${login.uname}">마이페이지</a> 
-						<li class="nav-item active"><a class="nav-link"
-							href="logout">로그아웃</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item active"><a class="nav-link"
-							href="join">회원가입</a></li>
-						<li class="nav-item active"><a class="nav-link"
-							href="login">로그인</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
-	</div>
-	
-	</nav>
-	
 	<c:if test="${uri == '/main' }">
 		<script>
 			$("#sform").css("marginTop","300px");

@@ -51,48 +51,52 @@
 	
 	#mrgaInfo a{
 		text-decoration: none; 
+		
 	}
 	
 	a {
 		text-decoration: none;
+	}
+	#ih{
+		background:rgba(0,0,0,0.4); 
+		
 	}
 </style>
 </head>
 <body>
 	
 <div class="wrap">
-
-	<div class="container-fluid" id="headerbar">
+	<div id="ih">
+	<div class="container-fluid mb-2" id="headerbar">
 	<c:choose>
 		<c:when test="${uri == '/main' && login.uid ne 'admin' }">
-	
-	<script>
-	var ranFn = "${mrga.fn}";
-	var front = ranFn.substring(0,12);
-	var end = ranFn.substring(14);
-	var mrgaWriter = "${mrga.writer}";
-	var mrgaPname = "${mrga.pname}";
-		$("#headerbar").css(
-				{
-				"background":"url(displayFile?fileName="+front+end+")",
-				"background-repeat" : "no-repeat",
-				"background-size" :"cover",
-				"background-position":"center",
-				 "height": "60vh"
+			<jsp:include page="include/header.jsp"></jsp:include>
+		
+		<script>
+			var ranFn = "${mrga.fn}";
+			var front = ranFn.substring(0,12);
+			var end = ranFn.substring(14);
+			var mrgaWriter = "${mrga.writer}";
+			var mrgaPname = "${mrga.pname}";
+				$("#headerbar").css({
+						"background":"url(displayFile?fileName="+front+end+")",
+						"background-repeat" : "no-repeat",
+						"background-size" :"cover",
+						"background-position":"center",
+						 "height": "60vh",
+						"z-index":"1"
 				});
 		
-	</script>
-	
-		<jsp:include page="include/header.jsp"></jsp:include>
+	</script>	
 		
-		<div id="mrgaInfo" class="text-center">
-			<span id="mrgaPname" >
-				<a href="detail?pno=${mrga.pno }"> ${mrga.pname }</a>
+		<div id="mrgaInfo" class="text-center mt-3 pt-3">
+			<span id="mrgaPname mt-2" >
+				<b><a href="detail?pno=${mrga.pno }"> ${mrga.pname }</a></b>
 			</span><br>
-			<span id="mrgaWriter">Photo by <a href="userDetail?uname=${mrga.writer }">${mrga.writer }</a></span>
+			<b><span id="mrgaWriter">Photo by <a href="userDetail?uname=${mrga.writer }">${mrga.writer }</a></span></b>
 			
 		</div>
-		</c:when>
+		</c:when>	
 		<c:otherwise>
 			<c:choose>
 			<c:when test="${login.uid eq 'admin'}">
@@ -105,7 +109,7 @@
 			
 		</c:otherwise>
 		</c:choose>
-		
+		</div>
 	</div>
 
 	<!-- Page Content -->
@@ -120,10 +124,10 @@
 		 <button type="button" role="group"  onclick="location.href='main'" class="list-group-item list-group-item-action">
     메인
 			  </button>
-			  <button type="button" role="group"  onclick="location.href='register'" class="list-group-item list-group-item-action">이벤트</button>
+			  <button type="button" role="group"  onclick="location.href='eventList'" class="list-group-item list-group-item-action">이벤트</button>
 			  <button type="button" role="group"  onclick="location.href='userList'" class="list-group-item list-group-item-action">회원 정보</button>
-			  <button type="button" role="group"  onclick="location.href='detail'" class="list-group-item list-group-item-action">건의사항</button>
-			  <button type="button" role="group"  onclick="location.href='detail'" class="list-group-item list-group-item-action" >신고함</button>
+			  <button type="button" role="group"  onclick="location.href='suggestions'" class="list-group-item list-group-item-action">건의사항</button>
+			  <button type="button" role="group"  onclick="location.href='flagged'" class="list-group-item list-group-item-action" >신고함</button>
 		
 		</div>
 		
@@ -143,6 +147,15 @@
 					</c:when>
 					<c:when test="${uri == '/userList' }">
 						<%@ include file="user/userList.jsp"%>
+					</c:when>
+					<c:when test="${uri == '/eventList' }">
+						<%@ include file="board/eventList.jsp"%>
+					</c:when>
+					<c:when test="${uri == '/flagged' }">
+						<%@ include file="board/flagged.jsp"%>
+					</c:when>
+						<c:when test="${uri == '/suggestions' }">
+						<%@ include file="board/suggestions.jsp"%>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="board/list.jsp"%>
