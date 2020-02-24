@@ -63,10 +63,10 @@ public class BoardController {
 		List adminList = new ArrayList();
 		adminList = boardService.boardListPage(cri);
 		
-		model.addAttribute("revlist", revlist);
-		model.addAttribute("plist", plist);
-		model.addAttribute("adminList", adminList);
-		ReviewVO wrv = reviewService.weekReview();
+		model.addAttribute("revlist", revlist); //댓글리스트
+		model.addAttribute("plist", plist); //상품 리스트
+		model.addAttribute("adminList", adminList); //관리자 리스트
+		ReviewVO wrv = reviewService.weekReview(); 
 		wrv.setFn(wrv.getFn().substring(0,12)+wrv.getFn().substring(14)); //주간리뷰 원본파일로.
 		model.addAttribute("weekReview",wrv);
 		

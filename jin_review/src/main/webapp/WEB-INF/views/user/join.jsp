@@ -14,7 +14,7 @@
 <body>
 
 <div class="container">
-	<h1 align="center">회 원 가 입1</h1>
+	<h1 align="center">회 원 가 입</h1>
 	<p align="center">
 		JinsReview는 고객님의 소중한 개인정보를 보호하기위해 주민번호를 수집하지 않습니다.<br>요청하시면 안내메일을
 		보내드립니다
@@ -55,14 +55,14 @@
 				<td>
 				<input type="text" id="email" name="receive_front" class="form-control" required="required"> @ 
 				<input type="text" id="email2" class="form-control"> 
-					<select id="emailselect" name="receive_back" onchange="selectEmail()">
+					<select id="emailselect" class="form-control" name="receive_back" onchange="selectEmail()">
 						<option value="1">직접입력</option>
 						<option value="naver.com">네이버</option>
 						<option value="daum.net">다음</option>
 						<option value="google.com">구글</option>
 				</select>
 				
-				<input type="button" id="emailSendbtn" value="이메일 인증 번호 발송" class="btn">
+				<input type="button" id="emailSendbtn" value="이메일 인증 번호 발송" class="btn btn-outline-secondary">
 				<input type="hidden" id="umail" name="umail" >
 				<!-- <input type="hidden" id="umail" name="umail" value="dkatl12@naver.com"> -->
 				
@@ -102,8 +102,7 @@
 			<input type="text" maxlength="4" onblur="key()" id="firstNum" class="form-control">
 					- 
 			<input type="text" id="secondNum" class="form-control"> 
-			<input type="button" id="btn" onclick="sendNum()" value="인증 번호 발송" class="btn">
-			<input type="hidden" name="uphone" value="010-123-456" >
+			<input type="button" id="btn" onclick="sendNum()" value="인증 번호 발송" class="btn btn-outline-secondary">
 			</td>
 					
 			</tr>

@@ -4,14 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- Jumbotron Header -->
 <div class="container">
-<header class="jumbotron my-4">
-	<h1 class="display-3">안녕하세요</h1>
-	<p class="lead">세상의 모든 리뷰를 담다.</p>
-	<a href="board/list">게시판</a> <a href="#" class="btn btn-primary btn-lg">Call
-		to action!</a>
-		
-		<!-- Topbar Search -->
-</header>
 <div class="text-center">
 <h1>주변 지역을 찾아보세요!</h1>  
 </div>
@@ -80,7 +72,7 @@
 		</div>
 		<div data-rno="${weekReview.rno }">
 		<a href='#' id='oriImg' data-toggle='modal' data-target='#myImgModal'>
-			<img style="width:100%; height: 50%" class="img-thumbnail" src="displayFile?fileName=${weekReview.fn }">
+			<img style="max-width:60%;" class="img-thumbnail" src="displayFile?fileName=${weekReview.fn }">
 			</a>
 		</div>
 		</div>

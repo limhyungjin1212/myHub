@@ -161,28 +161,16 @@ public class UserController {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
-
-			logger.info("" + umail);
+			
 			messageHelper.setFrom("limhyungjin1212@gmail.com"); // 보내는사람
-			messageHelper.setSubject("세모리 이메일 인증 번호"); // 제목
-
+			messageHelper.setSubject("JinsReview 이메일 인증 번호"); // 제목
 			while (true) {
-
 				checkNum = ((int) (Math.random() * 1000000));// 난수 만들기
-
 				if (checkNum > 99999) {
 					break;
 				}
 			}
-
-			messageHelper.setText(("<h1>인증번호 : " + checkNum + " </h1>text/html;charset=EUC-KR")); // 내용
-
-			/*
-			 * messageHelper.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-			 * .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-			 * .append("<a href='http://localhost:8080/lhj/user/join?checkNum="+checkNum+"")
-			 * .toString()); // 내용
-			 */
+			messageHelper.setText(("<h1>인증번호 :" + checkNum + " </h1>")); // 내용
 			messageHelper.setTo(umail); // 받는사람
 			mailSender.send(message);
 

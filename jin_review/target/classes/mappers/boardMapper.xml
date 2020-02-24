@@ -82,8 +82,12 @@
 	<!-- 게시글과 파일 가져오기  -->
 	<select id="boardListAttach" resultType="com.lhj.model.BoardVO" >
 		select * from (select B.* , @rownum:=@rownum+1 as rownum from (
-		select p.*,a.filename as fn , ifnull(round(avg(re.rate),1),0) as rate , (select count(rno) from review where pno = p.pno) as rcnt 
-				from product_board p left join attach a on (p.pno = a.pno) left join review as re on (re.pno = p.pno) join (select @rownum:=0) as R 
+		select p.*,a.filename as fn , ifnull(round(avg(re.rate),1),0) as rate , 
+		(select count(rno) from review where pno = p.pno) as rcnt 
+				from product_board p 
+				left join attach a on (p.pno = a.pno) 
+				left join review as re on (re.pno = p.pno) 
+				join (select @rownum:=0) as R 
 						<choose>
 							<when test="place != null || keyword != null">
 									<include refid="keyword"></include>
@@ -91,13 +95,12 @@
 										group by p.pno 
 							</when>
 							<otherwise>
-							  WHERE p.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -2 week) AND NOW() or (select count(rno) from review where pno = p.pno) > 5
-						group by p.pno 
-							order by rand()
+							  WHERE p.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -2 week) AND NOW() 
+							  or (select count(rno) from review where pno = p.pno) > 5
+						group by p.pno order by rand()
 							</otherwise>
 						</choose>
-						 ) 
-                        as B
+						 )as B
                 ) as C 
 			<![CDATA[
 			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 

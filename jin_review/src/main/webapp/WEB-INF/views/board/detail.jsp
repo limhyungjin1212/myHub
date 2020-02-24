@@ -555,11 +555,7 @@
 						$(data).each(function(index, data) {
 											//// 첫 번째 index는 배열의 인덱스 또는 객체의 키를 의미하고 
 											// 두 번째 매개 변수 item은 해당 인덱스나 키가 가진 값을 의미.
-											console.log(data.length);
-											console.log(this.boardAttachList);
-											console.log(this.repFileDetail[0].fn);
 											var idx = this.boardAttachList.length;
-											console.log(idx);
 											$(this.boardAttachList).each(function(index,data){
 												if(index == 0){
 													str += "<div class='carousel-item active'><ul class='attach'>"+
@@ -616,5 +612,5 @@
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=85"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=86"></script>
 

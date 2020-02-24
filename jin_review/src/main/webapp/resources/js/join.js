@@ -14,7 +14,6 @@ function key() {
 			&& !(pattern_spc.test(str)) && !(pattern_kor.test(str))) {
 		return true
 	} else {
-		
 		alert("숫자만 입력 가능합니다.")
 		return false
 	}

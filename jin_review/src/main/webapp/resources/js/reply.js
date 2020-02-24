@@ -87,7 +87,7 @@ $(document).ready(
 										var file = $("#files")[0].files[0]; // ?
 										var formData = new FormData(); // FormData는
 																		// 가상의
-																		// form태그
+										// form태그
 																		// .
 										formData.append("file", file); // 파일을
 																		// 추가.
