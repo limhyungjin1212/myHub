@@ -9,16 +9,59 @@
 </style>
 <div class="container">
 	<script>
+
+	function checkImageType(fileName){
+		var pattern = /jpg|gif|png|jpeg|/i;
+		return fileName.match(pattern);
+	}
+
+	function getImageLink(fileName){
+		if(!checkImageType(fileName)){
+			return;
+		}
+		var front = fileName.substr(0,12); //   /2020/01/07/
+		var end = fileName.substr(14);	//  7163ad49-a36d-4afe-bf82-e496526b4b40_coffee2.jpg 앞에 s_를 떼준다.
+		
+		
+		//alert("front"+front);
+		//alert("end"+end);
+		
+		return front + end;
+	}
+
+	function getOriginalName(fileName){
+		 if(checkImageType(fileName)){ //이미지 파일이면 skip
+	         return;
+	     }
+	     
+	     var idx=fileName.indexOf("_")+1; //uuid를 제외한 파일이름을 리턴함
+	     return fileName.substr(idx);
+		/*alert("fileName :" + fileName);
+		return fileName;*/
+	}
+	
 		var str = "";
 		var pno = ${update.pno};
+		
+		
+		$(document).ready(function(){
+			var selectCate = "${update.pcate}";
+			$("#selectCateBox").val(selectCate).attr("selected","selected");	
+		})
+		
+		
+		
 		$.getJSON("detailJSON?pno=" + pno, function(data) {
-			$(data).each(function(index,data) {
-			str += "<div><a href='#'>"+data+"</a><img class ='thumbnail'  src='displayFile?fileName="+getImageLink(data)+"'/>"
-				+ "<small class='imgdelBtn' data-src="+data+">[삭제]</small></div>";
-			});
+			$(data).each(function(index, data) {
+				$(this.boardAttachList).each(function(index,data) {
+					str += "<div><img class ='thumbnail'  src='displayFile?fileName="+data+"'/>"
+						+ "<small class='imgdelBtn' data-src="+data+">[삭제]</small></div>";
+					});
 
+			});
 		
 			$("#uploadedList").append(str);
+			
 		});
 		
 	
@@ -140,7 +183,7 @@
 			<table class="table table-hover" border="1">
 				<tr>
 					<td>
-						<select class="form-control col-lg-2" name="pcate">
+						<select class="form-control col-lg-5" id="selectCateBox" name="pcate">
 								<option value="병원">병원</option>
 								<option value="음식">음식</option>
 								<option value="제품">제품</option>
@@ -148,9 +191,12 @@
 								<option value="세탁소">세탁소</option>
 								<option value="호텔">호텔</option>
 								<option value="pc방">pc방</option>
+								<option value="공원">공원</option>
+								<option value="놀이동산">놀이 동산</option>
+								<option value="문화회관">문화회관</option>
 						</select>
 					</td>
-					<td>이름 2: <input type="text" name="pname" class="col-sm-4 form-control"
+					<td>이름 : <input type="text" name="pname" class="col-sm-4 form-control"
 						value=" ${update.pname }"></td>
 				</tr>
 				<tr>
@@ -177,9 +223,9 @@
 				
 				
 				<div class="attach"></div>
-				<div class="fileDrop">파일을 드래그앤 드랍aaa</div>
+				<div class="fileDrop">파일을 끌어다 놓으세요</div>
+				<h3>이곳이 업로드 되는 위치입니다.</h3>
 				<div id="uploadedList" class="row">
-					<h3>이곳이 업로드 되는 위치입니다.</h3>
 				</div>
 				<div align="center">
 					<input type="submit" class="btn-primary" value="수정">
@@ -192,35 +238,7 @@
 </div>
 <script>
 
-function checkImageType(fileName){
-	var pattern = /jpg|gif|png|jpeg/i;
-	return fileName.match(pattern);
-}
 
-function getImageLink(fileName){
-	if(!checkImageType(fileName)){
-		return;
-	}
-	var front = fileName.substr(0,12); //   /2020/01/07/
-	var end = fileName.substr(14);	//  7163ad49-a36d-4afe-bf82-e496526b4b40_coffee2.jpg 앞에 s_를 떼준다.
-	
-	
-	//alert("front"+front);
-	//alert("end"+end);
-	
-	return front + end;
-}
-
-function getOriginalName(fileName){
-	 if(checkImageType(fileName)){ //이미지 파일이면 skip
-         return;
-     }
-     
-     var idx=fileName.indexOf("_")+1; //uuid를 제외한 파일이름을 리턴함
-     return fileName.substr(idx);
-	/*alert("fileName :" + fileName);
-	return fileName;*/
-}
 //$(".fileDrop").hide();
 $(".fileDrop").show();
 $(".fileDrop").on("dragenter dragover",function(event){
@@ -296,8 +314,6 @@ $(".fileDrop").on("dragenter dragover",function(event){
 	}); //small click end
 $(".attach").on("click","small",function(event){
 	var that = $(this);
-	
-	
 	var arr = [];
 	$(".attach small").each(function(index){
 		arr.push($(this).attr("data-src"));

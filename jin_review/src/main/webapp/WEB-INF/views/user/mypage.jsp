@@ -360,7 +360,6 @@
 						dataType:"text",
 						success:function(result){
 							if(result == 'deleted'){
-								alert("deleted");
 							}
 						}
 					})

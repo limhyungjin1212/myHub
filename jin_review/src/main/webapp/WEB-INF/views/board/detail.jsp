@@ -220,7 +220,11 @@
 
 					<input type="file" id="files" multiple="multiple">
 					<div class="rvUploadedlist"></div>
+					
+					<div align="right">
 					<button id="replyAddBtn" class="btn btn-primary">리뷰 등록</button>
+					<button class="btn btn-light" onclick="location.href='main'">목록</button>
+					</div>
 				</form>
 
 			</div>
@@ -457,8 +461,13 @@
 	</script>
 
 
-	<button onclick="location.href='main'">목록aa</button>
-
+	
+<div>
+					<h1></h1>
+					</div>
+					<div>
+					<h1></h1>
+					</div>
 	
 </div>
 
@@ -504,12 +513,7 @@
 					</div>
 				</div>
 				
-				<div>
-					<h1>근처 비슷한곳 추천</h1>
-					</div>
-					<div>
-					<h1>비슷한 이미지</h1>
-					</div>
+				
 			</div>
 
 
@@ -612,5 +616,5 @@
 </script>
 
 
-<script type="text/javascript" src="resources/js/reply.js?ver=86"></script>
+<script type="text/javascript" src="resources/js/reply.js?ver=87"></script>
 

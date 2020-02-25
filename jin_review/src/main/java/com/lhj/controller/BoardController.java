@@ -47,26 +47,22 @@ public class BoardController {
 	public String index(BoardVO boardVO,ReviewVO reviewVO,Criteria cri,Model model,HttpServletRequest req) throws Exception{
 		
 		PageVO rpv = new PageVO(cri, reviewService.revCount());
-		
-		
-		List revlist = new ArrayList();
-		
-		revlist = reviewService.revListPage(cri);
+		List revlist = new ArrayList(); 
+		revlist = reviewService.revListPage(cri); //리뷰 리스트
 		
 		List plist = new ArrayList();
 		cri.setAmount(4);
-		plist = boardService.boardListAttach(cri);
-		
+		plist = boardService.boardListAttach(cri); //상품 리스트 4개씩.
 		
 		cri.setAmount(10);
 		PageVO pv = new PageVO(cri, boardService.boardCount(cri));
 		List adminList = new ArrayList();
-		adminList = boardService.boardListPage(cri);
+		adminList = boardService.boardListPage(cri); //관리자 페이지 리스트
 		
 		model.addAttribute("revlist", revlist); //댓글리스트
 		model.addAttribute("plist", plist); //상품 리스트
 		model.addAttribute("adminList", adminList); //관리자 리스트
-		ReviewVO wrv = reviewService.weekReview(); 
+		ReviewVO wrv = reviewService.weekReview(); //주간 리뷰 
 		wrv.setFn(wrv.getFn().substring(0,12)+wrv.getFn().substring(14)); //주간리뷰 원본파일로.
 		model.addAttribute("weekReview",wrv);
 		

@@ -23,18 +23,6 @@
 		<include refid="place"></include>			
 	</select>
 	
-<sql id="keyword">
-		<if test="keyword != null">
-				where (pcate like concat('%',trim(#{keyword}),'%') or pname like concat('%',trim(#{keyword}),'%')) 
-		</if>
-</sql>
-<sql id="place">
-		<if test="place != null">
-				and place like concat('%',trim(#{place}),'%')  
-		</if>
-</sql>
-
-
 	<!-- rownum을 이용한 페이징  -->
 	<select id="boardListPage" resultType="com.lhj.model.BoardVO">
 		select pno , pname, pcate ,ptel, pinfo , regdate
@@ -51,6 +39,16 @@
 			where rownum >(#{pageNum}-1)*#{amount} and rownum<=#{amount}*#{pageNum} 
 		]]>
 	</select>
+<sql id="keyword">
+		<if test="keyword != null">
+				where (pcate like concat('%',trim(#{keyword}),'%') or pname like concat('%',trim(#{keyword}),'%')) 
+		</if>
+</sql>
+<sql id="place">
+		<if test="place != null">
+				and place like concat('%',trim(#{place}),'%')  
+		</if>
+</sql>
 	
 	<!-- 상세보기  -->
 	<select id="boardDetail" resultType="com.lhj.model.BoardVO">
@@ -93,6 +91,7 @@
 									<include refid="keyword"></include>
 									<include refid="place"></include>
 										group by p.pno 
+										order by rate desc
 							</when>
 							<otherwise>
 							  WHERE p.regdate BETWEEN DATE_ADD(NOW(),INTERVAL -2 week) AND NOW() 

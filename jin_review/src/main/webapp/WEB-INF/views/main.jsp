@@ -118,7 +118,7 @@
 			<c:when test="${login.uid eq 'admin'}">
 			<div class="row">
 			<div class="col">
-				<h1>left</h1>
+				
 		
 		<div class="btn-group-vertical btn-group-lg" >
 		 <button type="button" role="group"  onclick="location.href='main'" class="list-group-item list-group-item-action">
@@ -163,7 +163,7 @@
 					</c:choose>
 				</div>
 			<div class="col">
-				<h1>right</h1>
+				
 			</div>
 			</div>
 			</c:when>

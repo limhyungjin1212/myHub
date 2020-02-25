@@ -15,7 +15,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+		<h6 class="m-0 font-weight-bold text-primary">상품 리스트</h6>
 	</div>
 
 	<!-- Topbar Search -->
@@ -23,14 +23,9 @@
 		class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 		<div class="input-group">
 			<%-- <input type="hidden" name="pageNum" value="${page.cri2.pageNum }"> --%>
-			<select>
-				<option></option>
-				<option>음식점</option>
-				<option>병원</option>
-				<option>제품</option>
-			</select> <input type="text" name="keyword"
+			<input type="text" name="keyword"
 				class="form-control bg-light border-0 small"
-				placeholder="Search for..." aria-label="Search"
+				placeholder="키워드를 검색하세요." aria-label="Search"
 				aria-describedby="basic-addon2">
 			<div class="input-group-append">
 				<input class="btn btn-primary" type="submit" value="검색">
@@ -40,15 +35,14 @@
 
 	<div class="card-body">
 		<div class="table-responsive">
-			<table class="table table-dark" id="dataTable" width="100%"
-				cellspacing="0">
-				<thead>
+			<table class="table" id="dataTable">
+				<thead class="thead-dark">
 					<tr>
-						<th>글번호</th>
-						<th>분류</th>
-						<th>제목</th>
-						<th>연락처</th>
-						<th>작성일자</th>
+						<th scope="col">글번호</th>
+						<th scope="col">분류</th>
+						<th scope="col">제목</th>
+						<th scope="col">연락처</th>
+						<th scope="col">작성일자</th>
 					</tr>
 				</thead>
 				<tfoot>
@@ -59,31 +53,7 @@
 						<th>연락처</th>
 						<th>작성일자</th>
 					</tr>
-					<!-- Trigger the modal with a button -->
-					<button type="button" class="btn btn-info btn-lg"
-						data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-					<!-- Modal -->
-					<div id="myModal" class="modal fade" role="dialog">
-						<div class="modal-dialog">
-
-							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Modal Header</h4>
-								</div>
-								<div class="modal-body">
-									<p>Some text in the modal.</p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Close</button>
-								</div>
-							</div>
-
-						</div>
-					</div>
+					
 					<tr>
 						<td><a href="register">글쓰기</a></td>
 						<td colspan="4">

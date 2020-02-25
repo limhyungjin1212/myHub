@@ -104,18 +104,15 @@
 
      geocodeAddress(geocoder, map);
     }
-
-	
 		
-    function geocodeAddress(geocoder, resultsMap) {
+    function geocodeAddress(geocoder, resultsMap) { //좌표가 아닌 주소로 저장되어 있는 장소를 좌표형태로 변환시켜줍니다.
     	
     var arrAddress= new Array(); //검색된 주소를 넣을 배열
-    <c:forEach items="${searchList}" var="sl">
+    <c:forEach items="${searchList}" var="sl"> 
     	<c:if test='${sl.place ne ""}'>
     		arrAddress.push({place: "${sl.place}",fn:"${sl.fn}",rate:"${sl.rate}",pname:"${sl.pname}",pno:"${sl.pno}",ptel:"${sl.ptel}"});		
     	</c:if>
     </c:forEach>
-	console.log(arrAddress);    
       for(var i=0; i<arrAddress.length; i++){
     	  geocoder.geocode({'address': arrAddress[i].place}, (function (i) {
     		  return function(results, status) {
@@ -126,17 +123,14 @@
     	            map: resultsMap,
     	            position: results[0].geometry.location
     	          });
-    	          console.log(arrAddress[i].fn);
-    	          console.log(typeof(arrAddress[i]));
     	        		  
-    	          var infowindow = new google.maps.InfoWindow();
+    	          var infowindow = new google.maps.InfoWindow(); //마커 클릭시 작은 팝업창을 띄운다.
     	          google.maps.event.addListener(marker, "click", function() {
     	          var contentString = "";
     	          contentString += '<div id="content">'+
     	  					'<br><div id="adress"><br>'+
-    	  					'<a href=detail?pno='+arrAddress[i].pno+'>'+arrAddress[i].pname+'</a><br><p>';
-    	  					
-    	  		for(var j=1;j<=arrAddress[i].rate;j++){
+    	  					'<a href=detail?pno='+arrAddress[i].pno+'>'+arrAddress[i].pname+'</a><br><p>'; //제목에 a태그로 상세보기페이지로 이동
+    	  		for(var j=1;j<=arrAddress[i].rate;j++){ //별점 start
     	  			contentString += "<i class='fas fa-star' style='color :#99ccff;'></i>";
     	  		}
     	  		if((arrAddress[i].rate*2) % 2 == 1){
@@ -148,13 +142,11 @@
     	  			for(var j=arrAddress[i].rate;j<=4;j++){
     	  				contentString += "<i class='far fa-star' style='color: #99ccff;'></i>";
     	  			}
-    	  		}
+    	  		} // 별점 end
     	  					
     	  		contentString +='</p><a href=detail?pno='+arrAddress[i].pno+'><img style="width:300px; height:200px;" class=img-thumbnail src=displayFile?fileName='+arrAddress[i].fn+'></a>'+
     	  					'<br></div><p><b>주소 :</b> ' +arrAddress[i].place+
     	         '<br><b>연락처 :</b> ' +arrAddress[i].ptel+'</p></div>';
-    	         
-    	         
     	         
     	        	  infowindow.setContent(contentString);
     	        	  infowindow.open(map,marker);

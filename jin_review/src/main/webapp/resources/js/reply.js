@@ -114,7 +114,7 @@ $(document).ready(
 															str = "<div>"
 																	+ "<a href=displayFile?fileName="
 																	+ getImageLink(data)
-																	+ "><img src='displayFile?fileName="
+																	+ "><img style='max-width:400px;' src='displayFile?fileName="
 																	+ getImageLink(data)
 																	+ "'/>"
 																	+ "</a><small data-src="
@@ -139,6 +139,23 @@ $(document).ready(
 
 									});
 
+					//small 태그를 클릭
+					$("#uploadedList").on("click","small",function(event){
+						var that = $(this);
+						$.ajax({
+							url:"deleteFile",
+							type:"post",
+							data: {fileName:$(this).attr("data-src")},
+							dataType:"text",
+							success:function(result){
+								if(result == 'deleted'){
+									alert("deleted");
+									that.parent("div").remove();
+								}
+							}
+						})
+					});
+					
 					// 댓글 수정 버튼 클릭
 					$("#replies").on("click", ".replyLi input:button",
 							function() {

@@ -22,6 +22,7 @@
 	<div class="row">
 		<label class="col-sm-1 control-label">카테고리</label>
 			<select id="selectBox" class="form-control col-lg-2" name="pcate">
+				<option value="">직접 입력</option>
 				<option value="병원">병원</option>
 				<option value="음식">음식</option>
 				<option value="제품">제품</option>
@@ -29,6 +30,10 @@
 				<option value="세탁소">세탁소</option>
 				<option value="호텔">호텔</option>
 				<option value="pc방">pc방</option>
+				<option value="공원">공원</option>
+				<option value="놀이동산">놀이 동산</option>
+				<option value="문화회관">문화회관</option>
+				
 			</select>
 		
 		<label class="col-sm-1 control-label">이름</label>
@@ -87,7 +92,7 @@
 	 
 	
 	<div class="fileDrop">파일을 드래그앤 드랍</div>
-	<div class="p-3 mb-2 bg-info text-white" id="uploadedList"></div>
+	<div class="row p-3 mb-2 bg-info text-white" id="uploadedList"></div>
 	<div class="text-center">
 	<input type="submit" class="btn btn-primary" value="글쓰기">
 	<input type="button" id="goList" class="btn btn-secondary"   value="목록" >

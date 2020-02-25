@@ -41,15 +41,11 @@ $(".fileDrop").on("dragenter dragover",function(event){
 	
 	$(".fileDrop").on("drop",function(event){
 		event.preventDefault();
-		
-		var files = event.originalEvent.dataTransfer.files; //?
-		var file = files[0]; //?
+		var files = event.originalEvent.dataTransfer.files; 
+		var file = files[0]; 
 		console.log(file);
-		
 		var formData = new FormData(); //FormData는 가상의 form태그 . 
-		
 		formData.append("file",file); //파일을 추가. 드래그앤드랍된 파일을 담는다.
-		
 		
 		$.ajax({
 			url:"uploadAjax",
@@ -60,14 +56,10 @@ $(".fileDrop").on("dragenter dragover",function(event){
 			type : "POST",
 			
 			success : function(data){
-				console.log("data="+data);
-				//alert(data);
-				//alert(checkImageType(data));
 				var str = "";
-				console.log(checkImageType(data));
 				if(checkImageType(data)){
-					str="<div>"
-						+"<a href=displayFile?fileName="+getImageLink(data)+"><img style='max-width:400px;' src='displayFile?fileName="+getImageLink(data)+"'/>"
+					str="<div><a href=displayFile?fileName="+getImageLink(data)+">" +
+							"<img style='max-width:400px;' src='displayFile?fileName="+getImageLink(data)+"'/>"
 						+ "</a><small data-src="+data+">삭제</small>" +"</div>";
 				} else {
 					str = "<div><a href='displayFile?fileName="+data+"'>"
@@ -123,6 +115,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
 		console.log(sv);
 		if(sv == "제품"){
 			 $("#map").hide();
+			 $("#pac-container").hide();
 		} else{
 			 $("#map").show();
 		}
@@ -131,26 +124,16 @@ $(".fileDrop").on("dragenter dragover",function(event){
 	
 	function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 35.5528, lng: 129.3309},
-          zoom: 15
+          center: {lat: 35.5528, lng: 129.3309}, //지도 초기화면 중앙의 좌표
+          zoom: 15 //확대의 정도
         });
-        var card = document.getElementById('pac-card');
-        var input = document.getElementById('pac-input');
-        var types = document.getElementById('type-selector');
-        var strictBounds = document.getElementById('strict-bounds-selector');
-
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
         var autocomplete = new google.maps.places.Autocomplete(input);
 
-        // Bind the map's bounds (viewport) property to the autocomplete object,
-        // so that the autocomplete requests use the current map bounds for the
-        // bounds option in the request.
         autocomplete.bindTo('bounds', map);
 
-        // Set the data fields to return when the user selects a place.
-        autocomplete.setFields(
-            ['address_components', 'geometry', 'icon', 'name']);
+        autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']); //자동완성
 
         var infowindow = new google.maps.InfoWindow();
         var infowindowContent = document.getElementById('infowindow-content');
@@ -165,8 +148,6 @@ $(".fileDrop").on("dragenter dragover",function(event){
           marker.setVisible(false);
           var place = autocomplete.getPlace();
           if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
             window.alert("No details available for input: '" + place.name + "'");
             return;
           }
@@ -196,25 +177,7 @@ $(".fileDrop").on("dragenter dragover",function(event){
           infowindow.open(map, marker);
         });
 
-        // Sets a listener on a radio button to change the filter type on Places
-        // Autocomplete.
-      /*function setupClickListener(id, types) {
-          var radioButton = document.getElementById(id);
-          radioButton.addEventListener('click', function() {
-            autocomplete.setTypes(types);
-          });
-        }
-
-        setupClickListener('changetype-all', []);
-        setupClickListener('changetype-address', ['address']);
-        setupClickListener('changetype-establishment', ['establishment']);
-        setupClickListener('changetype-geocode', ['geocode']);
-
-        document.getElementById('use-strict-bounds')
-            .addEventListener('click', function() {
-              console.log('Checkbox clicked! New state=' + this.checked);
-              autocomplete.setOptions({strictBounds: this.checked});
-            }); */
+        
       }	
 	
 	
