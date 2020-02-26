@@ -26,7 +26,7 @@ import com.lhj.model.ReviewVO;
 import com.lhj.service.BoardService;
 import com.lhj.service.ReviewService;
 
-
+//주석!~~!
 @Controller
 public class BoardController {
 	
